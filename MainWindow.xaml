@@ -30,7 +30,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Content="Jidelni listek" Height="50" Width="100"/>
+                <Button Grid.Column="0" Grid.Row="0" Content="Jidelni listek" Height="50" Width="100" Click="BtnMenu_Click"/>
                 <Button Grid.Column="1" Grid.Row="0" Content="Moje objednavky" Height="50" Width="120" IsEnabled="False"/>
                 <Button Grid.Column="2" Grid.Row="0" Content="Moje rezervace" Height="50" Width="110" IsEnabled="False"/>
             </Grid>

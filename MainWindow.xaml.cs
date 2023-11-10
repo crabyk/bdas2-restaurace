@@ -17,5 +17,11 @@ namespace BDAS2_Restaurace
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
         }
+
+        private void BtnMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.Show();
+        }
     }
 }

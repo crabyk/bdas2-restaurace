@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C2SemestralkaDemo.models
+namespace BDAS2_Restaurace.models
 {
 	internal abstract class Order
 	{
