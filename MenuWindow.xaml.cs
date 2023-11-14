@@ -1,4 +1,5 @@
-﻿using BDAS2_Restaurace.db;
+﻿using BDAS2_Restaurace.controllers;
+using BDAS2_Restaurace.db;
 using BDAS2_Restaurace.models;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
@@ -77,6 +78,9 @@ namespace BDAS2_Restaurace
                     }
                 }
             }
-        }
-    }
+            // Pro vyzkouseni odkomentovat
+			// drinkList = DrinkController.GetAll();
+
+		}
+	}
 }
