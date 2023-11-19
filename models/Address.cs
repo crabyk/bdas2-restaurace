@@ -15,8 +15,9 @@ namespace BDAS2_Restaurace.models
 		public string PostalCode { get; set; }
 		public string Country { get; set; }
 
-		public Address(string streetName, string cityName, string unitNumber, string postalCode, string country)
+		public Address(int id, string streetName, string cityName, string unitNumber, string postalCode, string country)
 		{
+			ID = id;
 			StreetName = streetName;
 			CityName = cityName;
 			UnitNumber = unitNumber;

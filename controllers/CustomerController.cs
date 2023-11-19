@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.controllers
 {
-	 class FoodController
+	class CustomerController
 	{
 
-		static public Food? Add(Food item)
+		static public Customer? Add(Customer item)
 		{
-			Food? result = null;
+			Customer? result = null;
 
 			using (OracleConnection conn = Database.Connect())
 			{
@@ -25,11 +25,15 @@ namespace BDAS2_Restaurace.controllers
 
 				using (OracleCommand comm = conn.CreateCommand())
 				{
-					comm.CommandText = "insert into polozky (nazev, cena, typ_polozky) VALUES (:nazev, :cena, :typPolozky) returning id_polozka into :newId";
-		
-					comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Name;
-					comm.Parameters.Add(":cena", OracleDbType.Decimal).Value = item.Price;
-					comm.Parameters.Add(":typPolozky", OracleDbType.Varchar2).Value = "jidlo";
+					comm.CommandText = "insert into adresy (jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id) VALUES (:jmeno, :prijmeni, :datumNarozeni, :telefon, :email, :adresaId) returning id_zakaznik into :newId";
+
+					comm.Parameters.Add(":jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+					comm.Parameters.Add(":prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+					comm.Parameters.Add(":datumNarozeni", OracleDbType.Varchar2).Value = item.BirthDate;
+					comm.Parameters.Add(":telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
+					comm.Parameters.Add(":email", OracleDbType.Varchar2).Value = item.Email;
+					comm.Parameters.Add(":adresaId", OracleDbType.Varchar2).Value = item.Address.ID;
+
 
 					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
 					p.Direction = ParameterDirection.Output;
@@ -40,21 +44,10 @@ namespace BDAS2_Restaurace.controllers
 					newId = ((OracleDecimal)p.Value).Value;
 
 				}
-				
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into jidla (hmotnost, recept, id_polozka) VALUES (:hmotnost, :recept, :polozkaId)";
-					
-					comm.Parameters.Add(":hmotnost", item.Weight);
-					comm.Parameters.Add(":recept", item.Recipe);
-					comm.Parameters.Add(":polozkaId", newId);
-
-					int rowsAffected = comm.ExecuteNonQuery();
-				}
 
 				result = item;
 				result.ID = Convert.ToInt32(newId);
-				
+
 			}
 
 			return result;
@@ -90,14 +83,14 @@ namespace BDAS2_Restaurace.controllers
 			return result;
 		}
 
-		static public Food? Get(string id)
+		static public Customer? Get(string id)
 		{
-			Food? result = null;
+			Customer? result = null;
 
 			using (OracleConnection conn = Database.Connect())
 			{
 				conn.Open();
-				string sql = "select j.id_polozka, nazev, cena, hmotnost, recept from polozky p join jidla j on p.id_polozka = j.id_polozka where j.id_polozka = :id";
+				string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici where id_zakaznik = :id";
 				using (OracleCommand comm = new OracleCommand(sql, conn))
 				{
 					comm.Parameters.Add(":id", id);
@@ -106,7 +99,7 @@ namespace BDAS2_Restaurace.controllers
 					{
 						while (rdr.Read())
 						{
-							result = new Food(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3), rdr.GetString(4));
+							result = new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6)));
 						}
 					}
 				}
@@ -116,30 +109,32 @@ namespace BDAS2_Restaurace.controllers
 			return result;
 		}
 
-		static public List<Food> GetAll()
+		static public List<Customer> GetAll()
 		{
-			List<Food> result = new List<Food>();
+			List<Customer> result = new List<Customer>();
 
 			using (OracleConnection conn = Database.Connect())
 			{
 				conn.Open();
-				string sql = "select j.id_polozka, nazev, cena, hmotnost, recept from polozky p join jidla j on p.id_polozka = j.id_polozka";
+				string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici";
 				using (OracleCommand comm = new OracleCommand(sql, conn))
 				{
+
 					using (OracleDataReader rdr = comm.ExecuteReader())
 					{
 						while (rdr.Read())
 						{
-							result.Add(new Food(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3), rdr.GetString(4)));
+							result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
 						}
 					}
 				}
+
 			}
 
 			return result;
 		}
 
-		static public Food? Update(Food item, string id)
+		static public Customer? Update(Customer item, string id)
 		{
 			throw new NotImplementedException();
 		}

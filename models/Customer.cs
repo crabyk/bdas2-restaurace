@@ -11,13 +11,15 @@ namespace BDAS2_Restaurace.models
 	{
 		public Food? Order { get; set; }	
 		public Customer(
+			int id,
 			string firstName,
 			string lastName,
 			DateTime birthDate,
 			string phoneNumber,
-			string email
+			string email,
+			Address address
 
-			) : base(firstName, lastName, birthDate, phoneNumber, email)
+			) : base(id, firstName, lastName, birthDate, phoneNumber, email, address)
 		{
 		}
 

@@ -16,12 +16,16 @@ namespace BDAS2_Restaurace.models
 		public string PhoneNumber { get; set; }
 		public string Email { get; set; }
 
+		public Address Address { get; set; }	
+
 		public Person(
+			int id,
 			string firstName, 
 			string lastName, 
 			DateTime birthDate, 
 			string phoneNumber, 
-			string email
+			string email,
+			Address address
 			)
 		{
 			if (firstName.Length == 0 || lastName.Length == 0)
@@ -30,11 +34,13 @@ namespace BDAS2_Restaurace.models
 			if (!Regex.Match(email, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$").Success)
 				throw new ArgumentException("Špatný formát pro email", nameof(firstName));
 
+			ID = id;
 			FirstName = firstName;
 			LastName = lastName;
 			BirthDate = birthDate;
 			PhoneNumber = phoneNumber;
 			Email = email;
+			Address = address;
 		}
 
 		public int Age()
