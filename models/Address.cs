@@ -8,6 +8,7 @@ namespace BDAS2_Restaurace.models
 {
 	internal class Address
 	{
+		public int ID { get; set; }
 		public string StreetName { get; set; }
 		public string CityName { get; set; }
 		public string UnitNumber { get; set; }	

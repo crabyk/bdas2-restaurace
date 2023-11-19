@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.controllers
 {
-	 class FoodController : IController<Food>
+	 class FoodController
 	{
 
 		static public Food? Add(Food item)
@@ -26,9 +26,7 @@ namespace BDAS2_Restaurace.controllers
 				using (OracleCommand comm = conn.CreateCommand())
 				{
 					comm.CommandText = "insert into polozky (nazev, cena, typ_polozky) VALUES (:nazev, :cena, :typPolozky) returning id_polozka into :polozkaId";
-					//comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Direction = ParameterDirection.ReturnValue;
-
-
+		
 					comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Name;
 					comm.Parameters.Add(":cena", OracleDbType.Decimal).Value = item.Price;
 					comm.Parameters.Add(":typPolozky", OracleDbType.Varchar2).Value = "jidlo";
@@ -37,7 +35,6 @@ namespace BDAS2_Restaurace.controllers
 					comm.Parameters.Add(p);
 
 					comm.ExecuteNonQuery();
-
 
 					polozkaId = ((OracleDecimal)p.Value).Value;
 

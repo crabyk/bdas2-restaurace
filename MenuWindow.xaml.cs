@@ -25,7 +25,8 @@ namespace BDAS2_Restaurace
             //GetFood();
 
             Food newFood = new Food(0, "Nějaká mnamka", 120.0, 105.0, "Nejaky recept :D");
-            // FoodController.Add(newFood);
+            
+            FoodController.Add(newFood); // Test vkladani
 			foodList = FoodController.GetAll();
 
 

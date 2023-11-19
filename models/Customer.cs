@@ -9,7 +9,7 @@ namespace BDAS2_Restaurace.models
 {
 	internal class Customer : Person
 	{
-		public Order? Order { get; set; }	
+		public Food? Order { get; set; }	
 		public Customer(
 			string firstName,
 			string lastName,
