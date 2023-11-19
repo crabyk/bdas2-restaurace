@@ -9,7 +9,7 @@ namespace BDAS2_Restaurace.models
 {
 	internal class DeliveryOrder : Order
 	{
-		Address Address { get; }
+		Address Address { get; set; }
 	
 		public DeliveryOrder (DateTime orderDate, Customer customer, Address address) : base (orderDate, customer)
 		{

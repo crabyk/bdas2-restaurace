@@ -9,7 +9,7 @@ namespace BDAS2_Restaurace.models
 {
 	internal class HereOrder : Order
 	{
-		int TableNumber { get; }
+		int TableNumber { get; set; }
 
 		public HereOrder(DateTime orderDate, Customer customer, int tableNumber) : base(orderDate, customer)
 		{

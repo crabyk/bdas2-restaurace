@@ -8,10 +8,10 @@ namespace BDAS2_Restaurace.models
 {
 	internal class Food : Item
 	{
-		public double Weight { get; }
-		public string Recipe { get; }
+		public double Weight { get; set; }
+		public string Recipe { get; set; }
 
-		public Food (string name, double price, double weight, string recipe) : base(name, price)
+		public Food (int id, string name, double price, double weight, string recipe) : base(id, name, price)
 		{
 			Weight = weight;
 			Recipe = recipe;

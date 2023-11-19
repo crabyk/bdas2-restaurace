@@ -8,6 +8,6 @@ namespace BDAS2_Restaurace.models
 {
 	internal class Table
 	{
-		public int Number { get; }
+		public int Number { get; set; }
 	}
 }

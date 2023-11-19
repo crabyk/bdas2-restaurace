@@ -9,9 +9,9 @@ namespace BDAS2_Restaurace.models
 {
 	internal abstract class Order
 	{
-		public DateTime OrderDate { get; }
-		public List<Item> Items { get; }
-		public Customer Customer { get; }
+		public DateTime OrderDate { get; set; }
+		public List<Item> Items { get; set; }
+		public Customer Customer { get; set; }
 
 		public Order(DateTime orderDate, Customer customer)
 		{

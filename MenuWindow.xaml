@@ -10,6 +10,7 @@
         <ListView Name="menuListView" Width="800" HorizontalContentAlignment="Stretch">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding ID}"/>
                     <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Price}"/>
                     <GridViewColumn Header="Gramaz" DisplayMemberBinding="{Binding Weight}"/>

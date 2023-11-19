@@ -15,16 +15,21 @@ namespace BDAS2_Restaurace
     {
         OracleConnection? conn = null;
         List<Food> foodList;
-        List<Drink> drinkList;
+        List<Food> drinkList;
 
         public MenuWindow()
         {
             InitializeComponent();
 
             foodList = new List<Food>();
-            GetFood();
+            //GetFood();
 
-            var width = menuListView.Width - SystemParameters.VerticalScrollBarWidth;
+            Food newFood = new Food(0, "Nějaká mnamka", 120.0, 105.0, "Nejaky recept :D");
+            // FoodController.Add(newFood);
+			foodList = FoodController.GetAll();
+
+
+			var width = menuListView.Width - SystemParameters.VerticalScrollBarWidth;
             var columns = (menuListView.View as GridView).Columns;
 
             foreach (var column in columns)
@@ -49,7 +54,7 @@ namespace BDAS2_Restaurace
                     {
                         while (rdr.Read())
                         {
-                            var food = new Food(rdr.GetString(0), rdr.GetInt32(1), rdr.GetInt32(2), rdr.GetString(3));
+                            var food = new Food(0, rdr.GetString(0), rdr.GetInt32(1), rdr.GetInt32(2), rdr.GetString(3));
                             foodList.Add(food);
                         }
                     }
@@ -59,6 +64,7 @@ namespace BDAS2_Restaurace
 
         private void GetDrinks()
         {
+            /*
             if (conn == null)
                 conn = Database.Connect();
 
@@ -78,8 +84,8 @@ namespace BDAS2_Restaurace
                     }
                 }
             }
+            */
             // Pro vyzkouseni odkomentovat
-			// drinkList = DrinkController.GetAll();
 
 		}
 	}

@@ -24,14 +24,14 @@ namespace BDAS2_Restaurace.controllers
 		/// </summary>
 		/// <param name="id">Identifikator hledaneho zaznamu</param>
 		/// <returns>Nalezeny zaznam pri uspechu, jinak null</returns>
-		static T Get(string id) => throw new NotImplementedException();
+		static T? Get(string id) => throw new NotImplementedException();
 
 		/// <summary>
 		/// Vlozi novy zaznam do tabulky v databazi
 		/// </summary>
 		/// <param name="item">Novy zaznam</param>
 		/// <returns>Vlozeny zaznam pri uspechu, jinak null</returns>
-		static T Add(T item) => throw new NotImplementedException();
+		static T? Add(T item) => throw new NotImplementedException();
 
 		/// <summary>
 		/// Upravy zaznam databazove tabulky
@@ -39,7 +39,7 @@ namespace BDAS2_Restaurace.controllers
 		/// <param name="item">Upraveny zaznam</param>
 		/// <param name="id">Identifikator upravovaneho zaznamu</param>
 		/// <returns>Upraveny zaznam pri uspechu, jinak null</returns>
-		static T Update(T item, string id) => throw new NotImplementedException();
+		static T? Update(T item, string id) => throw new NotImplementedException();
 
 		/// <summary>
 		/// Odebere zaznam databazove tabulky

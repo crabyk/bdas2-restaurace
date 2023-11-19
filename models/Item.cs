@@ -8,11 +8,13 @@ namespace BDAS2_Restaurace.models
 {
 	internal abstract class Item
 	{
-		public string Name { get; }
-		public double Price { get; }
+		public int ID { get; set; }
+		public string Name { get; set; }
+		public double Price { get; set; }
 
-		public Item(string name, double price)
+		public Item(int id, string name, double price)
 		{
+			ID = id;
 			Name = name;
 			Price = price;
 		}
