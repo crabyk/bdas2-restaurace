@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace.models
+namespace BDAS2_Restaurace.Model
 {
 	internal class Employee : Person
 	{
 		public Address Address { get; set; }
 
 		public Employee(
+			int id,
 			string firstName,
 			string lastName,
 			DateTime birthDate,
@@ -18,7 +19,7 @@ namespace BDAS2_Restaurace.models
 			string email,
 			Address address
 
-			) : base(firstName, lastName, birthDate, phoneNumber, email)
+			) : base(id, firstName, lastName, birthDate, phoneNumber, email, address)
 		{
 			Address = address;
 		}

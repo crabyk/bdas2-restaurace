@@ -12,6 +12,18 @@ namespace BDAS2_Restaurace
             InitializeComponent();
         }
 
+        /*
+		private void FoodViewList_Loaded(object sender, RoutedEventArgs e)
+		{
+			BDAS2_Restaurace.ViewModel.FoodViewModel foodViewModelObject = new BDAS2_Restaurace.ViewModel.FoodViewModel();
+			foodViewModelObject.LoadFood();
+
+			FoodViewList.DataContext = foodViewModelObject;
+		}
+        */
+
+
+		/*
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = new LoginWindow();
@@ -23,5 +35,6 @@ namespace BDAS2_Restaurace
             MenuWindow menuWindow = new MenuWindow();
             menuWindow.Show();
         }
-    }
+        */
+	}
 }

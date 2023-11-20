@@ -1,7 +1,8 @@
-﻿using BDAS2_Restaurace.controllers;
-using BDAS2_Restaurace.db;
-using BDAS2_Restaurace.models;
+﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.DB;
+using BDAS2_Restaurace.Model;
 using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ namespace BDAS2_Restaurace
         OracleConnection? conn = null;
         List<Food> foodList;
         List<Food> drinkList;
+        bool foodSelected = true;
+        bool drinkSelected = false;
 
         public MenuWindow()
         {
@@ -24,9 +27,9 @@ namespace BDAS2_Restaurace
             foodList = new List<Food>();
             //GetFood();
 
-            Food newFood = new Food(0, "Nějaká mnamka", 120.0, 105.0, "Nejaky recept :D");
+            // Food newFood = new Food(0, "Nějaká mnamka", 120.0, 105.0, "Nejaky recept :D");
             
-            FoodController.Add(newFood); // Test vkladani
+            // FoodController.Add(newFood); // Test vkladani
 			foodList = FoodController.GetAll();
 
 
@@ -55,8 +58,8 @@ namespace BDAS2_Restaurace
                     {
                         while (rdr.Read())
                         {
-                            var food = new Food(0, rdr.GetString(0), rdr.GetInt32(1), rdr.GetInt32(2), rdr.GetString(3));
-                            foodList.Add(food);
+                            // var food = new Food(0, rdr.GetString(0), rdr.GetInt32(1), rdr.GetInt32(2), rdr.GetString(3));
+                            // foodList.Add(food);
                         }
                     }
                 }
@@ -88,6 +91,18 @@ namespace BDAS2_Restaurace
             */
             // Pro vyzkouseni odkomentovat
 
+		}
+
+		private void Food_Button_Click(object sender, RoutedEventArgs e)
+		{
+            foodSelected = true;
+			drinkSelected = false;
+		}
+
+		private void Drink_Button_Click(object sender, RoutedEventArgs e)
+		{
+			foodSelected = false;
+			drinkSelected = true;
 		}
 	}
 }

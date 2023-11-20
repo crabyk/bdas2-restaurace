@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="BDAS2_Restaurace.Views.DrinkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
+             xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ListView Name="menuListView" Width="800" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path = Drink}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                    <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
+                    <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
+                    <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Volume}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

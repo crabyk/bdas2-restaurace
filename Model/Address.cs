@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace.models
+namespace BDAS2_Restaurace.Model
 {
 	internal class Address
 	{

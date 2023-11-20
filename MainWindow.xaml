@@ -4,22 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BDAS2_Restaurace"
+        xmlns:views = "clr-namespace:BDAS2_Restaurace.Views"
+        xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
         mc:Ignorable="d"
         Title="Hlavni menu" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType = "{x:Type viewModels:FoodViewModel}">
+            <views:FoodView x:Name="FoodViewList" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:DrinkViewModel}">
+            <views:DrinkView x:Name="DrinkViewList" />
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!-- Horni lista -->
         <Border Padding="10" Grid.Row="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,0,2">
             <DockPanel VerticalAlignment="Center">
                 <Label VerticalAlignment="Center">Restaurace</Label>
-                <Button Content="Prihlasit se" HorizontalAlignment="Right" Height="24" Width="80" Click="BtnLogin_Click"/>
+                <Button Content="Prihlasit se" HorizontalAlignment="Right" Height="24" Width="80"/>
             </DockPanel>
         </Border>
         <!-- Hlavni nabidka -->
-        <Border Grid.Row="1" Padding="10">
+        <Border Grid.Row="1" Padding="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -30,10 +46,27 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button Grid.Column="0" Grid.Row="0" Content="Jidelni listek" Height="50" Width="100" Click="BtnMenu_Click"/>
+                <Button Grid.Column="0" Grid.Row="0" Content="Jidelni listek" Height="50" Width="100"/>
                 <Button Grid.Column="1" Grid.Row="0" Content="Moje objednavky" Height="50" Width="120" IsEnabled="False"/>
                 <Button Grid.Column="2" Grid.Row="0" Content="Moje rezervace" Height="50" Width="110" IsEnabled="False"/>
+                
+                <Button Grid.Column="0" Grid.Row="1" 
+                        Content="Jídla"
+                        Height="50" Width="100"
+                        Command = "{Binding NavCommand}"
+                        CommandParameter = "food"/>
+                <Button Grid.Column="1" Grid.Row="1" 
+                        Content="Nápoje"
+                        Height="50" Width="100"
+                        Command = "{Binding NavCommand}"
+                        CommandParameter = "drinks"/>
             </Grid>
         </Border>
+
+
+        <Grid x:Name = "MainContent" Grid.Row = "2">
+            <ContentControl Content = "{Binding CurrentViewModel}"/>
+        </Grid>
     </Grid>
+    
 </Window>

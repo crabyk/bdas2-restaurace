@@ -1,6 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 
-namespace BDAS2_Restaurace.db
+namespace BDAS2_Restaurace.DB
 {
     public static class Database
     {

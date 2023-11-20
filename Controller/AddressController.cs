@@ -1,5 +1,5 @@
-﻿using BDAS2_Restaurace.db;
-using BDAS2_Restaurace.models;
+﻿using BDAS2_Restaurace.DB;
+using BDAS2_Restaurace.Model;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace.controllers
+namespace BDAS2_Restaurace.Controller
 {
 	class AddressController
 	{

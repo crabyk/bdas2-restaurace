@@ -1,11 +1,11 @@
-﻿using BDAS2_Restaurace.models;
+﻿using BDAS2_Restaurace.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace.models
+namespace BDAS2_Restaurace.Model
 {
 	internal class Customer : Person
 	{

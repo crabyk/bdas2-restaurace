@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace.models
+namespace BDAS2_Restaurace.Model
 {
 	internal abstract class Person
 	{
