@@ -15,7 +15,7 @@ namespace BDAS2_Restaurace
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
+            loginWindow.ShowDialog();          
         }
 
         private void BtnMenu_Click(object sender, RoutedEventArgs e)

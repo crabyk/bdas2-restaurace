@@ -11,6 +11,7 @@ namespace BDAS2_Restaurace.models
 		public Address Address { get; set; }
 
 		public Employee(
+			int id,
 			string firstName,
 			string lastName,
 			DateTime birthDate,
@@ -18,7 +19,7 @@ namespace BDAS2_Restaurace.models
 			string email,
 			Address address
 
-			) : base(firstName, lastName, birthDate, phoneNumber, email)
+			) : base(id, firstName, lastName, birthDate, phoneNumber, email, address)
 		{
 			Address = address;
 		}
