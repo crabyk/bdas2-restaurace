@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BDAS2_Restaurace.Router;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	internal class MenuViewModel : BindableBase
+	internal class MenuViewModel : RouteNavigation
 	{
+		public MenuViewModel() : base()
+		{
+			this.Routes.Add(new Route("drinks", new DrinkViewModel()));
+			this.Routes.Add(new Route("food", new FoodViewModel()));
+		}
+		/*
 		public MenuViewModel()
 		{
 			NavCommand = new MyICommand<string>(OnNav);
@@ -42,5 +49,6 @@ namespace BDAS2_Restaurace.ViewModel
 					break;
 			}
 		}
+		*/
 	}
 }

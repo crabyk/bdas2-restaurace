@@ -1,4 +1,5 @@
-﻿using BDAS2_Restaurace.ViewModel;
+﻿using BDAS2_Restaurace.Router;
+using BDAS2_Restaurace.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace
 {
-	class MainWindowViewModel : BindableBase
+	class MainWindowViewModel : RouteNavigation
 	{
+		public MainWindowViewModel() : base()
+		{
+			this.Routes.Add(new Route("menu", new MenuViewModel()));
+		}
+
+		/*
 		public MainWindowViewModel()
 		{
 			NavCommand = new MyICommand<string>(OnNav);
@@ -16,12 +23,12 @@ namespace BDAS2_Restaurace
 
 		private MenuViewModel menuViewModel = new MenuViewModel();
 
-		private BindableBase _CurrentViewModel;
+		private BindableBase CurrentViewModel;
 
-		public BindableBase CurrentViewModel
+		public BindableBase _CurrentViewModel
 		{
-			get { return _CurrentViewModel; }
-			set { SetProperty(ref _CurrentViewModel, value); }
+			get { return CurrentViewModel; }
+			set { SetProperty(ref CurrentViewModel, value); }
 		}
 
 		public MyICommand<string> NavCommand { get; private set; }
@@ -39,5 +46,6 @@ namespace BDAS2_Restaurace
 					break;
 			}
 		}
+		*/
 	}
 }
