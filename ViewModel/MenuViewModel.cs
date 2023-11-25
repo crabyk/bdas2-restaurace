@@ -1,20 +1,20 @@
-﻿using BDAS2_Restaurace.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDAS2_Restaurace
+namespace BDAS2_Restaurace.ViewModel
 {
-	class MainWindowViewModel : BindableBase
+	internal class MenuViewModel : BindableBase
 	{
-		public MainWindowViewModel()
+		public MenuViewModel()
 		{
 			NavCommand = new MyICommand<string>(OnNav);
 		}
 
-		private MenuViewModel menuViewModel = new MenuViewModel();
+		private FoodViewModel foodViewModel = new FoodViewModel();
+		private DrinkViewModel drinkViewModel = new DrinkViewModel();
 
 		private BindableBase _CurrentViewModel;
 
@@ -31,8 +31,11 @@ namespace BDAS2_Restaurace
 
 			switch (destination)
 			{
-				case "menu":
-					CurrentViewModel = menuViewModel;
+				case "food":
+					CurrentViewModel = foodViewModel;
+					break;
+				case "drinks":
+					CurrentViewModel = drinkViewModel;
 					break;
 				default:
 					CurrentViewModel = null;
