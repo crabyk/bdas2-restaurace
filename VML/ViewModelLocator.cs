@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -34,6 +35,7 @@ namespace BDAS2_Restaurace.VML
 			var viewType = d.GetType();
 			string str = viewType.FullName;
 			str = str.Replace(".Views.", ".ViewModel.");
+			str = str.Replace(".Add", ".");
 
 			var viewTypeName = str;
 			var viewModelTypeName = viewTypeName + "Model";

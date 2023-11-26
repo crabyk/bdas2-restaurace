@@ -13,6 +13,7 @@ namespace BDAS2_Restaurace
 		public MainWindowViewModel() : base()
 		{
 			this.Routes.Add(new Route("menu", new MenuViewModel()));
+			this.Routes.Add(new Route("order", new OrderViewModel()));
 		}
 
 		/*

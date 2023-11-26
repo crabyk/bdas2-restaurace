@@ -33,8 +33,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Padding="10">
-            <Label Content="Nabídka" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
+        <Border Grid.Row="0" Padding="10" >
+            <StackPanel>
+                <Label x:Name="MenuLabel" Content="Nabidka" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
+            </StackPanel>
         </Border>
 
         <Border Grid.Row="1" Padding="10">

@@ -88,7 +88,7 @@ namespace BDAS2_Restaurace.Controller
 					{
 						while (rdr.Read())
 						{
-							result = new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5));
+							//result = new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5));
 						}
 					}
 				}
@@ -112,7 +112,7 @@ namespace BDAS2_Restaurace.Controller
 					{
 						while (rdr.Read())
 						{
-							result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
+							//result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
 						}
 					}
 				}

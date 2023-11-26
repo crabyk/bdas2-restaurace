@@ -1,6 +1,4 @@
-﻿using BDAS2_Restaurace.Model;
-using BDAS2_Restaurace.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,12 @@ using System.Windows.Shapes;
 namespace BDAS2_Restaurace.Views
 {
 	/// <summary>
-	/// Interakční logika pro DrinkView.xaml
+	/// Interakční logika pro OrderView.xaml
 	/// </summary>
-	public partial class DrinkView : UserControl
+	public partial class OrderView : UserControl
 	{
-		public DrinkView()
+
+		public OrderView()
 		{
 			InitializeComponent();
 		}

@@ -1,27 +1,34 @@
 ﻿using BDAS2_Restaurace.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal class Customer : Person
+	public class Customer : Person
 	{
-		public Food? Order { get; set; }	
-		public Customer(
-			int id,
-			string firstName,
-			string lastName,
-			DateTime birthDate,
-			string phoneNumber,
-			string email,
-			Address address
-
-			) : base(id, firstName, lastName, birthDate, phoneNumber, email, address)
+		private Address address;
+		public Address? Address
 		{
+			get { return address; }
+			set
+			{
+				address = value;
+				RaisePropertyChanged(nameof(Address));
+			}
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void RaisePropertyChanged(string property)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(property));
+			}
+		}
 	}
 }

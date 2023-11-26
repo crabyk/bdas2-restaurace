@@ -1,40 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal class Address
+	public class Address
 	{
-		public int ID { get; set; }
-		public string StreetName { get; set; }
-		public string CityName { get; set; }
-		public string UnitNumber { get; set; }	
-		public string PostalCode { get; set; }
-		public string Country { get; set; }
+		private string streetName;
+		private string cityName;
+		private string unitNumber;
+		private string postalCode;
+		private string country;
 
-		public Address(int id, string streetName, string cityName, string unitNumber, string postalCode, string country)
+		public int ID { get; set; }
+		public string StreetName
 		{
-			ID = id;
-			StreetName = streetName;
-			CityName = cityName;
-			UnitNumber = unitNumber;
-			PostalCode = postalCode;
-			Country = country;
+			get { return streetName; }
+			set
+			{
+				streetName = value;
+				RaisePropertyChanged(nameof(StreetName));
+			}
 		}
 
-		public override string ToString()
+		public string CityName
 		{
-			string result = "";
-			result += $"Ulice: {StreetName}";
-			result += $"\nObec: {CityName}";
-			result += $"\nCislo popisne: {UnitNumber}";
-			result += $"\nPSC: {PostalCode}";
-			result += $"\nZeme: {Country}";
+			get { return cityName; }
+			set
+			{
+				cityName = value;
+				RaisePropertyChanged(nameof(CityName));
+			}
+		}
 
-			return result;
+		public string UnitNumber
+		{
+			get { return unitNumber; }
+			set
+			{
+				unitNumber = value;
+				RaisePropertyChanged(nameof(UnitNumber));
+			}
+		}
+
+		public string PostalCode
+		{
+			get { return postalCode; }
+			set
+			{
+				postalCode = value;
+				RaisePropertyChanged(nameof(PostalCode));
+			}
+		}
+
+		public string Country
+		{
+			get { return country; }
+			set
+			{
+				country = value;
+				RaisePropertyChanged(nameof(Country));
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void RaisePropertyChanged(string property)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(property));
+			}
 		}
 	}
 }

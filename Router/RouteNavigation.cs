@@ -32,6 +32,10 @@ namespace BDAS2_Restaurace.Router
 		private void OnNav(string destination)
 		{
 			Route route = routes.Find(r => destination == r.Name);
+
+			if (route == null)
+				return;
+
 			CurrentViewModel = route.ViewModel;
 		}
 	}

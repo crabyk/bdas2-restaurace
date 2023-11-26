@@ -3,24 +3,43 @@ using BDAS2_Restaurace.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
 	public class DrinkViewModel : BindableBase
 	{
+		private Drink selectedDrink;
+		public ObservableCollection<Drink> Drinks
+		{
+			get;
+			set;
+		}
+		public Drink SelectedDrink
+		{
+			get { return selectedDrink; }
+			set
+			{
+				selectedDrink = value;
+				OnPropertyChanged(nameof(SelectedDrink));	
+			}
+		}
 		public DrinkViewModel()
 		{
 			Load();
 		}
 
-		public ObservableCollection<Drink> Drink
+
+		/*
+		public void OnDrinkSelected(Drink drink)
 		{
-			get;
-			set;
+			DrinkSelected?.Invoke(this, drink);
 		}
+		*/
 
 		public void Load()
 		{
@@ -32,7 +51,7 @@ namespace BDAS2_Restaurace.ViewModel
 			data.Add(new Drink { ID = 3, Name = "Radegast 12", Price = 130, Volume = 500 });
 			*/
 
-			Drink = data;
+			Drinks = data;
 		}
 	}
 }

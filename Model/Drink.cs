@@ -17,8 +17,13 @@ namespace BDAS2_Restaurace.Model
 			set
 			{
 				volume = value;
-				RaisePropertyChanged("Volume");
+				RaisePropertyChanged(nameof(Volume));
 			}
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace BDAS2_Restaurace.Model
 			set
 			{
 				name = value;
-				RaisePropertyChanged("Name");
+				RaisePropertyChanged(nameof(Name));
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace BDAS2_Restaurace.Model
 			set
 			{
 				price = value;
-				RaisePropertyChanged("Price");
+				RaisePropertyChanged(nameof(Price));
 
 			}
 		}
@@ -51,5 +51,6 @@ namespace BDAS2_Restaurace.Model
 				PropertyChanged(this, new PropertyChangedEventArgs(property));
 			}
 		}
+
 	}
 }

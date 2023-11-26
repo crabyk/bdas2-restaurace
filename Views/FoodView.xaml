@@ -15,9 +15,19 @@
         <viewModel:FoodViewModel/>
     </UserControl.DataContext>
     -->
-    
+
     <Grid>
-        <ListView Name="menuListView" Width="800" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path = Food}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" DataContext="{Binding Path = SelectedFood}">
+            <Label x:Name="SelectedLabel" Content="{Binding Path = Name}" />
+        </StackPanel>
+        <ListView Grid.Row="1" Name="menuListView" Width="Auto" HorizontalContentAlignment="Stretch" 
+                      ItemsSource="{Binding Path = Food}"
+                      SelectedItem="{Binding SelectedFood}"
+                      >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>

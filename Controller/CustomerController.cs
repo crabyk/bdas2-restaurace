@@ -99,7 +99,7 @@ namespace BDAS2_Restaurace.Controller
 					{
 						while (rdr.Read())
 						{
-							result = new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6)));
+							// result = new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6)));
 						}
 					}
 				}
@@ -124,7 +124,7 @@ namespace BDAS2_Restaurace.Controller
 					{
 						while (rdr.Read())
 						{
-							result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
+							// result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
 						}
 					}
 				}

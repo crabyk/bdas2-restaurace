@@ -6,13 +6,31 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
 	public class FoodViewModel : BindableBase
 	{
+		public event EventHandler SelectedFoodChanged;
+
+		private Food selectedFood;
+		public Food SelectedFood
+		{
+			get { return selectedFood; }
+			set
+			{
+				selectedFood = value;
+				OnPropertyChanged(nameof(SelectedFood));
+				SelectedFoodChanged?.Invoke(this, EventArgs.Empty);
+			}
+		}
 		public FoodViewModel()
 		{
+			SelectedFood = new Food()
+			{
+				Name = "Test",
+			};
 			Load();
 		}
 

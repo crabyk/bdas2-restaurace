@@ -16,6 +16,9 @@
         <DataTemplate DataType = "{x:Type viewModels:MenuViewModel}">
             <views:MenuView x:Name="MenuViewModel" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:OrderViewModel}">
+            <views:OrderView x:Name="OrderViewModel" />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -52,7 +55,7 @@
             </Button>
             <Button 
                 Height="40" Width="80" Margin="0,10,0,0"
-                Command = "{Binding NavCommand}" CommandParameter = "menu"
+                Command = "{Binding NavCommand}" CommandParameter = "order"
                 >
                 <TextBlock Text="Vytvořit objednávku" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>

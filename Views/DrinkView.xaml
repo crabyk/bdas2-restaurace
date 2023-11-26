@@ -10,7 +10,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView Name="menuListView" Width="800" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path = Drink}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" DataContext="{Binding Path = SelectedDrink}">
+            <Label x:Name="SelectedLabel" Content="{Binding Path = Name}" />
+        </StackPanel>
+        <ListView Grid.Row="1" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
+                  IsSynchronizedWithCurrentItem="True"
+                  ItemsSource="{Binding Path = Drinks}"
+                  SelectedItem="{Binding Path = SelectedDrink}"
+                  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
