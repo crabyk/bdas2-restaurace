@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Model
 {
-	public abstract class Item
-	{
-		private string name;
-		private double price;
+    public abstract class Item
+    {
+        private string name;
+        private double price;
+        private BitmapImage? image;
 
-		public int ID { get; set; }
-		public string Name
-		{
-			get
-			{
-				return name;
-			}
+        public int ID { get; set; }
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
 
 			set
 			{
@@ -27,22 +24,35 @@ namespace BDAS2_Restaurace.Model
 			}
 		}
 
-		public double Price
-		{
-			get
-			{
-				return price;
-			}
+        public double Price
+        {
+            get
+            {
+                return price;
+            }
 
 			set
 			{
 				price = value;
 				RaisePropertyChanged(nameof(Price));
 
-			}
-		}
+            }
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public BitmapImage? Image
+        {
+            get
+            {
+                return image;
+            }
+            set
+            {
+                image = value;
+                RaisePropertyChanged("Image");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
 		protected void RaisePropertyChanged(string property)
 		{

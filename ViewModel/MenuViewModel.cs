@@ -34,15 +34,9 @@ namespace BDAS2_Restaurace.ViewModel
 		}
 		public MenuViewModel() : base()
 		{
-			foodViewModel = new FoodViewModel();
-			drinkViewModel = new DrinkViewModel();
-			SelectedDrink = DrinkViewModel.SelectedDrink;
-
-			CurrentViewModel = drinkViewModel;
-			this.Routes.Add(new Route("food", foodViewModel));
-			this.Routes.Add(new Route("drinks", drinkViewModel));
-
-			// SelectedItem = new FoodViewModel().SelectedFood;
+			this.Routes.Add(new Route("drinks", new DrinkViewModel()));
+			this.Routes.Add(new Route("food", new FoodViewModel()));
+			this.Routes.Add(new Route("testmenu", new TestMenuViewModel()));
 		}
 		/*
 		public MenuViewModel()

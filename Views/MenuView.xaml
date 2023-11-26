@@ -21,6 +21,9 @@
         <DataTemplate DataType = "{x:Type viewModels:DrinkViewModel}">
             <views:DrinkView x:Name="DrinkViewList" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:TestMenuViewModel}">
+            <views:TestMenuView x:Name="TestMenuViewList" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -52,6 +55,12 @@
                     Height="40" Width="80" Margin="0,0,10,0"
                     Command = "{Binding NavCommand}"
                     CommandParameter = "drinks"
+                    />
+                <Button
+                    Content="TestMenu"
+                    Height="40" Width="80" Margin="0,0,10,0"
+                    Command = "{Binding NavCommand}"
+                    CommandParameter = "testmenu"
                     />
             </StackPanel>
         </Border>
