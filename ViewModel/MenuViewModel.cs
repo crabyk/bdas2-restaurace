@@ -13,6 +13,7 @@ namespace BDAS2_Restaurace.ViewModel
 		{
 			this.Routes.Add(new Route("drinks", new DrinkViewModel()));
 			this.Routes.Add(new Route("food", new FoodViewModel()));
+			this.Routes.Add(new Route("testmenu", new TestMenuViewModel()));
 		}
 		/*
 		public MenuViewModel()
