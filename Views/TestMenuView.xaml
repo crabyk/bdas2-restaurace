@@ -49,7 +49,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Style="{StaticResource ItemImageStyle}"/>
+                    <Image Grid.Row="0" Style="{StaticResource ItemImageStyle}" Source="{Binding Path = Image}"/>
                     <StackPanel Grid.Row="1">
                         <TextBlock Style="{StaticResource TitleTextStyle}" Text="{Binding Path = Name}"/>
                         <StackPanel Orientation="Horizontal">
