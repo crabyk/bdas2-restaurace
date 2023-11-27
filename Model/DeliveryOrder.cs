@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal class DeliveryOrder : Order
+	public class DeliveryOrder : Order
 	{
 		Address Address { get; set; }
 	
+		/*
 		public DeliveryOrder (DateTime orderDate, Customer customer, Address address) : base (orderDate, customer)
 		{
 			Address = address;
 		}
+		*/
 
 		public override string ToString()
 		{

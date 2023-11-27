@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal class HereOrder : Order
+	public class HereOrder : Order
 	{
 		int TableNumber { get; set; }
 
+		/*
 		public HereOrder(DateTime orderDate, Customer customer, int tableNumber) : base(orderDate, customer)
 		{
 			TableNumber = tableNumber;	
 		}
+		*/
 
 		public override string ToString()
 		{

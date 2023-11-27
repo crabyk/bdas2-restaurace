@@ -13,8 +13,20 @@ namespace BDAS2_Restaurace.ViewModel
 {
 	public class OrderViewModel : RouteNavigation
 	{
+		private double price;
 		private Food selectedFood;
 		private Drink selectedDrink;
+		private PaymentType selectedPaymentType;
+
+		public double Price
+		{
+			get { return price; }
+			set
+			{
+				price = value;
+				OnPropertyChanged(nameof(Price));
+			}
+		}
 
 		public Food SelectedFood
 		{
@@ -23,7 +35,7 @@ namespace BDAS2_Restaurace.ViewModel
 			{
 				selectedFood = value;
 				SelectedItems.Add(value);	
-				OnPropertyChanged(nameof(selectedFood));	
+				OnPropertyChanged(nameof(SelectedFood));	
 			}
 		}
 
@@ -34,9 +46,20 @@ namespace BDAS2_Restaurace.ViewModel
 			{
 				selectedDrink = value;
 				SelectedItems.Add(value);
-				OnPropertyChanged(nameof(selectedDrink));
+				OnPropertyChanged(nameof(SelectedDrink));
 			}
 		}
+
+		public PaymentType SelectedPaymentType
+		{
+			get { return selectedPaymentType; }
+			set
+			{
+				selectedPaymentType = value;
+				OnPropertyChanged(nameof(SelectedPaymentType));
+			}
+		}
+
 		public Customer Customer { get; set; }
 		public Address Address { get; set; }
 
@@ -52,17 +75,67 @@ namespace BDAS2_Restaurace.ViewModel
 			set;
 		}
 
+		public ObservableCollection<PaymentType> PaymentTypes
+		{
+			get;
+			set;
+		}
+
 		public ObservableCollection<Item> SelectedItems
 		{
 			get;
 			set;
 		}
 
+		public ICommand CreateOrder { get; set; }
+
 		public OrderViewModel()
 		{
-			Load();
+			Customer = new Customer();
+			Address = new Address();	
+			CreateOrder = new RelayCommand(Create, CanCreate);
 			SelectedItems = new ObservableCollection<Item>();
+			Load();
 			// Routes.Add(new Route("menu", new MenuViewModel()));
+		}
+
+		public bool CanCreate(object ojb)
+		{
+			return true;
+		}
+
+		public void Create(object obj)
+		{
+			Customer.Address = Address;
+
+			Customer newCutomer = CustomerController.Add(Customer);
+			Address newAddress = AddressController.Add(Address);
+			Payment newPayment = PaymentController.Add(new Payment()
+			{
+				Date = DateTime.Now,
+				Amount = 100,
+				Type = SelectedPaymentType
+			});
+
+			Table newTable = new Table()
+			{
+				ID = 1,
+				Number = 10
+			};
+
+			List<Item> items = new List<Item>(SelectedItems);
+
+			Order newOrder = new Order()
+			{
+				OrderDate = DateTime.Now,
+				Customer = newCutomer,
+				Address = newAddress,
+				Payment = newPayment,
+				Table = newTable,
+				Items = items
+			};
+
+			OrderController.Add(newOrder);
 		}
 
 
@@ -70,6 +143,8 @@ namespace BDAS2_Restaurace.ViewModel
 		{
 			Food = new ObservableCollection<Food>(FoodController.GetAll());
 			Drinks = new ObservableCollection<Drink>(DrinkController.GetAll());
+			PaymentTypes = new ObservableCollection<PaymentType>(PaymentController.GetAllTypes());
+			SelectedPaymentType = PaymentTypes[0];
 		}
 	}
 }

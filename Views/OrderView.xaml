@@ -84,7 +84,11 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = NewCustomer}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = Customer}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
                             <TextBox Height="30" Grid.Column="1" Text="{Binding Path = FirstName}" />
@@ -106,7 +110,7 @@
                             <TextBox Height="30" Text="{Binding Path = Email}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = NewCustomer}">
+                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = Address}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
                             <TextBox Height="30" Grid.Column="1" Text="{Binding Path = StreetName}" />
@@ -128,15 +132,23 @@
                             <TextBox Height="30" Text="{Binding Path = Country}" />
                         </StackPanel>
                     </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <Label HorizontalAlignment="Right" Content="Typ platby" />
+                        <ComboBox HorizontalAlignment="Right" 
+                                  ItemsSource="{Binding Path = PaymentTypes}" 
+                                  SelectedItem="{Binding Path = SelectedPaymentType}"
+                                  DisplayMemberPath="Name"/>
+                    </StackPanel>
                 </Grid>
             </Border>
 
             <Border Grid.Row="4" Padding="10">
                 <DockPanel>
                     <Button
-                    Content="Potvrdit"
-                    Height="40" Width="80" HorizontalAlignment="Left"
-                    />
+                        Content="Potvrdit"
+                        Height="40" Width="80" HorizontalAlignment="Left"
+                        Command="{Binding Path = CreateOrder}"
+                        />
                 </DockPanel>
             </Border>
 

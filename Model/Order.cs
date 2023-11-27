@@ -7,19 +7,27 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal abstract class Order
+	public class Order
 	{
 		public int ID { get; set; }
 		public DateTime OrderDate { get; set; }
+		public Payment Payment { get; set; }
+
 		public List<Item> Items { get; set; }
 		public Customer Customer { get; set; }
 
+		public Address Address { get; set; }	
+
+		public Table Table { get; set; }
+
+		/*
 		public Order(DateTime orderDate, Customer customer)
 		{
 			OrderDate = orderDate;
 			Customer = customer;
 			Items = new List<Item>();
 		}
+		*/
 
 		public Item this[int index]
 		{

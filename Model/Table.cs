@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-	internal class Table
+	public class Table
 	{
 		public int ID { get; set; }
 		public int Number { get; set; }
