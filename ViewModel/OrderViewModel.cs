@@ -106,10 +106,10 @@ namespace BDAS2_Restaurace.ViewModel
 
 		public void Create(object obj)
 		{
-			Customer.Address = Address;
 
-			Customer newCutomer = CustomerController.Add(Customer);
 			Address newAddress = AddressController.Add(Address);
+			Customer.Address = newAddress;
+			Customer newCustomer = CustomerController.Add(Customer);
 			Payment newPayment = PaymentController.Add(new Payment()
 			{
 				Date = DateTime.Now,
@@ -128,7 +128,7 @@ namespace BDAS2_Restaurace.ViewModel
 			Order newOrder = new Order()
 			{
 				OrderDate = DateTime.Now,
-				Customer = newCutomer,
+				Customer = newCustomer,
 				Address = newAddress,
 				Payment = newPayment,
 				Table = newTable,

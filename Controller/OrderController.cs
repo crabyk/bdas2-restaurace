@@ -25,12 +25,11 @@ namespace BDAS2_Restaurace.Controller
 
 				using (OracleCommand comm = conn.CreateCommand())
 				{
-					comm.CommandText = "insert into objednavky (datum, platba_id, zakaznik_id, stul_id, adresa_id) VALUES (:datum, :platbaId, :zakaznikId, :stulId, :adresaId) returning id_objednavka into :newId";
+					comm.CommandText = "insert into objednavky (datum, platba_id, zakaznik_id, adresa_id) VALUES (:datum, :platbaId, :zakaznikId, :adresaId) returning id_objednavka into :newId";
 
 					comm.Parameters.Add(":datum", OracleDbType.Date).Value = item.OrderDate;
 					comm.Parameters.Add(":platbaId", OracleDbType.Int32).Value = item.Payment.ID;
 					comm.Parameters.Add(":zakaznikId", OracleDbType.Int32).Value = item.Customer.ID;
-					comm.Parameters.Add(":stulId", OracleDbType.Int32).Value = item.Table.ID;
 					comm.Parameters.Add(":adresaId", OracleDbType.Int32).Value = item.Address.ID;
 
 					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
@@ -40,6 +39,7 @@ namespace BDAS2_Restaurace.Controller
 					comm.ExecuteNonQuery();
 
 					orderId = ((OracleDecimal)p.Value).Value;
+					item.ID = Convert.ToInt32(orderId);
 
 				}
 
@@ -49,15 +49,14 @@ namespace BDAS2_Restaurace.Controller
 
 					foreach (Item orderItem in item.Items)
 					{
-						comm.Parameters.Add(":objednavkaId", OracleDbType.Int32).Value = item.ID;
-						comm.Parameters.Add(":polozkaId", OracleDbType.Int32).Value = orderItem.ID;
+						comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
+						comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
 						comm.ExecuteNonQuery();
 					}
 
 				}
 
 				result = item;
-				result.ID = Convert.ToInt32(orderId);
 
 			}
 

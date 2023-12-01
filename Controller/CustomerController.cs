@@ -25,14 +25,14 @@ namespace BDAS2_Restaurace.Controller
 
 				using (OracleCommand comm = conn.CreateCommand())
 				{
-					comm.CommandText = "insert into adresy (jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id) VALUES (:jmeno, :prijmeni, :datumNarozeni, :telefon, :email, :adresaId) returning id_zakaznik into :newId";
+					comm.CommandText = "insert into zakaznici (jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id) VALUES (:jmeno, :prijmeni, :datumNarozeni, :telefon, :email, :adresaId) returning id_zakaznik into :newId";
 
 					comm.Parameters.Add(":jmeno", OracleDbType.Varchar2).Value = item.FirstName;
 					comm.Parameters.Add(":prijmeni", OracleDbType.Varchar2).Value = item.LastName;
-					comm.Parameters.Add(":datumNarozeni", OracleDbType.Varchar2).Value = item.BirthDate;
+					comm.Parameters.Add(":datumNarozeni", OracleDbType.Date).Value = item.BirthDate;
 					comm.Parameters.Add(":telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
 					comm.Parameters.Add(":email", OracleDbType.Varchar2).Value = item.Email;
-					comm.Parameters.Add(":adresaId", OracleDbType.Varchar2).Value = item.Address.ID;
+					comm.Parameters.Add(":adresaId", OracleDbType.Decimal).Value = item.Address.ID;
 
 
 					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);

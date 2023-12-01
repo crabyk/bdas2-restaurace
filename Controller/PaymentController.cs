@@ -26,11 +26,11 @@ namespace BDAS2_Restaurace.Controller
 
 				using (OracleCommand comm = conn.CreateCommand())
 				{
-					comm.CommandText = "insert into platby (suma, datum, typ_platba_id) VALUES (:suma, :datum, :typPlatbaId) returning id_platba into :newId";
+					comm.CommandText = "insert into platby (suma, datum, typ_platby_id) VALUES (:suma, :datum, :typPlatbyId) returning id_platba into :newId";
 
-					comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Amount;
-					comm.Parameters.Add(":cena", OracleDbType.Decimal).Value = item.Date;
-					comm.Parameters.Add(":typPlatbaId", OracleDbType.Decimal).Value = item.Type.ID;
+					comm.Parameters.Add(":suma", OracleDbType.Double).Value = item.Amount;
+					comm.Parameters.Add(":datum", OracleDbType.Date).Value = item.Date;
+					comm.Parameters.Add(":typPlatbyId", OracleDbType.Decimal).Value = item.Type.ID;
 
 					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
 					p.Direction = ParameterDirection.Output;
