@@ -12,51 +12,50 @@ namespace BDAS2_Restaurace.Model
         private string email;
 
 
-		public int ID { get; set; }
-		public string FirstName
-		{
-			get { return firstName; }
-			set
-			{
-				firstName = value;
-				RaisePropertyChanged(nameof(FirstName));
-			}
-		}
-		public string LastName
-		{
-			get { return lastName; }
-			set
-			{
-				lastName = value;
-				RaisePropertyChanged(nameof(LastName));
-			}
-		}
-		public string FullName
-		{
-			get
-			{
-				return FirstName + " " + LastName;
-			}
-		}
-		public DateTime BirthDate
-		{
-			get { return  birthDate; }
-			set
-			{
-				birthDate = value;
-				RaisePropertyChanged(nameof(BirthDate));
-			}
-		}
-		public string PhoneNumber
-		{
-			get { return phoneNumber; }
-			set
-			{
-				phoneNumber = value;
-				RaisePropertyChanged(nameof(PhoneNumber));
-			}
-		}
-		}
+        public int ID { get; set; }
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                firstName = value;
+                RaisePropertyChanged(nameof(FirstName));
+            }
+        }
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                lastName = value;
+                RaisePropertyChanged(nameof(LastName));
+            }
+        }
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+        public DateTime BirthDate
+        {
+            get { return birthDate; }
+            set
+            {
+                birthDate = value;
+                RaisePropertyChanged(nameof(BirthDate));
+            }
+        }
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set
+            {
+                phoneNumber = value;
+                RaisePropertyChanged(nameof(PhoneNumber));
+            }
+        }
 
         public string Email
         {
