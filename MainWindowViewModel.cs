@@ -1,4 +1,5 @@
-﻿using BDAS2_Restaurace.Router;
+﻿using BDAS2_Restaurace.Model;
+using BDAS2_Restaurace.Router;
 using BDAS2_Restaurace.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BDAS2_Restaurace
 		{
 			this.Routes.Add(new Route("menu", new MenuViewModel()));
 			this.Routes.Add(new Route("order", new OrderViewModel()));
+			this.Routes.Add(new Route("table", new TableViewModel(typeof(Customer))));
 		}
 
 		/*
