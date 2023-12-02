@@ -24,18 +24,16 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_adresu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
-                    comm.Parameters.Add(":p_mesto", OracleDbType.Varchar2).Value = item.CityName;
-                    comm.Parameters.Add(":p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
-                    comm.Parameters.Add(":p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
-                    comm.Parameters.Add(":p_stat", OracleDbType.Varchar2).Value = item.Country;
-
-                    OracleParameter p = new OracleParameter(":p_id_adresa", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
+                    comm.Parameters.Add("p_mesto", OracleDbType.Varchar2).Value = item.CityName;
+                    comm.Parameters.Add("p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
+                    comm.Parameters.Add("p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
+                    comm.Parameters.Add("p_stat", OracleDbType.Varchar2).Value = item.Country;
+                    comm.Parameters.Add("p_id_adresa", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters["p_id_adresa"].Value).Value;
                 }
 
                 result = item;
@@ -58,7 +56,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "smazat_adresu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_adresa", id);
+                    comm.Parameters.Add("p_id_adresa", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -80,17 +78,17 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_adresu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_adresa", id);
+                    comm.Parameters.Add("p_id_adresa", id);
 
-                    OracleParameter streetName = new OracleParameter(":p_ulice", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter streetName = new OracleParameter("p_ulice", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(streetName);
-                    OracleParameter cityName = new OracleParameter(":p_mesto", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter cityName = new OracleParameter("p_mesto", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(cityName);
-                    OracleParameter unitNumber = new OracleParameter(":p_cislo_popisne", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter unitNumber = new OracleParameter("p_cislo_popisne", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(unitNumber);
-                    OracleParameter postalCode = new OracleParameter(":p_psc", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter postalCode = new OracleParameter("p_psc", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(postalCode);
-                    OracleParameter country = new OracleParameter(":p_stat", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter country = new OracleParameter("p_stat", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(country);
 
                     comm.ExecuteNonQuery();
@@ -147,12 +145,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "upravit_adresu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_adresa", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add(":p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
-                    comm.Parameters.Add(":p_mesto", OracleDbType.Varchar2).Value = item.CityName;
-                    comm.Parameters.Add(":p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
-                    comm.Parameters.Add(":p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
-                    comm.Parameters.Add(":p_stat", OracleDbType.Varchar2).Value = item.Country;
+                    comm.Parameters.Add("p_id_adresa", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
+                    comm.Parameters.Add("p_mesto", OracleDbType.Varchar2).Value = item.CityName;
+                    comm.Parameters.Add("p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
+                    comm.Parameters.Add("p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
+                    comm.Parameters.Add("p_stat", OracleDbType.Varchar2).Value = item.Country;
 
                     comm.ExecuteNonQuery();
                 }

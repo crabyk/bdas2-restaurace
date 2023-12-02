@@ -25,19 +25,17 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_zakaznika";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
-                    comm.Parameters.Add(":p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
-                    comm.Parameters.Add(":p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
-                    comm.Parameters.Add(":p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
-                    comm.Parameters.Add(":p_email", OracleDbType.Varchar2).Value = item.Email;
-                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
-
-                    OracleParameter p = new OracleParameter(":p_id_zakaznik", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+                    comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add("p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
+                    comm.Parameters.Add("p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
+                    comm.Parameters.Add("p_email", OracleDbType.Varchar2).Value = item.Email;
+                    comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
+                    comm.Parameters.Add("p_id_zakaznik", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters["p_id_zakaznik"].Value).Value;
                 }
 
                 result = item;
@@ -60,7 +58,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "smazat_zakaznika";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_zakaznik", id);
+                    comm.Parameters.Add("p_id_zakaznik", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -81,19 +79,19 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_zakaznika";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_zakaznik", id);
+                    comm.Parameters.Add("p_id_zakaznik", id);
 
-                    OracleParameter firstName = new OracleParameter(":p_jmeno", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(firstName);
-                    OracleParameter lastName = new OracleParameter(":p_prijmeni", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter lastName = new OracleParameter("p_prijmeni", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(lastName);
-                    OracleParameter birthDate = new OracleParameter(":p_datum_narozeni", OracleDbType.Date, ParameterDirection.Output);
+                    OracleParameter birthDate = new OracleParameter("p_datum_narozeni", OracleDbType.Date, ParameterDirection.Output);
                     comm.Parameters.Add(birthDate);
-                    OracleParameter phoneNumber = new OracleParameter(":p_telefon", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter phoneNumber = new OracleParameter("p_telefon", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(phoneNumber);
-                    OracleParameter email = new OracleParameter(":p_email", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter email = new OracleParameter("p_email", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(email);
-                    OracleParameter addressId = new OracleParameter(":p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter addressId = new OracleParameter("p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(addressId);
 
                     comm.ExecuteNonQuery();
@@ -155,12 +153,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_id_zakaznik", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add(":p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
-                    comm.Parameters.Add(":p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
-                    comm.Parameters.Add(":p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
-                    comm.Parameters.Add(":p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
-                    comm.Parameters.Add(":p_email", OracleDbType.Varchar2).Value = item.Email;
-                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
+                    comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+                    comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add("p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
+                    comm.Parameters.Add("p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
+                    comm.Parameters.Add("p_email", OracleDbType.Varchar2).Value = item.Email;
+                    comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
 
                     comm.ExecuteNonQuery();
                 }

@@ -114,11 +114,11 @@ namespace BDAS2_Restaurace.ViewModel
                 Type = SelectedPaymentType
             });
 
-            Table newTable = new Table()
-            {
-                ID = 1,
-                Number = 10
-            };
+            //Table newTable = new Table()
+            //{
+            //    ID = 1,
+            //    Number = 10
+            //};
 
             List<Item> items = new List<Item>(SelectedItems);
 
@@ -128,7 +128,7 @@ namespace BDAS2_Restaurace.ViewModel
                 Customer = newCustomer,
                 Address = newAddress,
                 Payment = newPayment,
-                Table = newTable,
+                //Table = newTable,
                 Items = items
             };
 

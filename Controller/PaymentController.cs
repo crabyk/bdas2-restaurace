@@ -25,16 +25,14 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_platbu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_suma", OracleDbType.Double).Value = item.Amount;
-                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.Date;
-                    comm.Parameters.Add(":p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
-
-                    OracleParameter p = new OracleParameter(":p_id_platba", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_suma", OracleDbType.Double).Value = item.Amount;
+                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.Date;
+                    comm.Parameters.Add("p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
+                    comm.Parameters.Add(":p_id_platba", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters[":p_id_platba"].Value).Value;
                 }
 
                 result = item;
@@ -58,14 +56,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_typ_platby";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
-
-                    OracleParameter p = new OracleParameter(":p_id_typ_platby", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters["p_id_typ_platby"].Value).Value;
                 }
 
                 result = item;
@@ -88,9 +84,9 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_typ_platby";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_typ_platby", OracleDbType.Decimal).Value = id;
+                    comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal).Value = id;
 
-                    OracleParameter name = new OracleParameter(":p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(name);
 
                     comm.ExecuteNonQuery();
@@ -119,7 +115,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "smazat_platbu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_platba", id);
+                    comm.Parameters.Add("p_id_platba", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -140,13 +136,13 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_platbu";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_platba", id);
+                    comm.Parameters.Add("p_id_platba", id);
 
-                    OracleParameter amount = new OracleParameter(":p_suma", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter amount = new OracleParameter("p_suma", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(amount);
-                    OracleParameter date = new OracleParameter(":p_datum", OracleDbType.Date, ParameterDirection.Output);
+                    OracleParameter date = new OracleParameter("p_datum", OracleDbType.Date, ParameterDirection.Output);
                     comm.Parameters.Add(date);
-                    OracleParameter typeId = new OracleParameter(":p_typ_platby_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter typeId = new OracleParameter("p_typ_platby_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(typeId);
 
                     comm.ExecuteNonQuery();
@@ -241,9 +237,9 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_id_platba", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add(":p_suma", OracleDbType.Int32).Value = item.Amount;
-                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.Date;
-                    comm.Parameters.Add(":p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
+                    comm.Parameters.Add("p_suma", OracleDbType.Int32).Value = item.Amount;
+                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.Date;
+                    comm.Parameters.Add("p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
 
                     comm.ExecuteNonQuery();
                 }

@@ -24,20 +24,17 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_objednavku";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.OrderDate;
-                    comm.Parameters.Add(":p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
-                    comm.Parameters.Add(":p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;     
-                    // TODO osetrit kdyz nebude stul nebo adresa
-                    comm.Parameters.Add(":p_stul_id", OracleDbType.Decimal).Value = item.Table.ID;
-                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
-
-                    OracleParameter p = new OracleParameter(":p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
+                    comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
+                    comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
+                    comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
+                    comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
+                    comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
-
-                    orderId = ((OracleDecimal)p.Value).Value;
+                    orderId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
                     item.ID = Convert.ToInt32(orderId);
+
                 }
 
                 using (OracleCommand comm = conn.CreateCommand())
@@ -46,6 +43,7 @@ namespace BDAS2_Restaurace.Controller
 
                     foreach (Item orderItem in item.Items)
                     {
+                        comm.Parameters.Clear();
                         comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
                         comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
                         comm.ExecuteNonQuery();
@@ -71,7 +69,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "smazat_objednavku";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_objednavka", id);
+                    comm.Parameters.Add("p_id_objednavka", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -93,17 +91,17 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_objednavku";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_objednavka", id);
+                    comm.Parameters.Add("p_id_objednavka", id);
 
-                    OracleParameter orderDate = new OracleParameter(":p_datum", OracleDbType.Date, ParameterDirection.Output);
+                    OracleParameter orderDate = new OracleParameter("p_datum", OracleDbType.Date, ParameterDirection.Output);
                     comm.Parameters.Add(orderDate);
-                    OracleParameter paymentId = new OracleParameter(":p_platba_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter paymentId = new OracleParameter("p_platba_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(paymentId);
-                    OracleParameter customerId = new OracleParameter(":p_zakaznik_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter customerId = new OracleParameter("p_zakaznik_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(customerId);
-                    OracleParameter tableId = new OracleParameter(":p_stul_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter tableId = new OracleParameter("p_stul_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(tableId);
-                    OracleParameter addressId = new OracleParameter(":p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter addressId = new OracleParameter("p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(addressId);
 
                     comm.ExecuteNonQuery();
@@ -166,13 +164,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "upravit_objednavku";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_objednavka", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.OrderDate;
-                    comm.Parameters.Add(":p_platba_id", OracleDbType.Int32).Value = item.Payment.ID;
-                    comm.Parameters.Add(":p_zakaznik_id", OracleDbType.Int32).Value = item.Customer.ID;
-                    // TODO predat bud pouze stul nebo adresu podle toho, co objednavka obsahuje
-                    comm.Parameters.Add(":p_stul_id", OracleDbType.Int32).Value = item.Table.ID;
-                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Int32).Value = item.Address.ID;
+                    comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
+                    comm.Parameters.Add("p_platba_id", OracleDbType.Int32).Value = item.Payment.ID;
+                    comm.Parameters.Add("p_zakaznik_id", OracleDbType.Int32).Value = item.Customer.ID;
+                    comm.Parameters.Add("p_stul_id", OracleDbType.Int32).Value = item.Table?.ID;
+                    comm.Parameters.Add("p_adresa_id", OracleDbType.Int32).Value = item.Address?.ID;
 
                     comm.ExecuteNonQuery();
                 }

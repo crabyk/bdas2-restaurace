@@ -25,16 +25,14 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "vlozit_napoj";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
-                    comm.Parameters.Add(":p_cena", OracleDbType.Int32).Value = item.Price;
-                    comm.Parameters.Add(":p_objem", OracleDbType.Int32).Value = item.Volume;
-
-                    OracleParameter p = new OracleParameter(":p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
+                    comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
+                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters["p_id_polozka"].Value).Value;
                 }
 
                 result = item;
@@ -57,7 +55,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "smazat_polozku";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_polozka", id);
+                    comm.Parameters.Add("p_id_polozka", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -78,13 +76,13 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_napoj";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_polozka", id);
+                    comm.Parameters.Add("p_id_polozka", id);
 
-                    OracleParameter name = new OracleParameter(":p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(name);
-                    OracleParameter price = new OracleParameter(":p_cena", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter price = new OracleParameter("p_cena", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(price);
-                    OracleParameter volume = new OracleParameter(":p_objem", OracleDbType.Int32, ParameterDirection.Output);
+                    OracleParameter volume = new OracleParameter("p_objem", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(volume);
 
                     comm.ExecuteNonQuery();
@@ -146,10 +144,10 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "upravit_napoj";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":p_id_polozka", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
-                    comm.Parameters.Add(":p_cena", OracleDbType.Int32).Value = item.Price;
-                    comm.Parameters.Add(":p_objem", OracleDbType.Int32).Value = item.Volume;
+                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
+                    comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
 
                     comm.ExecuteNonQuery();
                 }
