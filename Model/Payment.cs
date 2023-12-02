@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -13,7 +9,7 @@ namespace BDAS2_Restaurace.Model
         private DateTime date;
         private PaymentType type;
 
-        public int ID { get; set; } 
+        public int ID { get; set; }
         public double Amount
         {
             get { return amount; }
@@ -24,34 +20,34 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-		public DateTime Date
-		{
-			get { return date; }
-			set
-			{
-				date = value;
-				RaisePropertyChanged(nameof(Date));
-			}
-		}
+        public DateTime Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                RaisePropertyChanged(nameof(Date));
+            }
+        }
 
-		public PaymentType Type
-		{
-			get { return type; }
-			set
-			{
-				type = value;
-				RaisePropertyChanged(nameof(Type));
-			}
-		}
+        public PaymentType Type
+        {
+            get { return type; }
+            set
+            {
+                type = value;
+                RaisePropertyChanged(nameof(Type));
+            }
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		protected void RaisePropertyChanged(string property)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(property));
-			}
-		}
-	}
+        protected void RaisePropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+    }
 }

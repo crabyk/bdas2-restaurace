@@ -48,7 +48,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 image = value;
-                RaisePropertyChanged("Image");
+                RaisePropertyChanged(nameof(Image));
             }
         }
 

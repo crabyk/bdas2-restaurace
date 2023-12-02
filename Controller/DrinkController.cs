@@ -5,150 +5,159 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class DrinkController
-	{
+    class DrinkController
+    {
 
-		static public Drink? Add(Drink item)
-		{
-			Drink? result = null;
+        static public Drink? Add(Drink item)
+        {
+            Drink? result = null;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal newId;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into polozky (nazev, cena, typ_polozky) VALUES (:nazev, :cena, :typPolozky) returning id_polozka into :newId";
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_napoj";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Name;
-					comm.Parameters.Add(":cena", OracleDbType.Decimal).Value = item.Price;
-					comm.Parameters.Add(":typPolozky", OracleDbType.Varchar2).Value = "jidlo";
+                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add(":p_cena", OracleDbType.Int32).Value = item.Price;
+                    comm.Parameters.Add(":p_objem", OracleDbType.Int32).Value = item.Volume;
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                    OracleParameter p = new OracleParameter(":p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(p);
 
-					comm.ExecuteNonQuery();
+                    comm.ExecuteNonQuery();
 
-					newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)p.Value).Value;
+                }
 
-				}
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into napoje (objem, id_polozka) VALUES (:objem, :polozkaId)";
+            return result;
+        }
 
-					comm.Parameters.Add(":objem", item.Volume);
-					comm.Parameters.Add(":polozkaId", newId);
+        static public int Delete(string id)
+        {
+            int result = 0;
 
-					int rowsAffected = comm.ExecuteNonQuery();
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-				result = item;
-				result.ID = Convert.ToInt32(newId);
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-			}
+                    comm.Parameters.Add(":p_id_polozka", id);
 
-			return result;
-		}
+                    result = comm.ExecuteNonQuery();
+                }
+            }
 
-		static public int Delete(string id)
-		{
-			int result = 0;
+            return result;
+        }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
+        static public Drink? Get(string id)
+        {
+            Drink? result = null;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from napoje where id_polozka = :id";
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_napoj";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					comm.Parameters.Add(":id", id);
+                    comm.Parameters.Add(":p_id_polozka", id);
 
-					result = comm.ExecuteNonQuery();
-				}
+                    OracleParameter name = new OracleParameter(":p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(name);
+                    OracleParameter price = new OracleParameter(":p_cena", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(price);
+                    OracleParameter volume = new OracleParameter(":p_objem", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(volume);
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from polozky where id_polozka = :id";
+                    comm.ExecuteNonQuery();
 
-					comm.Parameters.Add(":id", id);
+                    result = new Drink()
+                    {
+                        ID = int.Parse(id),
+                        Name = name.Value.ToString(),
+                        Price = double.Parse(price.Value.ToString()),
+                        Volume = double.Parse(volume.Value.ToString())
+                    };
+                }
+            }
 
-					result = comm.ExecuteNonQuery();
-				}
-			}
+            return result;
+        }
 
-			return result;
-		}
+        static public List<Drink> GetAll()
+        {
+            List<Drink> result = new List<Drink>();
 
-		static public Drink? Get(string id)
-		{
-			Drink? result = null;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select n.id_polozka, nazev, cena, objem from polozky p join napoje n on p.id_polozka = n.id_polozka";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            // result.Add(new Drink(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3)));
+                            result.Add(
+                                new Drink
+                                {
+                                    ID = rdr.GetInt32(0),
+                                    Name = rdr.GetString(1),
+                                    Price = rdr.GetInt32(2),
+                                    Volume = rdr.GetInt32(3)
+                                });
+                        }
+                    }
+                }
+            }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select j.id_polozka, nazev, cena, objem from polozky p join jidla n on p.id_polozka = n.id_polozka where n.id_polozka = :id";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					comm.Parameters.Add(":id", id);
+            return result;
+        }
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							// result = new Drink(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3));
-						}
-					}
-				}
+        static public Drink? Update(Drink item)
+        {
+            Drink? result = null;
 
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			return result;
-		}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_napoj";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-		static public List<Drink> GetAll()
-		{
-			List<Drink> result = new List<Drink>();
+                    comm.Parameters.Add(":p_id_polozka", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add(":p_cena", OracleDbType.Int32).Value = item.Price;
+                    comm.Parameters.Add(":p_objem", OracleDbType.Int32).Value = item.Volume;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select n.id_polozka, nazev, cena, objem from polozky p join napoje n on p.id_polozka = n.id_polozka";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							// result.Add(new Drink(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3)));
-							result.Add(
-								new Drink
-								{
-									ID = rdr.GetInt32(0),
-									Name = rdr.GetString(1),
-									Price = rdr.GetInt32(2),
-									Volume = rdr.GetInt32(3)
-								});
-						}
-					}
-				}
-			}
+                    comm.ExecuteNonQuery();
+                }
 
-			return result;
-		}
+                result = item;
+            }
 
-		static public Drink? Update(Drink item, string id)
-		{
-			throw new NotImplementedException();
-		}
-	}
+            return result;
+        }
+    }
 }

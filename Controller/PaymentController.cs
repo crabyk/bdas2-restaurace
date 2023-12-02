@@ -5,218 +5,253 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class PaymentController
-	{
+    class PaymentController
+    {
 
-		static public Payment? Add(Payment item)
-		{
-			Payment? result = null;
+        static public Payment? Add(Payment item)
+        {
+            Payment? result = null;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal newId;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into platby (suma, datum, typ_platby_id) VALUES (:suma, :datum, :typPlatbyId) returning id_platba into :newId";
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_platbu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					comm.Parameters.Add(":suma", OracleDbType.Double).Value = item.Amount;
-					comm.Parameters.Add(":datum", OracleDbType.Date).Value = item.Date;
-					comm.Parameters.Add(":typPlatbyId", OracleDbType.Decimal).Value = item.Type.ID;
+                    comm.Parameters.Add(":p_suma", OracleDbType.Double).Value = item.Amount;
+                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.Date;
+                    comm.Parameters.Add(":p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                    OracleParameter p = new OracleParameter(":p_id_platba", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(p);
 
-					comm.ExecuteNonQuery();
+                    comm.ExecuteNonQuery();
 
-					newId = ((OracleDecimal)p.Value).Value;
+                    newId = ((OracleDecimal)p.Value).Value;
+                }
 
-				}
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
 
-				result = item;
-				result.ID = Convert.ToInt32(newId);
+            return result;
+        }
 
-			}
+        static public PaymentType? AddType(PaymentType item)
+        {
+            PaymentType? result = null;
 
-			return result;
-		}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
 
-		static public PaymentType? AddType(PaymentType item)
-		{
-			PaymentType? result = null;
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_typ_platby";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal newId;
+                    comm.Parameters.Add(":p_nazev", OracleDbType.Varchar2).Value = item.Name;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into typy_plateb (nazev) VALUES (:nazev) returning id_typ_platby into :newId";
+                    OracleParameter p = new OracleParameter(":p_id_typ_platby", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(p);
 
-					comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.ExecuteNonQuery();
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                    newId = ((OracleDecimal)p.Value).Value;
+                }
 
-					comm.ExecuteNonQuery();
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
 
-					newId = ((OracleDecimal)p.Value).Value;
+            return result;
+        }
 
-				}
+        static public PaymentType? GetType(string id)
+        {
+            PaymentType? result = null;
 
-				result = item;
-				result.ID = Convert.ToInt32(newId);
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_typ_platby";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-			return result;
-		}
+                    comm.Parameters.Add(":p_id_typ_platby", OracleDbType.Decimal).Value = id;
 
-		static public int Delete(string id)
-		{
-			int result = 0;
+                    OracleParameter name = new OracleParameter(":p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(name);
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
+                    comm.ExecuteNonQuery();
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from jidla where id_polozka = :id";
+                    result = new PaymentType()
+                    {
+                        ID = int.Parse(id),
+                        Name = name.Value.ToString()
+                    };
+                }
+            }
 
-					comm.Parameters.Add(":id", id);
+            return result;
+        }
 
-					result = comm.ExecuteNonQuery();
-				}
+        static public int Delete(string id)
+        {
+            int result = 0;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from polozky where id_polozka = :id";
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-					comm.Parameters.Add(":id", id);
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_platbu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					result = comm.ExecuteNonQuery();
-				}
-			}
+                    comm.Parameters.Add(":p_id_platba", id);
 
-			return result;
-		}
+                    result = comm.ExecuteNonQuery();
+                }
+            }
 
-		static public Payment? Get(string id)
-		{
-			Payment? result = null;
+            return result;
+        }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select t.id_typ_platby, t.nazev, id_platba, suma, datum  from platby p join typy_plateb t on p.typ_platby_id = t.id_typ_platby where p.typ_platby_id = :id";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					comm.Parameters.Add(":id", id);
+        static public Payment? Get(string id)
+        {
+            Payment? result = null;
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							PaymentType paymentType = new PaymentType
-							{
-								ID = rdr.GetInt32(0),
-								Name = rdr.GetString(1) 
-							};
-							result = new Payment
-							{
-								ID = rdr.GetInt32(2),
-								Amount = rdr.GetDouble(3),
-								Date = rdr.GetDateTime(4),
-								Type = paymentType	
-							};
-						}
-					}
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_platbu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-			}
+                    comm.Parameters.Add(":p_id_platba", id);
 
-			return result;
-		}
+                    OracleParameter amount = new OracleParameter(":p_suma", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(amount);
+                    OracleParameter date = new OracleParameter(":p_datum", OracleDbType.Date, ParameterDirection.Output);
+                    comm.Parameters.Add(date);
+                    OracleParameter typeId = new OracleParameter(":p_typ_platby_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(typeId);
 
-		static public List<Payment> GetAll()
-		{
-			List<Payment> result = new List<Payment>();
+                    comm.ExecuteNonQuery();
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select t.id_typ_platby, t.nazev, id_platba, suma, datum  from platby p join typy_plateb t on p.typ_platby_id = t.id_typ_platby";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							PaymentType paymentType = new PaymentType
-							{
-								ID = rdr.GetInt32(0),
-								Name = rdr.GetString(1)
-							};
-							result.Add(new Payment
-							{
-								ID = rdr.GetInt32(2),
-								Amount = rdr.GetDouble(3),
-								Date = rdr.GetDateTime(4),
-								Type = paymentType
-							});
-						}
-					}
-				}
-			}
+                    var type = GetType(typeId.Value.ToString());
 
-			return result;
-		}
+                    result = new Payment()
+                    {
+                        ID = int.Parse(id),
+                        Amount = double.Parse(amount.Value.ToString()),
+                        Date = ((OracleDate)date.Value).Value,
+                        Type = type
+                    };
+                }
+            }
 
-		static public List<PaymentType> GetAllTypes()
-		{
-			List<PaymentType> result = new List<PaymentType>();
+            return result;
+        }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_typ_platby, nazev from typy_plateb";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							result.Add(new PaymentType
-							{
-								ID = rdr.GetInt32(0),
-								Name = rdr.GetString(1)
-							});
-						}
-					}
-				}
-			}
+        static public List<Payment> GetAll()
+        {
+            List<Payment> result = new List<Payment>();
 
-			return result;
-		}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select t.id_typ_platby, t.nazev, id_platba, suma, datum  from platby p join typy_plateb t on p.typ_platby_id = t.id_typ_platby";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            PaymentType paymentType = new PaymentType
+                            {
+                                ID = rdr.GetInt32(0),
+                                Name = rdr.GetString(1)
+                            };
+                            result.Add(new Payment
+                            {
+                                ID = rdr.GetInt32(2),
+                                Amount = rdr.GetDouble(3),
+                                Date = rdr.GetDateTime(4),
+                                Type = paymentType
+                            });
+                        }
+                    }
+                }
+            }
 
+            return result;
+        }
 
-		static public Payment? Update(Payment item, string id)
-		{
-			throw new NotImplementedException();
-		}
+        static public List<PaymentType> GetAllTypes()
+        {
+            List<PaymentType> result = new List<PaymentType>();
 
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select id_typ_platby, nazev from typy_plateb";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            result.Add(new PaymentType
+                            {
+                                ID = rdr.GetInt32(0),
+                                Name = rdr.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
 
-	}
+            return result;
+        }
+
+        static public Payment? Update(Payment item, string id)
+        {
+            Payment? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_platbu";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_platba", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add(":p_suma", OracleDbType.Int32).Value = item.Amount;
+                    comm.Parameters.Add(":p_datum", OracleDbType.Date).Value = item.Date;
+                    comm.Parameters.Add(":p_typ_platby_id", OracleDbType.Decimal).Value = item.Type.ID;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
+        }
+    }
 }

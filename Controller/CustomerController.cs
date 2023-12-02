@@ -5,138 +5,170 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class CustomerController
-	{
+    class CustomerController
+    {
 
-		static public Customer? Add(Customer item)
-		{
-			Customer? result = null;
+        static public Customer? Add(Customer item)
+        {
+            Customer? result = null;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal newId;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into zakaznici (jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id) VALUES (:jmeno, :prijmeni, :datumNarozeni, :telefon, :email, :adresaId) returning id_zakaznik into :newId";
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					comm.Parameters.Add(":jmeno", OracleDbType.Varchar2).Value = item.FirstName;
-					comm.Parameters.Add(":prijmeni", OracleDbType.Varchar2).Value = item.LastName;
-					comm.Parameters.Add(":datumNarozeni", OracleDbType.Date).Value = item.BirthDate;
-					comm.Parameters.Add(":telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
-					comm.Parameters.Add(":email", OracleDbType.Varchar2).Value = item.Email;
-					comm.Parameters.Add(":adresaId", OracleDbType.Decimal).Value = item.Address.ID;
+                    comm.Parameters.Add(":p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+                    comm.Parameters.Add(":p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add(":p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
+                    comm.Parameters.Add(":p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
+                    comm.Parameters.Add(":p_email", OracleDbType.Varchar2).Value = item.Email;
+                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
 
+                    OracleParameter p = new OracleParameter(":p_id_zakaznik", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(p);
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                    comm.ExecuteNonQuery();
 
-					comm.ExecuteNonQuery();
+                    newId = ((OracleDecimal)p.Value).Value;
+                }
 
-					newId = ((OracleDecimal)p.Value).Value;
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
 
-				}
+            return result;
+        }
 
-				result = item;
-				result.ID = Convert.ToInt32(newId);
+        static public int Delete(string id)
+        {
+            int result = 0;
 
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			return result;
-		}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-		static public int Delete(string id)
-		{
-			int result = 0;
+                    comm.Parameters.Add(":p_id_zakaznik", id);
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
+                    result = comm.ExecuteNonQuery();
+                }
+            }
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from jidla where id_polozka = :id";
+            return result;
+        }
 
-					comm.Parameters.Add(":id", id);
+        static public Customer? Get(string id)
+        {
+            Customer? result = null;
 
-					result = comm.ExecuteNonQuery();
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from polozky where id_polozka = :id";
+                    comm.Parameters.Add(":p_id_zakaznik", id);
 
-					comm.Parameters.Add(":id", id);
+                    OracleParameter firstName = new OracleParameter(":p_jmeno", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(firstName);
+                    OracleParameter lastName = new OracleParameter(":p_prijmeni", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(lastName);
+                    OracleParameter birthDate = new OracleParameter(":p_datum_narozeni", OracleDbType.Date, ParameterDirection.Output);
+                    comm.Parameters.Add(birthDate);
+                    OracleParameter phoneNumber = new OracleParameter(":p_telefon", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(phoneNumber);
+                    OracleParameter email = new OracleParameter(":p_email", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(email);
+                    OracleParameter addressId = new OracleParameter(":p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(addressId);
 
-					result = comm.ExecuteNonQuery();
-				}
-			}
+                    comm.ExecuteNonQuery();
 
-			return result;
-		}
+                    var adresa = AddressController.Get(addressId.Value.ToString());
 
-		static public Customer? Get(string id)
-		{
-			Customer? result = null;
+                    result = new Customer()
+                    {
+                        ID = int.Parse(id),
+                        FirstName = firstName.Value.ToString(),
+                        LastName = lastName.Value.ToString(),
+                        BirthDate = ((OracleDate)birthDate.Value).Value,
+                        PhoneNumber = phoneNumber.Value.ToString(),
+                        Email = email.Value.ToString(),
+                        Address = adresa
+                    };
+                }
+            }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici where id_zakaznik = :id";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					comm.Parameters.Add(":id", id);
+            return result;
+        }
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							// result = new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6)));
-						}
-					}
-				}
+        static public List<Customer> GetAll()
+        {
+            List<Customer> result = new List<Customer>();
 
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
 
-			return result;
-		}
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            // result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
+                        }
+                    }
+                }
 
-		static public List<Customer> GetAll()
-		{
-			List<Customer> result = new List<Customer>();
+            }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
+            return result;
+        }
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							// result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
-						}
-					}
-				}
+        static public Customer? Update(Customer item)
+        {
+            Customer? result = null;
 
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			return result;
-		}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-		static public Customer? Update(Customer item, string id)
-		{
-			throw new NotImplementedException();
-		}
-	}
+                    comm.Parameters.Add("p_id_zakaznik", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add(":p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+                    comm.Parameters.Add(":p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add(":p_datum_narozeni", OracleDbType.Date).Value = item.BirthDate;
+                    comm.Parameters.Add(":p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
+                    comm.Parameters.Add(":p_email", OracleDbType.Varchar2).Value = item.Email;
+                    comm.Parameters.Add(":p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
+        }
+    }
 }

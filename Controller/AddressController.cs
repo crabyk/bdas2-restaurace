@@ -5,126 +5,162 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class AddressController
-	{
+    class AddressController
+    {
+        static public Address? Add(Address item)
+        {
+            Address? result = null;
 
-		static public Address? Add(Address item)
-		{
-			Address? result = null;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal newId;
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_adresu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into adresy (ulice, mesto, cislo_popisne, psc, stat) VALUES (:ulice, :mesto, :cisloPopisen, :psc, :stat) returning id_adresa into :newId";
+                    comm.Parameters.Add(":p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
+                    comm.Parameters.Add(":p_mesto", OracleDbType.Varchar2).Value = item.CityName;
+                    comm.Parameters.Add(":p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
+                    comm.Parameters.Add(":p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
+                    comm.Parameters.Add(":p_stat", OracleDbType.Varchar2).Value = item.Country;
 
-					comm.Parameters.Add(":ulice", OracleDbType.Varchar2).Value = item.StreetName;
-					comm.Parameters.Add(":mesto", OracleDbType.Varchar2).Value = item.CityName;
-					comm.Parameters.Add(":cisloPopisne", OracleDbType.Varchar2).Value = item.UnitNumber;
-					comm.Parameters.Add(":psc", OracleDbType.Varchar2).Value = item.PostalCode;
-					comm.Parameters.Add(":stat", OracleDbType.Varchar2).Value = item.Country;
+                    OracleParameter p = new OracleParameter(":p_id_adresa", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(p);
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                    comm.ExecuteNonQuery();
 
-					comm.ExecuteNonQuery();
+                    newId = ((OracleDecimal)p.Value).Value;
+                }
 
-					newId = ((OracleDecimal)p.Value).Value;
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
 
-				}
+            return result;
+        }
 
-				result = item;
-				result.ID = Convert.ToInt32(newId);
+        static public int Delete(string id)
+        {
+            int result = 0;
 
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			return result;
-		}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_adresu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-		static public int Delete(string id)
-		{
-			int result = 0;
+                    comm.Parameters.Add(":p_id_adresa", id);
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
+                    result = comm.ExecuteNonQuery();
+                }
+            }
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from adresy where id_adresa = :id";
+            return result;
+        }
 
-					comm.Parameters.Add(":id", id);
+        static public Address? Get(string id)
+        {
+            Address? result = null;
 
-					result = comm.ExecuteNonQuery();
-				}
-			}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-			return result;
-		}
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_adresu";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-		static public Address? Get(string id)
-		{
-			Address? result = null;
+                    comm.Parameters.Add(":p_id_adresa", id);
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy where id_adresa = :id";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					comm.Parameters.Add(":id", id);
+                    OracleParameter streetName = new OracleParameter(":p_ulice", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(streetName);
+                    OracleParameter cityName = new OracleParameter(":p_mesto", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(cityName);
+                    OracleParameter unitNumber = new OracleParameter(":p_cislo_popisne", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(unitNumber);
+                    OracleParameter postalCode = new OracleParameter(":p_psc", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(postalCode);
+                    OracleParameter country = new OracleParameter(":p_stat", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(country);
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							//result = new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5));
-						}
-					}
-				}
+                    comm.ExecuteNonQuery();
 
-			}
+                    result = new Address()
+                    {
+                        ID = int.Parse(id),
+                        StreetName = streetName.Value.ToString(),
+                        CityName = cityName.Value.ToString(),
+                        UnitNumber = unitNumber.Value.ToString(),
+                        PostalCode = postalCode.Value.ToString(),
+                        Country = country.Value.ToString()
+                    };
+                }
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		static public List<Address> GetAll()
-		{
-			List<Address> result = new List<Address>();
+        static public List<Address> GetAll()
+        {
+            List<Address> result = new List<Address>();
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							//result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
-						}
-					}
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            //result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
+                        }
+                    }
+                }
 
-			}
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		static public Address? Update(Address item, string id)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        static public Address? Update(Address item)
+        {
+            Address? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_adresu";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add(":p_id_adresa", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add(":p_ulice", OracleDbType.Varchar2).Value = item.StreetName;
+                    comm.Parameters.Add(":p_mesto", OracleDbType.Varchar2).Value = item.CityName;
+                    comm.Parameters.Add(":p_cislo_popisne", OracleDbType.Varchar2).Value = item.UnitNumber;
+                    comm.Parameters.Add(":p_psc", OracleDbType.Varchar2).Value = item.PostalCode;
+                    comm.Parameters.Add(":p_stat", OracleDbType.Varchar2).Value = item.Country;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
+        }
+    }
 }
