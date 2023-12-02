@@ -19,6 +19,9 @@
         <DataTemplate DataType = "{x:Type viewModels:OrderViewModel}">
             <views:OrderView x:Name="OrderViewModel" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:TableViewModel}">
+            <views:TableView x:Name="TableViewModel" />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -40,9 +43,15 @@
 
         <!-- Horni lista -->
         <Border Padding="10" Grid.Row="0" Grid.Column="1" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,0,2">
-            <DockPanel VerticalAlignment="Center">
-                <Button Content="Prihlasit se" HorizontalAlignment="Right" Height="24" Width="80" />
-            </DockPanel>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Content="Prihlasit se" HorizontalAlignment="Right" Height="24" Width="80" Margin="10,0,0,0" />
+                <Button 
+                    Content="Admin" 
+                    HorizontalAlignment="Right" 
+                    Height="24" Width="80" Margin="10,0,0,0"
+                    Command = "{Binding NavCommand}" CommandParameter = "table"
+                    />
+            </StackPanel>
         </Border>
 
         <!-- Bocni lista -->

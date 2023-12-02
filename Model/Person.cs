@@ -37,13 +37,7 @@ namespace BDAS2_Restaurace.Model
 				RaisePropertyChanged(nameof(LastName));
 			}
 		}
-		public string FullName
-		{
-			get
-			{
-				return FirstName + " " + LastName;
-			}
-		}
+
 		public DateTime BirthDate
 		{
 			get { return  birthDate; }
