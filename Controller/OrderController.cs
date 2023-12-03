@@ -18,39 +18,52 @@ namespace BDAS2_Restaurace.Controller
             {
                 conn.Open();
                 decimal orderId;
+                // transakce k zajisteni konzistence dat
+                OracleTransaction orderAddTransaction = null;
 
-                using (OracleCommand comm = conn.CreateCommand())
+                try
                 {
-                    comm.CommandText = "vlozit_objednavku";
-                    comm.CommandType = CommandType.StoredProcedure;
+                    orderAddTransaction = conn.BeginTransaction();
 
-                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
-                    comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
-                    comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
-                    comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
-                    comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
-                    comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
-
-                    comm.ExecuteNonQuery();
-                    orderId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
-                    item.ID = Convert.ToInt32(orderId);
-
-                }
-
-                using (OracleCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
-
-                    foreach (Item orderItem in item.Items)
+                    using (OracleCommand comm = conn.CreateCommand())
                     {
-                        comm.Parameters.Clear();
-                        comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
-                        comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
-                        comm.ExecuteNonQuery();
-                    }
-                }
+                        comm.CommandText = "vlozit_objednavku";
+                        comm.CommandType = CommandType.StoredProcedure;
 
-                result = item;
+                        comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
+                        comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
+                        comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
+                        comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
+                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
+                        comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
+
+                        comm.ExecuteNonQuery();
+                        orderId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
+                        item.ID = Convert.ToInt32(orderId);
+
+                    }
+
+                    using (OracleCommand comm = conn.CreateCommand())
+                    {
+                        comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
+
+                        foreach (Item orderItem in item.Items)
+                        {
+                            comm.Parameters.Clear();
+                            comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
+                            comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
+                            comm.ExecuteNonQuery();
+                        }
+                    }
+
+                    orderAddTransaction.Commit();
+                    result = item;
+                }
+                catch (Exception ex)
+                {
+                    orderAddTransaction?.Rollback();
+                    throw ex;
+                }
             }
 
             return result;
