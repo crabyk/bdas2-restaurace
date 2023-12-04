@@ -100,6 +100,17 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected async void Load()
 		{
+            /*
+             * 
+             * Odkomentovat pro lepsi otestovani async chovani
+             * 
+             * Jinak GUI okna nezamrzaji coz je fajn
+             * 
+             * Zaroven se diky tomu da otestovat nove vytvareni instanci ViewModel jen kdyz jsou potreba, 
+             * protoze metoda Load() se spousti jen v konstruktoru
+             * 
+             */
+            // await Task.Delay(2000);
             List<T> result = await Task.Run(() => controller.GetAll());
             ObservableCollection<T> items = new ObservableCollection<T>(result);
             Items = items;
