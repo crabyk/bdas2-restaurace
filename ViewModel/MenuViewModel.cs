@@ -16,7 +16,7 @@ namespace BDAS2_Restaurace.ViewModel
         private Drink selectedDrink;
         public Drink SelectedDrink
         {
-            get { return DrinkViewModel.SelectedDrink; }
+            get { return DrinkViewModel.SelectedItem; }
             set
             {
                 selectedDrink = value;

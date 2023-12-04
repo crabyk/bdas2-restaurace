@@ -19,7 +19,7 @@ namespace BDAS2_Restaurace.ViewModel
             //    new Food { ID = 5, Name = "Vyborny jidlo", Price = 120, Weight = 110, Recipe = "Magic"},
             //    new Food { ID = 6, Name = "Jeste lepsi jidlo", Price = 140, Weight = 90, Recipe = "Magic times 2"}
             //};
-            Food = new ObservableCollection<Food>(FoodController.GetFoodFromView());
+            Food = new ObservableCollection<Food>(new FoodController().GetFoodFromView());
         }
     }
 }

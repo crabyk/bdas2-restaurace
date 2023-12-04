@@ -8,10 +8,10 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class DrinkController : Controller<Drink>
+    public class DrinkController : Controller<Drink>
     {
 
-        public new Drink? Add(Drink item)
+        public override Drink? Add(Drink item)
         {
             Drink? result = null;
 
@@ -42,7 +42,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        public new int Delete(string id)
+        public override int Delete(string id)
         {
             int result = 0;
 
@@ -65,7 +65,7 @@ namespace BDAS2_Restaurace.Controller
         }
 
 
-        public new Drink? Get(int id)
+        public override Drink? Get(string id)
         {
             Drink? result = null;
 
@@ -91,7 +91,7 @@ namespace BDAS2_Restaurace.Controller
 
                     result = new Drink()
                     {
-                        ID = id,
+                        ID = int.Parse(id),
                         Name = name.Value.ToString(),
                         Price = double.Parse(price.Value.ToString()),
                         Volume = double.Parse(volume.Value.ToString())
@@ -102,7 +102,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        public new List<Drink> GetAll()
+        public override List<Drink> GetAll()
         {
             List<Drink> result = new List<Drink>();
 
@@ -136,7 +136,7 @@ namespace BDAS2_Restaurace.Controller
         }
 
 
-        public new Drink? Update(Drink item)
+        public override Drink? Update(Drink item)
         {
             Drink? result = null;
 

@@ -8,27 +8,27 @@ namespace BDAS2_Restaurace.Controller
 {
 	public abstract class Controller<T>
 	{
-		public T? Add(T item)
+		virtual public T? Add(T item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public int Delete(string id)
+        virtual public int Delete(string id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public T? Get(string id)
+        virtual public T? Get(string id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public List<T> GetAll()
+		virtual public List<T> GetAll()
 		{
 			throw new NotImplementedException();
 		}
 
-		public T? Update(T item)
+        virtual public T? Update(T item)
 		{
 			throw new NotImplementedException();
 		}

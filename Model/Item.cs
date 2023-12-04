@@ -4,13 +4,12 @@ using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Model
 {
-    public abstract class Item : ICloneable
+    public abstract class Item : ModelBase
     {
         private string name;
         private double price;
         private BitmapImage? image;
 
-        public int ID { get; set; }
         public string Name
         {
             get
@@ -52,21 +51,5 @@ namespace BDAS2_Restaurace.Model
                 RaisePropertyChanged(nameof(Image));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
-
-        protected void RaisePropertyChanged(string property)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(property));
-			}
-		}
-
 	}
 }

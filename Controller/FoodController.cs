@@ -12,10 +12,10 @@ using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class FoodController
+    public class FoodController : Controller<Food>
     {
 
-        static public Food? Add(Food item)
+        public override Food? Add(Food item)
         {
             Food? result = null;
 
@@ -47,7 +47,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public int Delete(string id)
+        public override int Delete(string id)
         {
             int result = 0;
 
@@ -69,7 +69,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Food? Get(int id)
+        public override Food? Get(string id)
         {
             Food? result = null;
 
@@ -96,7 +96,7 @@ namespace BDAS2_Restaurace.Controller
 
                     result = new Food()
                     {
-                        ID = id,
+                        ID = int.Parse(id),
                         Name = name.Value.ToString(),
                         Price = double.Parse(price.Value.ToString()),
                         Weight = double.Parse(weight.Value.ToString()),
@@ -108,7 +108,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public List<Food> GetAll()
+        public override List<Food> GetAll()
         {
             List<Food> result = new List<Food>();
 
@@ -140,7 +140,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        public static List<Food> GetFoodFromView()
+        public List<Food> GetFoodFromView()
         {
             List<Food> food = new List<Food>();
 
@@ -184,7 +184,7 @@ namespace BDAS2_Restaurace.Controller
             return food;
         }
 
-        static public Food? Update(Food item)
+        public override Food? Update(Food item)
         {
             Food? result = null;
 
@@ -212,7 +212,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        private static BitmapImage ConvertToBitmap(Image img)
+        public BitmapImage ConvertToBitmap(Image img)
         {
             using (var memory = new MemoryStream())
             {

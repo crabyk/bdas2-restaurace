@@ -36,7 +36,10 @@ namespace BDAS2_Restaurace.Router
 			if (route == null)
 				return;
 
-			CurrentViewModel = route.ViewModel;
+			Type viewModelType = route.ViewModel.GetType();
+			BindableBase? newInstance = (BindableBase?)Activator.CreateInstance(viewModelType);
+
+			CurrentViewModel = newInstance ?? route.ViewModel;
 		}
 	}
 }

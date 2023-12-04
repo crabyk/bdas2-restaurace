@@ -5,48 +5,10 @@ using System.Collections.ObjectModel;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	public class FoodViewModel : BindableBase
+	public class FoodViewModel : TableViewModel<Food, FoodController>
 	{
-		public event EventHandler SelectedFoodChanged;
-
-		private Food selectedFood;
-		public Food SelectedFood
+		public FoodViewModel() : base (new FoodController())
 		{
-			get { return selectedFood; }
-			set
-			{
-				selectedFood = (Food)value.Clone();
-				OnPropertyChanged(nameof(SelectedFood));
-			}
 		}
-		public FoodViewModel()
-		{
-			SelectedFood = new Food()
-			{
-				Name = "Test",
-			};
-			Load();
-		}
-
-        public ObservableCollection<Food> Food
-        {
-            get;
-            set;
-        }
-
-        public void Load()
-        {
-            ObservableCollection<Food> data = new ObservableCollection<Food>(FoodController.GetAll());
-
-            /*
-			data.Add(new Food { ID = 1, Name = "Gulaš se šesti", Price = 120, Weight = 150, Recipe = "Some recipe" });
-			data.Add(new Food { ID = 2, Name = "Svičkova na smetaně", Price = 150, Weight = 160, Recipe = "Some recipe" });
-			data.Add(new Food { ID = 3, Name = "Řízek s bramborem", Price = 130, Weight = 135, Recipe = "Some recipe" });
-			data.Add(new Food { ID = 4, Name = "Koprovka s vejcem", Price = 100, Weight = 140, Recipe = "Some recipe" });
-			*/
-
-
-            Food = data;
-        }
     }
 }

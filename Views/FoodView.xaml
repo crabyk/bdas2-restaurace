@@ -22,8 +22,8 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <ListView Grid.Column="0" Name="menuListView" Width="Auto" HorizontalContentAlignment="Stretch" 
-                      ItemsSource="{Binding Path = Food}"
-                      SelectedItem="{Binding SelectedFood}"
+                      ItemsSource="{Binding Path = Items}"
+                      SelectedItem="{Binding Path = SelectedItem}"
                       >
             <ListView.View>
                 <GridView>
@@ -36,7 +36,7 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedFood}">
+        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedItem}">
             <StackPanel Orientation="Horizontal">
                 <Label Content="ID:" />
                 <Label Content="{Binding Path = ID}" />

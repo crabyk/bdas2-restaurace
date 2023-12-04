@@ -12,13 +12,13 @@ using System.Windows.Input;
 namespace BDAS2_Restaurace.ViewModel
 {
 	public class TableViewModel<T, U> : BindableBase 
-        where T : ICloneable, new()
-        where U : Controller<T>
-	{
+        where T : ModelBase, new()
+        where U : Controller<T>, new()
+    {
         // private Controller<object> controller;
-        private U controller;
-		private T selectedItem;
-		private ObservableCollection<T> items;
+        protected U controller;
+        protected T selectedItem;
+        protected ObservableCollection<T> items;
         public ObservableCollection<T> Items
         {
             get { return items; }
@@ -44,6 +44,8 @@ namespace BDAS2_Restaurace.ViewModel
 
         public TableViewModel(U controller)
 		{
+            SelectedItem = new T();
+            Items = new ObservableCollection<T>();
             this.controller = controller;
             ClearSelected = new RelayCommand(ClearMethod, CanClearMethod);
             Create = new RelayCommand(CreateMethod, CanCreateMethod);
@@ -52,53 +54,54 @@ namespace BDAS2_Restaurace.ViewModel
             Load();
 		}
 
-        private bool CanUpdateMethod(object obj)
+        protected bool CanUpdateMethod(object obj)
         {
-            return selectedItem != null;
+            return SelectedItem != null;
         }
 
-        private void UpdateMethod(object obj)
+        protected void UpdateMethod(object obj)
         {
-            controller.Update(selectedItem);
+            controller.Update(SelectedItem);
             Load();
         }
 
-        private bool CanDeleteMethod(object obj)
+        protected bool CanDeleteMethod(object obj)
         {
-            return selectedItem != null;
+            return SelectedItem != null;
         }
 
-        private void DeleteMethod(object obj)
+        protected void DeleteMethod(object obj)
         {
-            // controller.Delete();
+            controller.Delete(SelectedItem.ID.ToString());
             Load();
         }
 
-        private bool CanCreateMethod(object obj)
+        protected bool CanCreateMethod(object obj)
         {
             return true;
         }
 
-        private void CreateMethod(object obj)
+        protected void CreateMethod(object obj)
         {
-            controller.Add(selectedItem);
+            controller.Add(SelectedItem);
             Load();
         }
 
-        public bool CanClearMethod(object obj)
+        protected bool CanClearMethod(object obj)
         {
             return true;
         }
 
-        public void ClearMethod(object obj)
+        protected void ClearMethod(object obj)
         {
-            selectedItem = new T();
+            SelectedItem = new T();
         }
 
 
-        public void Load()
+        protected void Load()
 		{
             ObservableCollection<T> items = new ObservableCollection<T>(controller.GetAll());
+            Items = items;
 		}
 	}
 }

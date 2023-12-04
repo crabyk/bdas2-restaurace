@@ -17,10 +17,10 @@
 
     <UserControl.Resources>
         <DataTemplate DataType = "{x:Type viewModel:FoodViewModel}">
-            <views:FoodView x:Name="FoodViewList" />
+            <views:EditFoodView x:Name="EditFoodView" />
         </DataTemplate>
         <DataTemplate DataType = "{x:Type viewModel:DrinkViewModel}">
-            <views:EditDrinkView x:Name="DrinkViewList" />
+            <views:EditDrinkView x:Name="EditDrinkView" />
         </DataTemplate>
     </UserControl.Resources>
     
