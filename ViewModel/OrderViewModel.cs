@@ -104,10 +104,10 @@ namespace BDAS2_Restaurace.ViewModel
         public void Create(object obj)
         {
 
-            Address newAddress = AddressController.Add(Address);
+            Address newAddress = new AddressController().Add(Address);
             Customer.Address = newAddress;
-            Customer newCustomer = CustomerController.Add(Customer);
-            Payment newPayment = PaymentController.Add(new Payment()
+            Customer newCustomer = new CustomerController().Add(Customer);
+            Payment newPayment = new PaymentController().Add(new Payment()
             {
                 Date = DateTime.Now,
                 Amount = 100,
@@ -132,7 +132,7 @@ namespace BDAS2_Restaurace.ViewModel
                 Items = items
             };
 
-            OrderController.Add(newOrder);
+            new OrderController().Add(newOrder);
         }
 
 
@@ -140,7 +140,7 @@ namespace BDAS2_Restaurace.ViewModel
         {
             Food = new ObservableCollection<Food>(new FoodController().GetAll());
             Drinks = new ObservableCollection<Drink>(new DrinkController().GetAll());
-            PaymentTypes = new ObservableCollection<PaymentType>(PaymentController.GetAllTypes());
+            PaymentTypes = new ObservableCollection<PaymentType>(new PaymentController().GetAllTypes());
             SelectedPaymentType = PaymentTypes[0];
         }
     }
