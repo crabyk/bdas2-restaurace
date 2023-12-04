@@ -6,7 +6,6 @@ namespace BDAS2_Restaurace.Model
     {
         private int number;
 
-        public int ID { get; set; }
         public int Number
         {
             get { return number; }

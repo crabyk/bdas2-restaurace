@@ -9,7 +9,6 @@ namespace BDAS2_Restaurace.Model
         private DateTime date;
         private PaymentType type;
 
-        public int ID { get; set; }
         public double Amount
         {
             get { return amount; }

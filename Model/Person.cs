@@ -12,7 +12,6 @@ namespace BDAS2_Restaurace.Model
         private string email;
 
 
-        public int ID { get; set; }
         public string FirstName
         {
             get { return firstName; }
