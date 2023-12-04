@@ -2,7 +2,7 @@
 
 namespace BDAS2_Restaurace.Model
 {
-    public class PaymentType
+    public class PaymentType : ModelBase
     {
         private string name;
 
@@ -17,14 +17,5 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
     }
 }

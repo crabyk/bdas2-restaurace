@@ -2,7 +2,7 @@
 
 namespace BDAS2_Restaurace.Model
 {
-    public class Table
+    public class Table : ModelBase
     {
         private int number;
 

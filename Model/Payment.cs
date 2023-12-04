@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace BDAS2_Restaurace.Model
 {
-    public class Payment : BindableBase
+    public class Payment : ModelBase
     {
         private double amount;
         private DateTime date;
@@ -37,16 +37,6 @@ namespace BDAS2_Restaurace.Model
             {
                 type = value;
                 RaisePropertyChanged(nameof(Type));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
     }

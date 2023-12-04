@@ -8,9 +8,9 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class AddressController
+    class AddressController : Controller<Address>
     {
-        static public Address? Add(Address item)
+        public override Address? Add(Address item)
         {
             Address? result = null;
 
@@ -43,7 +43,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public int Delete(string id)
+        public override int Delete(string id)
         {
             int result = 0;
 
@@ -65,7 +65,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Address? Get(string id)
+        public override Address? Get(string id)
         {
             Address? result = null;
 
@@ -108,7 +108,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public List<Address> GetAll()
+        public override List<Address> GetAll()
         {
             List<Address> result = new List<Address>();
 
@@ -132,7 +132,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Address? Update(Address item)
+        public override Address? Update(Address item)
         {
             Address? result = null;
 

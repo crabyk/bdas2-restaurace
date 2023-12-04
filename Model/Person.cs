@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace BDAS2_Restaurace.Model
 {
-    public abstract class Person
+    public abstract class Person : ModelBase
     {
         private string firstName;
         private string lastName;

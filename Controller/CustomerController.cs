@@ -11,7 +11,7 @@ namespace BDAS2_Restaurace.Controller
 	public class CustomerController : Controller<Customer>
 	{
 
-		static public Customer? Add(Customer item)
+        public override Customer? Add(Customer item)
 		{
 			Customer? result = null;
 
@@ -45,7 +45,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-		static public int Delete(string id)
+        public override int Delete(string id)
 		{
 			int result = 0;
 
@@ -67,7 +67,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-		static public Customer? Get(string id)
+        public override Customer? Get(string id)
 		{
 			Customer? result = null;
 
@@ -96,7 +96,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    var adresa = AddressController.Get(addressId.Value.ToString());
+                    var adresa = new AddressController().Get(addressId.Value.ToString());
 
                     result = new Customer()
                     {
@@ -114,7 +114,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-		static public List<Customer> GetAll()
+        public override List<Customer> GetAll()
 		{
 			List<Customer> result = new List<Customer>();
 
@@ -139,7 +139,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Customer? Update(Customer item)
+        public override Customer? Update(Customer item)
         {
             Customer? result = null;
 

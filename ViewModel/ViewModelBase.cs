@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	public class TableViewModel<T, U> : BindableBase 
+	public class ViewModelBase<T, U> : BindableBase 
         where T : ModelBase, new()
         where U : Controller<T>, new()
     {
@@ -42,7 +42,7 @@ namespace BDAS2_Restaurace.ViewModel
         public ICommand Delete { get; set; }
         public ICommand Update { get; set; }
 
-        public TableViewModel(U controller)
+        public ViewModelBase(U controller)
 		{
             SelectedItem = new T();
             Items = new ObservableCollection<T>();

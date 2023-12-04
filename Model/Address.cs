@@ -2,7 +2,7 @@
 
 namespace BDAS2_Restaurace.Model
 {
-    public class Address
+    public class Address : ModelBase
     {
         private string streetName;
         private string cityName;
@@ -10,7 +10,6 @@ namespace BDAS2_Restaurace.Model
         private string postalCode;
         private string country;
 
-        public int ID { get; set; }
         public string StreetName
         {
             get { return streetName; }
@@ -58,16 +57,6 @@ namespace BDAS2_Restaurace.Model
             {
                 country = value;
                 RaisePropertyChanged(nameof(Country));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
     }

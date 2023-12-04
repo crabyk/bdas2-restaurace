@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace BDAS2_Restaurace.Model
 {
-    public class Order
+    public class Order : ModelBase
     {
         private DateTime orderDate;
         private Payment payment;
@@ -13,7 +13,6 @@ namespace BDAS2_Restaurace.Model
         private Table? table;
         private Address? address;
 
-        public int ID { get; set; }
         public DateTime OrderDate
         {
             get { return orderDate; }
@@ -118,16 +117,6 @@ namespace BDAS2_Restaurace.Model
             result += "\n===========================================================";
 
             return result;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
         }
     }
 }

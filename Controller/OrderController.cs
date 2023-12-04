@@ -8,9 +8,9 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class OrderController
+    public class OrderController : Controller<Order>
     {
-        static public Order? Add(Order item)
+        public override Order? Add(Order item)
         {
             Order? result = null;
 
@@ -67,7 +67,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public int Delete(string id)
+        public override int Delete(string id)
         {
             int result = 0;
 
@@ -89,7 +89,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Order? Get(string id)
+        public override Order? Get(string id)
         {
             Order? result = null;
 
@@ -117,8 +117,8 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    var payment = PaymentController.Get(paymentId.Value.ToString());
-                    var customer = CustomerController.Get(customerId.Value.ToString());
+                    var payment = new PaymentController().Get(paymentId.Value.ToString());
+                    var customer = new CustomerController().Get(customerId.Value.ToString());
 
                     // TODO dodelat vytvoreni objektu objednavky
                     // udelat metody k zjisteni vsech polozek pro danou objednavku
@@ -138,7 +138,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public List<Order> GetAll()
+        public override List<Order> GetAll()
         {
             List<Order> result = new List<Order>();
 
@@ -162,7 +162,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Order? Update(Order item)
+        public override Order? Update(Order item)
         {
             Order? result = null;
 

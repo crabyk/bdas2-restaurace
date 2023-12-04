@@ -8,10 +8,10 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class PaymentController
+    class PaymentController : Controller<Payment>
     {
 
-        static public Payment? Add(Payment item)
+        public override Payment? Add(Payment item)
         {
             Payment? result = null;
 
@@ -42,7 +42,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public PaymentType? AddType(PaymentType item)
+        public PaymentType? AddType(PaymentType item)
         {
             PaymentType? result = null;
 
@@ -71,7 +71,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public PaymentType? GetType(string id)
+        public PaymentType? GetType(string id)
         {
             PaymentType? result = null;
 
@@ -102,7 +102,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public int Delete(string id)
+        public override int Delete(string id)
         {
             int result = 0;
 
@@ -124,7 +124,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Payment? Get(string id)
+        public override Payment? Get(string id)
         {
             Payment? result = null;
 
@@ -162,7 +162,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public List<Payment> GetAll()
+        public override List<Payment> GetAll()
         {
             List<Payment> result = new List<Payment>();
 
@@ -196,7 +196,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public List<PaymentType> GetAllTypes()
+        public List<PaymentType> GetAllTypes()
         {
             List<PaymentType> result = new List<PaymentType>();
 
@@ -223,7 +223,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Payment? Update(Payment item, string id)
+        public override Payment? Update(Payment item)
         {
             Payment? result = null;
 

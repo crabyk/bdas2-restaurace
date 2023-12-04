@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-    public class DrinkViewModel : TableViewModel<Drink, DrinkController>
+    public class DrinkViewModel : ViewModelBase<Drink, DrinkController>
     {
 
         public DrinkViewModel() : base(new DrinkController())

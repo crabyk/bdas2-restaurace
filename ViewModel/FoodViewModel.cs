@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	public class FoodViewModel : TableViewModel<Food, FoodController>
+	public class FoodViewModel : ViewModelBase<Food, FoodController>
 	{
 		public FoodViewModel() : base (new FoodController())
 		{
