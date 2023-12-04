@@ -9,15 +9,13 @@
              vml:ViewModelLocator.AutoHookedUpViewModel = "True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" DataContext="{Binding Path = SelectedDrink}">
-            <Label x:Name="SelectedLabel" Content="{Binding Path = Name}" />
-        </StackPanel>
-        <ListView Grid.Row="1" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
                   IsSynchronizedWithCurrentItem="True"
                   ItemsSource="{Binding Path = Drinks}"
                   SelectedItem="{Binding Path = SelectedDrink}"
@@ -31,5 +29,24 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedDrink}">
+            <StackPanel>
+                <Label Content="ID:" />
+                <Label Content="{Binding Path = ID}" />
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Nazev:" />
+                <Label Content="{Binding Path = Name}" />
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Cena:" />
+                <Label Content="{Binding Path = Price}" />
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Objem:" />
+                <Label Content="{Binding Path = Volume}" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

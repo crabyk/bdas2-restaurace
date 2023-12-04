@@ -7,12 +7,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
 	public class DrinkViewModel : BindableBase
 	{
+
 		private Drink selectedDrink;
 		public ObservableCollection<Drink> Drinks
 		{
@@ -24,7 +26,7 @@ namespace BDAS2_Restaurace.ViewModel
 			get { return selectedDrink; }
 			set
 			{
-				selectedDrink = value;
+				selectedDrink = DrinkController.Get(value.ID);
 				OnPropertyChanged(nameof(SelectedDrink));	
 			}
 		}

@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class CustomerController
+	public class CustomerController : Controller<Customer>
 	{
 
-		static public Customer? Add(Customer item)
+		public static new Customer? Add(Customer item)
 		{
 			Customer? result = null;
 
@@ -53,7 +53,7 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public int Delete(string id)
+		static public new int Delete(string id)
 		{
 			int result = 0;
 
@@ -83,7 +83,7 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public Customer? Get(string id)
+		static public new Customer? Get(string id)
 		{
 			Customer? result = null;
 
@@ -109,7 +109,7 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public List<Customer> GetAll()
+		static public new List<Customer> GetAll()
 		{
 			List<Customer> result = new List<Customer>();
 

@@ -59,7 +59,7 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public int Delete(string id)
+		static public int Delete(int id)
 		{
 			int result = 0;
 
@@ -89,14 +89,14 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public Drink? Get(string id)
+		static public Drink? Get(int id)
 		{
 			Drink? result = null;
 
 			using (OracleConnection conn = Database.Connect())
 			{
 				conn.Open();
-				string sql = "select j.id_polozka, nazev, cena, objem from polozky p join jidla n on p.id_polozka = n.id_polozka where n.id_polozka = :id";
+				string sql = "select n.id_polozka, nazev, cena, objem from polozky p join napoje n on p.id_polozka = n.id_polozka where n.id_polozka = :id";
 				using (OracleCommand comm = new OracleCommand(sql, conn))
 				{
 					comm.Parameters.Add(":id", id);
@@ -105,6 +105,13 @@ namespace BDAS2_Restaurace.Controller
 					{
 						while (rdr.Read())
 						{
+							result = new Drink
+							{
+								ID = rdr.GetInt32(0),
+								Name = rdr.GetString(1),
+								Price = rdr.GetDouble(2),
+								Volume = rdr.GetDouble(3)
+							};
 							// result = new Drink(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3));
 						}
 					}
@@ -146,7 +153,7 @@ namespace BDAS2_Restaurace.Controller
 			return result;
 		}
 
-		static public Drink? Update(Drink item, string id)
+		static public Drink? Update(Drink item, int id)
 		{
 			throw new NotImplementedException();
 		}

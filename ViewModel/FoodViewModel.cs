@@ -12,7 +12,6 @@ namespace BDAS2_Restaurace.ViewModel
 {
 	public class FoodViewModel : BindableBase
 	{
-		public event EventHandler SelectedFoodChanged;
 
 		private Food selectedFood;
 		public Food SelectedFood
@@ -22,7 +21,6 @@ namespace BDAS2_Restaurace.ViewModel
 			{
 				selectedFood = value;
 				OnPropertyChanged(nameof(SelectedFood));
-				SelectedFoodChanged?.Invoke(this, EventArgs.Empty);
 			}
 		}
 		public FoodViewModel()

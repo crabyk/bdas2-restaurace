@@ -36,6 +36,7 @@ namespace BDAS2_Restaurace.VML
 			string str = viewType.FullName;
 			str = str.Replace(".Views.", ".ViewModel.");
 			str = str.Replace(".Add", ".");
+			str = str.Replace(".Edit", ".");
 
 			var viewTypeName = str;
 			var viewModelTypeName = viewTypeName + "Model";

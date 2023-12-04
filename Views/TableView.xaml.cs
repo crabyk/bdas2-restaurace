@@ -1,6 +1,8 @@
-﻿using BDAS2_Restaurace.Model;
+﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.ViewModel;
 using Microsoft.VisualBasic;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -75,6 +77,8 @@ namespace BDAS2_Restaurace.Views
 					Form.Children.Add(CreateInput(property));
 				else if (property.PropertyType == typeof(DateTime))
 					Form.Children.Add(CreateDatePicker(property));
+				else if (property.PropertyType == typeof(BitmapImage))
+					Form.Children.Add(CreateFilePicker(property));
 				else
 					Form.Children.Add(CreateComboBox(property));
 
@@ -94,6 +98,27 @@ namespace BDAS2_Restaurace.Views
 
 			stackPanel.Children.Add(label);
 			stackPanel.Children.Add(value);
+
+			return stackPanel;
+		}
+
+		private StackPanel CreateFilePicker(PropertyInfo property)
+		{
+			var stackPanel = new StackPanel();
+			var label = new Label();
+			var input = new Button();
+
+			label.Content = property.Name + " " + property.PropertyType;
+
+			input.Content = "Vybrat soubor";
+			input.Click += (sender, e) =>
+			{
+				OpenFileDialog dialog = new OpenFileDialog();
+				dialog.ShowDialog();
+			};
+
+			stackPanel.Children.Add(label);
+			stackPanel.Children.Add(input);
 
 			return stackPanel;
 		}
@@ -118,7 +143,7 @@ namespace BDAS2_Restaurace.Views
 			var label = new Label();
 			var input = new ComboBox();
 
-			label.Content = property.Name + " " + property.PropertyType;
+			label.Content = property.Name + " " + property.PropertyType.Name;
 
 			stackPanel.Children.Add(label);
 			stackPanel.Children.Add(input);

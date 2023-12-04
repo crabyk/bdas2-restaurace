@@ -1,4 +1,5 @@
-﻿using BDAS2_Restaurace.Model;
+﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace BDAS2_Restaurace.ViewModel
 {
 	public class TableViewModel : BindableBase
 	{
+		// private Controller<object> controller;
 		private Type? type;
 		private object? data;
 		public object? Data

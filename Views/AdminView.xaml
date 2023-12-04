@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="BDAS2_Restaurace.Views.AdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
+             xmlns:views = "clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:AdminViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate DataType = "{x:Type viewModel:FoodViewModel}">
+            <views:FoodView x:Name="FoodViewList" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:DrinkViewModel}">
+            <views:EditDrinkView x:Name="DrinkViewList" />
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="2">
+            <Button Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
+            <Button Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
+            <Button Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+            <Button Content="Rezervace" />
+            <Button Content="Stoly" />
+            <Button Content="Zakaznici" />
+            <Button Content="Zamestnanci" />
+            <Button Content="Pozice" />
+            <Button Content="Smeny" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            <Label x:Name="Headline" Content="" FontSize="24" />
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Grid x:Name = "MainContent" Grid.Row = "2">
+                <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
+            </Grid>
+        </StackPanel>
+        
+        
+    </Grid>
+</UserControl>
