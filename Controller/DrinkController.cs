@@ -45,9 +45,6 @@ namespace BDAS2_Restaurace.Controller
         static public int Delete(string id)
         {
             int result = 0;
-		static public int Delete(int id)
-		{
-			int result = 0;
 
             using (OracleConnection conn = Database.Connect())
             {
