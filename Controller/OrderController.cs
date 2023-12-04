@@ -5,138 +5,190 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
-	class OrderController
-	{
+    class OrderController
+    {
+        static public Order? Add(Order item)
+        {
+            Order? result = null;
 
-		static public Order? Add(Order item)
-		{
-			Order? result = null;
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal orderId;
+                // transakce k zajisteni konzistence dat
+                OracleTransaction orderAddTransaction = null;
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				decimal orderId;
+                try
+                {
+                    orderAddTransaction = conn.BeginTransaction();
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into objednavky (datum, platba_id, zakaznik_id, adresa_id) VALUES (:datum, :platbaId, :zakaznikId, :adresaId) returning id_objednavka into :newId";
+                    using (OracleCommand comm = conn.CreateCommand())
+                    {
+                        comm.Transaction = orderAddTransaction;
 
-					comm.Parameters.Add(":datum", OracleDbType.Date).Value = item.OrderDate;
-					comm.Parameters.Add(":platbaId", OracleDbType.Int32).Value = item.Payment.ID;
-					comm.Parameters.Add(":zakaznikId", OracleDbType.Int32).Value = item.Customer.ID;
-					comm.Parameters.Add(":adresaId", OracleDbType.Int32).Value = item.Address.ID;
+                        comm.CommandText = "vlozit_objednavku";
+                        comm.CommandType = CommandType.StoredProcedure;
 
-					OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-					p.Direction = ParameterDirection.Output;
-					comm.Parameters.Add(p);
+                        comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
+                        comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
+                        comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
+                        comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
+                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
+                        comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
 
-					comm.ExecuteNonQuery();
+                        comm.ExecuteNonQuery();
+                        orderId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
+                        item.ID = Convert.ToInt32(orderId);
 
-					orderId = ((OracleDecimal)p.Value).Value;
-					item.ID = Convert.ToInt32(orderId);
+                        comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
+                        comm.CommandType = CommandType.Text;
 
-				}
+                        foreach (Item orderItem in item.Items)
+                        {
+                            comm.Parameters.Clear();
+                            comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
+                            comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
+                            comm.ExecuteNonQuery();
+                        }
+                    }
+                    orderAddTransaction.Commit();
+                    result = item;
+                }
+                catch (Exception ex)
+                {
+                    orderAddTransaction?.Rollback();
+                    throw ex;
+                }
+            }
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
+            return result;
+        }
 
-					foreach (Item orderItem in item.Items)
-					{
-						comm.Parameters.Add(":objednavkaId", OracleDbType.Decimal).Value = item.ID;
-						comm.Parameters.Add(":polozkaId", OracleDbType.Decimal).Value = orderItem.ID;
-						comm.ExecuteNonQuery();
-					}
+        static public int Delete(string id)
+        {
+            int result = 0;
 
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-				result = item;
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_objednavku";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-			}
+                    comm.Parameters.Add("p_id_objednavka", id);
 
-			return result;
-		}
+                    result = comm.ExecuteNonQuery();
+                }
+            }
 
-		static public int Delete(string id)
-		{
-			int result = 0;
+            return result;
+        }
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
+        static public Order? Get(string id)
+        {
+            Order? result = null;
 
-				using (OracleCommand comm = conn.CreateCommand())
-				{
-					comm.CommandText = "delete from adresy where id_adresa = :id";
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
 
-					comm.Parameters.Add(":id", id);
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_objednavku";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-					result = comm.ExecuteNonQuery();
-				}
-			}
+                    comm.Parameters.Add("p_id_objednavka", id);
 
-			return result;
-		}
+                    OracleParameter orderDate = new OracleParameter("p_datum", OracleDbType.Date, ParameterDirection.Output);
+                    comm.Parameters.Add(orderDate);
+                    OracleParameter paymentId = new OracleParameter("p_platba_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(paymentId);
+                    OracleParameter customerId = new OracleParameter("p_zakaznik_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(customerId);
+                    OracleParameter tableId = new OracleParameter("p_stul_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(tableId);
+                    OracleParameter addressId = new OracleParameter("p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(addressId);
 
-		static public Order? Get(string id)
-		{
-			Order? result = null;
+                    comm.ExecuteNonQuery();
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy where id_adresa = :id";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					comm.Parameters.Add(":id", id);
+                    var payment = PaymentController.Get(paymentId.Value.ToString());
+                    var customer = CustomerController.Get(customerId.Value.ToString());
 
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							//result = new Order(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5));
-						}
-					}
-				}
+                    // TODO dodelat vytvoreni objektu objednavky
+                    // udelat metody k zjisteni vsech polozek pro danou objednavku
+                    // dal zjistit stul nebo adresu podle objednavky
+                    result = new Order()
+                    {
+                        ID = int.Parse(id),
+                        OrderDate = ((OracleDate)orderDate.Value).Value,
+                        Payment = payment,
+                        Customer = customer
+                        // polozky, stul/adresa
+                    };
+                }
 
-			}
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		static public List<Order> GetAll()
-		{
-			List<Order> result = new List<Order>();
+        static public List<Order> GetAll()
+        {
+            List<Order> result = new List<Order>();
 
-			using (OracleConnection conn = Database.Connect())
-			{
-				conn.Open();
-				string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy";
-				using (OracleCommand comm = new OracleCommand(sql, conn))
-				{
-					using (OracleDataReader rdr = comm.ExecuteReader())
-					{
-						while (rdr.Read())
-						{
-							//result.Add(new Order(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
-						}
-					}
-				}
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy";
+                using (OracleCommand comm = new OracleCommand(sql, conn))
+                {
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            //result.Add(new Order(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
+                        }
+                    }
+                }
 
-			}
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		static public Order? Update(Order item, string id)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        static public Order? Update(Order item)
+        {
+            Order? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_objednavku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
+                    comm.Parameters.Add("p_platba_id", OracleDbType.Int32).Value = item.Payment.ID;
+                    comm.Parameters.Add("p_zakaznik_id", OracleDbType.Int32).Value = item.Customer.ID;
+                    comm.Parameters.Add("p_stul_id", OracleDbType.Int32).Value = item.Table?.ID;
+                    comm.Parameters.Add("p_adresa_id", OracleDbType.Int32).Value = item.Address?.ID;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
+        }
+    }
 }

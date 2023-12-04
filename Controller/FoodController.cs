@@ -26,36 +26,22 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "insert into polozky (nazev, cena, typ_polozky) VALUES (:nazev, :cena, :typPolozky) returning id_polozka into :newId";
+                    comm.CommandText = "vlozit_jidlo";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":nazev", OracleDbType.Varchar2).Value = item.Name;
-                    comm.Parameters.Add(":cena", OracleDbType.Decimal).Value = item.Price;
-                    comm.Parameters.Add(":typPolozky", OracleDbType.Varchar2).Value = "jidlo";
-
-                    OracleParameter p = new OracleParameter(":newId", OracleDbType.Decimal);
-                    p.Direction = ParameterDirection.Output;
-                    comm.Parameters.Add(p);
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add("p_cena", OracleDbType.Decimal).Value = item.Price;
+                    comm.Parameters.Add("p_hmotnost", OracleDbType.Decimal).Value = item.Weight;
+                    comm.Parameters.Add("p_recept", OracleDbType.Varchar2).Value = item.Recipe;
+                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)p.Value).Value;
-
-                }
-
-                using (OracleCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "insert into jidla (hmotnost, recept, id_polozka) VALUES (:hmotnost, :recept, :polozkaId)";
-
-                    comm.Parameters.Add(":hmotnost", item.Weight);
-                    comm.Parameters.Add(":recept", item.Recipe);
-                    comm.Parameters.Add(":polozkaId", newId);
-
-                    int rowsAffected = comm.ExecuteNonQuery();
+                    newId = ((OracleDecimal)comm.Parameters["p_id_polozka"].Value).Value;
                 }
 
                 result = item;
                 result.ID = Convert.ToInt32(newId);
-
             }
 
             return result;
@@ -71,18 +57,10 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "delete from jidla where id_polozka = :id";
+                    comm.CommandText = "smazat_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add(":id", id);
-
-                    result = comm.ExecuteNonQuery();
-                }
-
-                using (OracleCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "delete from polozky where id_polozka = :id";
-
-                    comm.Parameters.Add(":id", id);
+                    comm.Parameters.Add("p_id_polozka", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -98,20 +76,33 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select j.id_polozka, nazev, cena, hmotnost, recept from polozky p join jidla j on p.id_polozka = j.id_polozka where j.id_polozka = :id";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.Parameters.Add(":id", id);
+                    comm.CommandText = "ziskat_jidlo";
+                    comm.CommandType = CommandType.StoredProcedure;
 
-                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(name);
+                    OracleParameter price = new OracleParameter("p_cena", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(price);
+                    OracleParameter weight = new OracleParameter("p_hmotnost", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(weight);
+                    OracleParameter recipe = new OracleParameter("p_recept", OracleDbType.Varchar2, ParameterDirection.Output);
+                    comm.Parameters.Add(recipe);
+
+                    comm.ExecuteNonQuery();
+
+                    result = new Food()
                     {
-                        while (rdr.Read())
-                        {
-                            // result = new Food(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3), rdr.GetString(4));
-                        }
-                    }
+                        ID = int.Parse(id),
+                        Name = name.Value.ToString(),
+                        Price = double.Parse(price.Value.ToString()),
+                        Weight = double.Parse(weight.Value.ToString()),
+                        Recipe = recipe.Value.ToString()
+                    };
                 }
-
             }
 
             return result;
@@ -193,9 +184,32 @@ namespace BDAS2_Restaurace.Controller
             return food;
         }
 
-        static public Food? Update(Food item, string id)
+        static public Food? Update(Food item)
         {
-            throw new NotImplementedException();
+            Food? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_jidlo";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+                    comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
+                    comm.Parameters.Add("p_hmotnost", OracleDbType.Int32).Value = item.Weight;
+                    comm.Parameters.Add("p_recept", OracleDbType.Varchar2).Value = item.Recipe;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
         }
 
         private static BitmapImage ConvertToBitmap(Image img)
