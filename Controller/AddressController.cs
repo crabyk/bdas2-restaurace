@@ -91,6 +91,8 @@ namespace BDAS2_Restaurace.Controller
                     OracleParameter country = new OracleParameter("p_stat", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(country);
 
+                    // Asi nejaky problem s datovymi typi u procedury v DB nebo nevim :D
+                    // Aspon se diky tomu da krasne otestovat ze program ted pada az kdyz se nacitaji Customers a ne hned pri spusteni
                     comm.ExecuteNonQuery();
 
                     result = new Address()
