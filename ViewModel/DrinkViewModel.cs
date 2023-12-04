@@ -1,31 +1,92 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
+using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
 	public class DrinkViewModel : BindableBase
 	{
 
-		private Drink selectedDrink;
-		public ObservableCollection<Drink> Drinks
+        private Drink selectedDrink;
+        private ObservableCollection<Drink> drinks;
+        public ObservableCollection<Drink> Drinks
 		{
-			get;
-			set;
+			get { return drinks; }
+			set
+            {
+                drinks = value;
+                OnPropertyChanged(nameof(Drinks));
+            }
 		}
 		public Drink SelectedDrink
 		{
 			get { return selectedDrink; }
 			set
 			{
-				selectedDrink = DrinkController.Get(value.ID);
+				selectedDrink = value == null ? new Drink() : (Drink)value.Clone();
 				OnPropertyChanged(nameof(SelectedDrink));	
 			}
 		}
-		public DrinkViewModel()
+
+        public ICommand ClearSelected { get; set; }
+        public ICommand Create { get; set; }
+        public ICommand Delete { get; set; }
+        public ICommand Update { get; set; }
+
+        public DrinkViewModel()
 		{
-			Load();
+            ClearSelected = new RelayCommand(ClearMethod, CanClearMethod);
+            Create = new RelayCommand(CreateMethod, CanCreateMethod);
+            Delete = new RelayCommand(DeleteMethod, CanDeleteMethod);
+            Update = new RelayCommand(UpdateMethod, CanUpdateMethod);
+            Load();
 		}
+
+        private bool CanUpdateMethod(object obj)
+        {
+            return true;
+        }
+
+        private void UpdateMethod(object obj)
+        {
+            new DrinkController().Update(SelectedDrink);
+            Load();
+        }
+
+        private bool CanDeleteMethod(object obj)
+        {
+            return SelectedDrink != null;
+        }
+
+        private void DeleteMethod(object obj)
+        {
+            new DrinkController().Delete(SelectedDrink.ID.ToString());
+            Load();
+        }
+
+        private bool CanCreateMethod(object obj)
+        {
+            return true;
+        }
+
+        private void CreateMethod(object obj)
+        {
+            new DrinkController().Add(SelectedDrink);
+            Load();
+        }
+
+        public bool CanClearMethod(object obj)
+        {
+            return true;
+        }
+
+        public void ClearMethod(object obj)
+        {
+            SelectedDrink = new Drink();
+        }
+
 
 
         /*
@@ -37,7 +98,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         public void Load()
         {
-            ObservableCollection<Drink> data = new ObservableCollection<Drink>(DrinkController.GetAll());
+            ObservableCollection<Drink> data = new ObservableCollection<Drink>(new DrinkController().GetAll());
 
             /*
 			data.Add(new Drink { ID = 1, Name = "Točená kofola", Price = 20, Volume = 300 });

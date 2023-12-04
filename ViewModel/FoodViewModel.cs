@@ -15,7 +15,7 @@ namespace BDAS2_Restaurace.ViewModel
 			get { return selectedFood; }
 			set
 			{
-				selectedFood = value;
+				selectedFood = (Food)value.Clone();
 				OnPropertyChanged(nameof(SelectedFood));
 			}
 		}

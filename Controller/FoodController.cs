@@ -69,7 +69,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        static public Food? Get(string id)
+        static public Food? Get(int id)
         {
             Food? result = null;
 
@@ -96,7 +96,7 @@ namespace BDAS2_Restaurace.Controller
 
                     result = new Food()
                     {
-                        ID = int.Parse(id),
+                        ID = id,
                         Name = name.Value.ToString(),
                         Price = double.Parse(price.Value.ToString()),
                         Weight = double.Parse(weight.Value.ToString()),

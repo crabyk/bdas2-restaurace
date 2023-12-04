@@ -139,7 +139,7 @@ namespace BDAS2_Restaurace.ViewModel
         public void Load()
         {
             Food = new ObservableCollection<Food>(FoodController.GetAll());
-            Drinks = new ObservableCollection<Drink>(DrinkController.GetAll());
+            Drinks = new ObservableCollection<Drink>(new DrinkController().GetAll());
             PaymentTypes = new ObservableCollection<PaymentType>(PaymentController.GetAllTypes());
             SelectedPaymentType = PaymentTypes[0];
         }

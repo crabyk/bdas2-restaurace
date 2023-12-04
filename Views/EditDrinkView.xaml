@@ -15,42 +15,56 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
-                  IsSynchronizedWithCurrentItem="True"
-                  ItemsSource="{Binding Path = Drinks}"
-                  SelectedItem="{Binding Path = SelectedDrink}"
-                  >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                    <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
-                    <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
-                    <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Volume}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedDrink}">
-            <StackPanel>
-                <Label Content="ID:" />
-                <Label Content="{Binding Path = ID}" />
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
-            <StackPanel>
-                <Label Content="Nazev:" />
-                <TextBox Text="{Binding Path = Name}" />
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Cena:" />
-                <TextBox Text="{Binding Path = Price}" />
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Objem:" />
-                <TextBox Text="{Binding Path = Volume}" />
+            
+            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+                      IsSynchronizedWithCurrentItem="True"
+                      ItemsSource="{Binding Path = Drinks}"
+                      SelectedItem="{Binding Path = SelectedDrink}"
+                      >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
+                        <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
+                        <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Volume}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <StackPanel Grid.Column="1">
+            <StackPanel DataContext="{Binding Path = SelectedDrink}">
+                <StackPanel>
+                    <Label Content="ID:" />
+                    <Label Content="{Binding Path = ID}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Nazev:" />
+                    <TextBox Text="{Binding Path = Name}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Cena:" />
+                    <TextBox Text="{Binding Path = Price}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Objem:" />
+                    <TextBox Text="{Binding Path = Volume}" />
+                </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Upravit" />
-                <Button Content="Smazat" />
-                <Button Content="Přidat jako nový" />
+                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

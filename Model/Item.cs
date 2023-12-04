@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Model
 {
-    public abstract class Item
+    public abstract class Item : ICloneable
     {
         private string name;
         private double price;
@@ -54,7 +55,12 @@ namespace BDAS2_Restaurace.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-		protected void RaisePropertyChanged(string property)
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        protected void RaisePropertyChanged(string property)
 		{
 			if (PropertyChanged != null)
 			{
