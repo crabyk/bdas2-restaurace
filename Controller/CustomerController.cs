@@ -5,6 +5,7 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -129,7 +130,16 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            // result.Add(new Customer(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetDateTime(3), rdr.GetString(4), rdr.GetString(5), AddressController.Get(rdr.GetString(6))));
+                            Address address = new AddressController().Get("1");
+                            result.Add(new Customer()
+                            {
+                                ID = rdr.GetInt32(0),
+                                FirstName = rdr.GetString(1),
+                                LastName = rdr.GetString(2),
+                                BirthDate = rdr.GetDateTime(3),
+                                PhoneNumber = rdr.GetString(4),
+                                Email = rdr.GetString(5)
+                            });
                         }
                     }
                 }

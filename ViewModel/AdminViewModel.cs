@@ -11,9 +11,13 @@ namespace BDAS2_Restaurace.ViewModel
 	{
 		public AdminViewModel()
 		{
-			this.Routes.Add(new Route("drink", new DrinkViewModel()));
-			this.Routes.Add(new Route("food", new FoodViewModel()));
-			this.Routes.Add(new Route("order", new OrderViewModel()));
-		}
+
+			this.Routes.Add(new Route<DrinkViewModel>("drink"));
+			this.Routes.Add(new Route<FoodViewModel>("food"));
+			this.Routes.Add(new Route<OrderViewModel>("order"));
+            this.Routes.Add(new Route<PaymentTypeViewModel>("paymentType"));
+            this.Routes.Add(new Route<CustomerViewModel>("customer"));
+
+        }
 	}
 }

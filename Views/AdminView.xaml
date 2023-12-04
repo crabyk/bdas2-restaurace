@@ -22,6 +22,12 @@
         <DataTemplate DataType = "{x:Type viewModel:DrinkViewModel}">
             <views:EditDrinkView x:Name="EditDrinkView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:PaymentTypeViewModel}">
+            <views:EditPaymentTypeView x:Name="EditPaymentTypeView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:CustomerViewModel}">
+            <views:EditCustomerView x:Name="EditCustomerView" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -38,9 +44,10 @@
             <Button Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
             <Button Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
             <Button Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+            <Button Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
+            <Button Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
             <Button Content="Rezervace" />
             <Button Content="Stoly" />
-            <Button Content="Zakaznici" />
             <Button Content="Zamestnanci" />
             <Button Content="Pozice" />
             <Button Content="Smeny" />

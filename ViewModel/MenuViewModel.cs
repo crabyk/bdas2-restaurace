@@ -26,9 +26,11 @@ namespace BDAS2_Restaurace.ViewModel
         }
         public MenuViewModel() : base()
         {
-            this.Routes.Add(new Route("drinks", new DrinkViewModel()));
-            this.Routes.Add(new Route("food", new FoodViewModel()));
-            this.Routes.Add(new Route("testmenu", new TestMenuViewModel()));
+
+            this.Routes.Add(new Route<DrinkViewModel>("drinks"));
+            this.Routes.Add(new Route<FoodViewModel>("food"));
+            this.Routes.Add(new Route<TestMenuViewModel>("testmenu"));
+
         }
         /*
 		public MenuViewModel()

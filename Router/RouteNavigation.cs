@@ -10,8 +10,8 @@ namespace BDAS2_Restaurace.Router
 	public class RouteNavigation : BindableBase
 	{
 		private List<Route> routes = new List<Route>();
-		
-		public List<Route> Routes { get { return routes; } }	
+
+        public List<Route> Routes { get { return routes; } }	
 
 		public RouteNavigation()
 		{
@@ -35,9 +35,11 @@ namespace BDAS2_Restaurace.Router
 
 			if (route == null)
 				return;
-
+			/*
 			Type viewModelType = route.ViewModel.GetType();
 			BindableBase? newInstance = (BindableBase?)Activator.CreateInstance(viewModelType);
+			*/
+			BindableBase? newInstance = route.NewViewModel();
 
 			CurrentViewModel = newInstance ?? route.ViewModel;
 		}
