@@ -37,13 +37,14 @@ namespace BDAS2_Restaurace.Controller
                         comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
                         comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
                         comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
-                        comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output); ;
+                        comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
 
                         comm.ExecuteNonQuery();
                         orderId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
                         item.ID = Convert.ToInt32(orderId);
 
                         comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
+                        comm.CommandType = CommandType.Text;
 
                         foreach (Item orderItem in item.Items)
                         {
