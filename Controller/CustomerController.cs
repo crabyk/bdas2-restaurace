@@ -130,7 +130,7 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            Address address = new AddressController().Get("1");
+                            // Address address = new AddressController().Get("1");
                             result.Add(new Customer()
                             {
                                 ID = rdr.GetInt32(0),

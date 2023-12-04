@@ -98,9 +98,10 @@ namespace BDAS2_Restaurace.ViewModel
         }
 
 
-        protected void Load()
+        protected async void Load()
 		{
-            ObservableCollection<T> items = new ObservableCollection<T>(controller.GetAll());
+            List<T> result = await Task.Run(() => controller.GetAll());
+            ObservableCollection<T> items = new ObservableCollection<T>(result);
             Items = items;
 		}
 	}
