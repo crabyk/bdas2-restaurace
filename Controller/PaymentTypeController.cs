@@ -5,9 +5,6 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -57,7 +54,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal).Value = id;
 
-                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, 50, null, ParameterDirection.Output);
                     comm.Parameters.Add(name);
 
                     comm.ExecuteNonQuery();

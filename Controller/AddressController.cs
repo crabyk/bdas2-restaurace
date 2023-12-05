@@ -80,19 +80,18 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_adresa", id);
 
-                    OracleParameter streetName = new OracleParameter("p_ulice", OracleDbType.Varchar2, ParameterDirection.Output);
+                    // u vystupnich varcharu je potreba specifikovat velikost..
+                    OracleParameter streetName = new OracleParameter("p_ulice", OracleDbType.Varchar2, 32, null, ParameterDirection.Output);
                     comm.Parameters.Add(streetName);
-                    OracleParameter cityName = new OracleParameter("p_mesto", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter cityName = new OracleParameter("p_mesto", OracleDbType.Varchar2, 32, null, ParameterDirection.Output);
                     comm.Parameters.Add(cityName);
-                    OracleParameter unitNumber = new OracleParameter("p_cislo_popisne", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter unitNumber = new OracleParameter("p_cislo_popisne", OracleDbType.Varchar2, 10, null, ParameterDirection.Output);
                     comm.Parameters.Add(unitNumber);
-                    OracleParameter postalCode = new OracleParameter("p_psc", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter postalCode = new OracleParameter("p_psc", OracleDbType.Varchar2, 6, null, ParameterDirection.Output);
                     comm.Parameters.Add(postalCode);
-                    OracleParameter country = new OracleParameter("p_stat", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter country = new OracleParameter("p_stat", OracleDbType.Varchar2, 32, null, ParameterDirection.Output);
                     comm.Parameters.Add(country);
 
-                    // Asi nejaky problem s datovymi typi u procedury v DB nebo nevim :D
-                    // Aspon se diky tomu da krasne otestovat ze program ted pada az kdyz se nacitaji Customers a ne hned pri spusteni
                     comm.ExecuteNonQuery();
 
                     result = new Address()
