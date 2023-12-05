@@ -83,13 +83,13 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_polozka", id);
 
-                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, 64, null, ParameterDirection.Output);
                     comm.Parameters.Add(name);
                     OracleParameter price = new OracleParameter("p_cena", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(price);
                     OracleParameter weight = new OracleParameter("p_hmotnost", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(weight);
-                    OracleParameter recipe = new OracleParameter("p_recept", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter recipe = new OracleParameter("p_recept", OracleDbType.Varchar2, 2048, null, ParameterDirection.Output);
                     comm.Parameters.Add(recipe);
 
                     comm.ExecuteNonQuery();

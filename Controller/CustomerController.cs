@@ -5,16 +5,15 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Net;
 
 namespace BDAS2_Restaurace.Controller
 {
-	public class CustomerController : Controller<Customer>
-	{
+    public class CustomerController : Controller<Customer>
+    {
 
         public override Customer? Add(Customer item)
-		{
-			Customer? result = null;
+        {
+            Customer? result = null;
 
             using (OracleConnection conn = Database.Connect())
             {
@@ -47,8 +46,8 @@ namespace BDAS2_Restaurace.Controller
         }
 
         public override int Delete(string id)
-		{
-			int result = 0;
+        {
+            int result = 0;
 
             using (OracleConnection conn = Database.Connect())
             {
@@ -69,8 +68,8 @@ namespace BDAS2_Restaurace.Controller
         }
 
         public override Customer? Get(string id)
-		{
-			Customer? result = null;
+        {
+            Customer? result = null;
 
             using (OracleConnection conn = Database.Connect())
             {
@@ -82,15 +81,15 @@ namespace BDAS2_Restaurace.Controller
     
                     comm.Parameters.Add("p_id_zakaznik", id);
 
-                    OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, 20, null, ParameterDirection.Output);
                     comm.Parameters.Add(firstName);
-                    OracleParameter lastName = new OracleParameter("p_prijmeni", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter lastName = new OracleParameter("p_prijmeni", OracleDbType.Varchar2, 50, null, ParameterDirection.Output);
                     comm.Parameters.Add(lastName);
                     OracleParameter birthDate = new OracleParameter("p_datum_narozeni", OracleDbType.Date, ParameterDirection.Output);
                     comm.Parameters.Add(birthDate);
-                    OracleParameter phoneNumber = new OracleParameter("p_telefon", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter phoneNumber = new OracleParameter("p_telefon", OracleDbType.Varchar2, 12, null, ParameterDirection.Output);
                     comm.Parameters.Add(phoneNumber);
-                    OracleParameter email = new OracleParameter("p_email", OracleDbType.Varchar2, ParameterDirection.Output);
+                    OracleParameter email = new OracleParameter("p_email", OracleDbType.Varchar2, 128, null, ParameterDirection.Output);
                     comm.Parameters.Add(email);
                     OracleParameter addressId = new OracleParameter("p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(addressId);
@@ -116,12 +115,14 @@ namespace BDAS2_Restaurace.Controller
         }
 
         public override List<Customer> GetAll()
-		{
-			List<Customer> result = new List<Customer>();
+        {
+            List<Customer> result = new List<Customer>();
 
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
+
+                // TODO vsechny tyhle GetAll metody by sly nejspis udelat pres explicitni kurzor, splnime si tim aspon tu podminku :D
                 string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici";
                 using (OracleCommand comm = new OracleCommand(sql, conn))
                 {
@@ -138,7 +139,8 @@ namespace BDAS2_Restaurace.Controller
                                 LastName = rdr.GetString(2),
                                 BirthDate = rdr.GetDateTime(3),
                                 PhoneNumber = rdr.GetString(4),
-                                Email = rdr.GetString(5)
+                                Email = rdr.GetString(5),
+                                Address = address
                             });
                         }
                     }
