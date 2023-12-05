@@ -12,7 +12,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 name = value;
-                RaisePropertyChanged(nameof(Name));
+                 OnPropertyChanged(nameof(Name));
             }
         }
 

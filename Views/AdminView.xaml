@@ -31,6 +31,9 @@
         <DataTemplate DataType = "{x:Type viewModel:OrderViewModel}">
             <views:EditOrderView x:Name="EditOrderView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:AddressViewModel}">
+            <views:EditAddressView x:Name="EditAddressView" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -49,7 +52,7 @@
             <Button Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
             <Button Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
             <Button Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
-            <Button Content="Rezervace" />
+            <Button Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
             <Button Content="Stoly" />
             <Button Content="Zamestnanci" />
             <Button Content="Pozice" />

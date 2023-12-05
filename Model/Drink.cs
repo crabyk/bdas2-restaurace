@@ -11,7 +11,7 @@
             set
             {
                 volume = value;
-                RaisePropertyChanged(nameof(Volume));
+                 OnPropertyChanged(nameof(Volume));
             }
         }
 

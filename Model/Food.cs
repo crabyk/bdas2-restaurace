@@ -12,7 +12,7 @@
             set
             {
                 weight = value;
-                RaisePropertyChanged("Weight");
+                 OnPropertyChanged("Weight");
             }
         }
 
@@ -23,7 +23,7 @@
             set
             {
                 recipe = value;
-                RaisePropertyChanged("Recipe");
+                 OnPropertyChanged("Recipe");
             }
         }
     }

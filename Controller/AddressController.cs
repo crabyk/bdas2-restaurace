@@ -8,7 +8,7 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    class AddressController : Controller<Address>
+    public class AddressController : Controller<Address>
     {
         public override Address? Add(Address item)
         {
@@ -123,6 +123,15 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
+                            result.Add(new Address
+                            {
+                                ID = rdr.GetInt32(0),
+                                StreetName = rdr.GetString(1),
+                                CityName = rdr.GetString(2),
+                                UnitNumber = rdr.GetString(3),
+                                PostalCode = rdr.GetString(4),
+                                Country = rdr.GetString(5)
+                            });
                             //result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
                         }
                     }

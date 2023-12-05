@@ -16,7 +16,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 streetName = value;
-                RaisePropertyChanged(nameof(StreetName));
+                 OnPropertyChanged(nameof(StreetName));
             }
         }
 
@@ -26,7 +26,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 cityName = value;
-                RaisePropertyChanged(nameof(CityName));
+                 OnPropertyChanged(nameof(CityName));
             }
         }
 
@@ -36,7 +36,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 unitNumber = value;
-                RaisePropertyChanged(nameof(UnitNumber));
+                 OnPropertyChanged(nameof(UnitNumber));
             }
         }
 
@@ -46,7 +46,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 postalCode = value;
-                RaisePropertyChanged(nameof(PostalCode));
+                 OnPropertyChanged(nameof(PostalCode));
             }
         }
 
@@ -56,8 +56,13 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 country = value;
-                RaisePropertyChanged(nameof(Country));
+                 OnPropertyChanged(nameof(Country));
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{StreetName} {UnitNumber}\n{PostalCode} {CityName}\n{Country}";
         }
     }
 }

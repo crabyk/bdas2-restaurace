@@ -68,6 +68,40 @@
                     <TextBox Text="{Binding Path = Email}" />
                 </StackPanel>
             </StackPanel>
+            <!-- Adresy -->
+            <StackPanel>
+                <ComboBox 
+                        IsSynchronizedWithCurrentItem="True"
+                        SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
+                        SelectedValue="{Binding Path = SelectedItem.Address.ID, Mode=OneWay}"
+                        SelectedValuePath="ID"
+                        ItemsSource="{Binding Path = Addresses}" 
+                        >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = PostalCode}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Mesto:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = CityName}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Ulice:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = StreetName}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="ČP:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = UnitNumber}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
                 <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>

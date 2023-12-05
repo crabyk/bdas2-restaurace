@@ -7,7 +7,7 @@ namespace BDAS2_Restaurace.Model
     {
         private double amount;
         private DateTime date;
-        private PaymentType type;
+        private PaymentType type = new PaymentType();
 
         public double Amount
         {
@@ -15,7 +15,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 amount = value;
-                RaisePropertyChanged(nameof(Amount));
+                OnPropertyChanged(nameof(Amount));
             }
         }
 
@@ -25,7 +25,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 date = value;
-                RaisePropertyChanged(nameof(Date));
+                OnPropertyChanged(nameof(Date));
             }
         }
 
@@ -35,8 +35,18 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 type = value;
-                RaisePropertyChanged(nameof(Type));
+                OnPropertyChanged(nameof(Type));
             }
         }
+
+
+        public override object Clone()
+        {
+            Payment payment = (Payment)this.MemberwiseClone();
+            payment.Type = (PaymentType)Type?.Clone();
+            return payment;
+        }
+
+
     }
 }

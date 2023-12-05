@@ -54,45 +54,45 @@ namespace BDAS2_Restaurace.ViewModel
             Load();
 		}
 
-        protected bool CanUpdateMethod(object obj)
+        protected virtual bool CanUpdateMethod(object obj)
         {
             return SelectedItem != null;
         }
 
-        protected void UpdateMethod(object obj)
+        protected virtual void UpdateMethod(object obj)
         {
             controller.Update(SelectedItem);
             Load();
         }
 
-        protected bool CanDeleteMethod(object obj)
+        protected virtual bool CanDeleteMethod(object obj)
         {
             return SelectedItem != null;
         }
 
-        protected void DeleteMethod(object obj)
+        protected virtual void DeleteMethod(object obj)
         {
             controller.Delete(SelectedItem.ID.ToString());
             Load();
         }
 
-        protected bool CanCreateMethod(object obj)
+        protected virtual bool CanCreateMethod(object obj)
         {
             return true;
         }
 
-        protected void CreateMethod(object obj)
+        protected virtual void CreateMethod(object obj)
         {
             controller.Add(SelectedItem);
             Load();
         }
 
-        protected bool CanClearMethod(object obj)
+        protected virtual bool CanClearMethod(object obj)
         {
             return true;
         }
 
-        protected void ClearMethod(object obj)
+        protected virtual void ClearMethod(object obj)
         {
             SelectedItem = new T();
         }

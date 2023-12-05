@@ -24,5 +24,13 @@ namespace BDAS2_Restaurace.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+        public override object Clone()
+        {
+            Customer customer = (Customer)this.MemberwiseClone();
+            customer.Address = (Address)Address?.Clone();
+
+            return customer;
+        }
     }
 }

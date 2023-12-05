@@ -8,7 +8,7 @@ namespace BDAS2_Restaurace.Model
     {
         private DateTime orderDate;
         private Payment payment;
-        private List<Item> items;
+        private List<Item> items = new List<Item>();
         private Customer customer;
         private Table? table;
         private Address? address;
@@ -19,7 +19,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 orderDate = value;
-                RaisePropertyChanged(nameof(OrderDate));
+                 OnPropertyChanged(nameof(OrderDate));
             }
         }
         public Payment Payment
@@ -28,7 +28,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 payment = value;
-                RaisePropertyChanged(nameof(Payment));
+                OnPropertyChanged(nameof(Payment));
             }
         }
         public List<Item> Items
@@ -37,7 +37,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 items = value;
-                RaisePropertyChanged(nameof(Items));
+                OnPropertyChanged(nameof(Items));
             }
         }
         public Customer Customer
@@ -46,7 +46,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 customer = value;
-                RaisePropertyChanged(nameof(Customer));
+                 OnPropertyChanged(nameof(Customer));
             }
         }
         public Table? Table
@@ -55,7 +55,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 table = value;
-                RaisePropertyChanged(nameof(Table));
+                 OnPropertyChanged(nameof(Table));
             }
         }
         public Address? Address
@@ -64,18 +64,29 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 address = value;
-                RaisePropertyChanged(nameof(Address));
+                 OnPropertyChanged(nameof(Address));
             }
         }
 
-        /*
-		public Order(DateTime orderDate, Customer customer)
-		{
-			OrderDate = orderDate;
-			Customer = customer;
-			Items = new List<Item>();
-		}
-		*/
+
+        public override object Clone()
+        {
+            Order order = (Order)this.MemberwiseClone();
+            order.Payment = (Payment)Payment?.Clone();
+            order.Address = (Address)Address?.Clone();
+            order.Table = (Table)Table?.Clone();
+            order.Customer = (Customer)Customer?.Clone();
+
+            /*
+            order.Items = new List<Item>();
+            foreach (var item in Items)
+                order.Items.Add((Item)item.Clone());
+            */
+            
+
+            return order;
+        }
+
 
         public Item this[int index]
         {
@@ -97,26 +108,6 @@ namespace BDAS2_Restaurace.Model
         {
             for (int i = 0; i < amount; i++)
                 AddItem(item);
-        }
-
-        public override string ToString()
-        {
-            string result = "";
-            result += "\nDatum: " + OrderDate.ToString();
-            result += "\n-----------------------------------------------------------";
-            result += "\n Zakaznik";
-            result += "\n" + Customer.ToString();
-            result += $"\nPolozky objednavky ({Items.Count})";
-            result += "\n-----------------------------------------------------------";
-            int cnt = 1;
-            foreach (Item item in Items)
-            {
-                result += $"\n{cnt})" + item.ToString();
-                cnt++;
-            }
-            result += "\n===========================================================";
-
-            return result;
         }
     }
 }

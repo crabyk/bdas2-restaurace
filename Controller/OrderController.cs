@@ -145,23 +145,27 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select id_objednavka, datum, platba_id, zakaznik_id from objednavky";
+                string sql = "select id_objednavka, datum, platba_id, zakaznik_id, adresa_id from objednavky";
                 using (OracleCommand comm = new OracleCommand(sql, conn))
                 {
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
-                            Payment payment = new PaymentController().Get(rdr.GetString(2));
-                            Customer customer = new CustomerController().Get(rdr.GetString(3));
+                            Payment payment = new PaymentController().Get(rdr.GetInt32(2).ToString());
+                            Customer customer = new CustomerController().Get(rdr.GetInt32(3).ToString());
+                            // Address address = new AddressController().Get(rdr.GetInt32(4).ToString());
+
+                            List<Item> items = new OrderItemController().GetAll(rdr.GetInt32(0).ToString());
+
                             result.Add(new Order()
                             {
                                 ID = rdr.GetInt32(0),
                                 OrderDate= rdr.GetDateTime(1),
                                 Payment = payment,
-                                Customer = customer
+                                Customer = customer,
+                                Items = items
                             });
-                            //result.Add(new Order(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
                         }
                     }
                 }

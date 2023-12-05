@@ -20,7 +20,7 @@ namespace BDAS2_Restaurace.Model
 			set
 			{
 				name = value;
-				RaisePropertyChanged(nameof(Name));
+				 OnPropertyChanged(nameof(Name));
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace BDAS2_Restaurace.Model
 			set
 			{
 				price = value;
-				RaisePropertyChanged(nameof(Price));
+				 OnPropertyChanged(nameof(Price));
 
             }
         }
@@ -48,8 +48,16 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 image = value;
-                RaisePropertyChanged(nameof(Image));
+                 OnPropertyChanged(nameof(Image));
             }
         }
-	}
+
+        public override object Clone()
+        {
+            Item item = (Item)this.MemberwiseClone(); 
+            item.Image = Image?.Clone();
+
+            return item;
+        }
+    }
 }

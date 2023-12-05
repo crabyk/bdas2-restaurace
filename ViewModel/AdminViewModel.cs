@@ -17,6 +17,7 @@ namespace BDAS2_Restaurace.ViewModel
 			this.Routes.Add(new Route<OrderViewModel>("order"));
             this.Routes.Add(new Route<PaymentTypeViewModel>("paymentType"));
             this.Routes.Add(new Route<CustomerViewModel>("customer"));
+            this.Routes.Add(new Route<AddressViewModel>("address"));
 
         }
 	}

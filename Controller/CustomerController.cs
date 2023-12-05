@@ -96,7 +96,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    // var adresa = new AddressController().Get(addressId.Value.ToString());
+                    var adresa = new AddressController().Get(addressId.Value.ToString());
 
 
                     result = new Customer()
@@ -104,9 +104,10 @@ namespace BDAS2_Restaurace.Controller
                         ID = int.Parse(id),
                         FirstName = firstName.Value.ToString(),
                         LastName = lastName.Value.ToString(),
-                        BirthDate = Convert.ToDateTime(birthDate.Value),
+                        BirthDate = ((OracleDate)birthDate.Value).Value,
                         PhoneNumber = phoneNumber.Value.ToString(),
-                        Email = email.Value.ToString()
+                        Email = email.Value.ToString(),
+                        Address = adresa
                     };
                 }
             }
@@ -131,7 +132,7 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            // Address address = new AddressController().Get("1");
+                            Address address = new AddressController().Get(rdr.GetString(6));
                             result.Add(new Customer()
                             {
                                 ID = rdr.GetInt32(0),

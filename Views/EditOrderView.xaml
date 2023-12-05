@@ -29,43 +29,61 @@
             <ListView Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
                         ItemsSource="{Binding Path = Items}"
-                        SelectedItem="{Binding Path = SelectedItem}"
+                        SelectedItem="{Binding Path = SelectedItem, Mode=TwoWay}"
                         >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = OrderDate}"/>
+                        <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Customer.FullName}"/>
+                        <GridViewColumn Header="Obec" DisplayMemberBinding="{Binding Path = Customer.Address}"/>
+                        <GridViewColumn Header="Pocet polozek" DisplayMemberBinding="{Binding Path = Items.Count}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
 
         <StackPanel Grid.Column="1">
-            <StackPanel DataContext="{Binding Path = SelectedItem}">
-                <StackPanel>
-                    <Label Content="ID:" />
-                    <Label Content="{Binding Path = ID}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Objem:" />
-                    <DatePicker SelectedDate="{Binding Path = OrderDate}" />
+            <StackPanel>
+                <StackPanel DataContext="{Binding Path = SelectedItem}">
+                    <StackPanel>
+                        <Label Content="ID:" />
+                        <Label Content="{Binding Path = ID}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Objem:" />
+                        <DatePicker SelectedDate="{Binding Path = OrderDate}" />
+                    </StackPanel>
                 </StackPanel>
                 
                 <!-- Platba -->
-                <StackPanel DataContext="{Binding Path = Payment}">
+                <StackPanel>
                     <Label Content="Platba:" FontSize="16"/>
                     <StackPanel>
-                        <Label Content="Částka:" />
-                        <TextBox Text="{Binding Path = Amount}" />
+                        <Label Content="{Binding Path = Test}" />
+                        <ComboBox 
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedItem.Payment.Type, Mode=TwoWay}"
+                            SelectedValue="{Binding Path = SelectedItem.Payment.Type.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = PaymentTypes}" 
+                            DisplayMemberPath="Name"
+                            />
                     </StackPanel>
-                    <StackPanel>
-                        <Label Content="Datum platby:" />
-                        <TextBox Text="{Binding Path = Date}" />
+                    <StackPanel DataContext="{Binding Path = SelectedItem.Payment}">
+                        <StackPanel>
+                            <Label Content="Částka:" />
+                            <TextBox Text="{Binding Path = Amount}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Datum platby:" />
+                            <TextBox Text="{Binding Path = Date}" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Zakaznik -->
-                <StackPanel DataContext="{Binding Path = Customer}">
+                <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
                     <Label Content="Zakaznik:" FontSize="16"/>
                     <StackPanel>
                         <Label Content="ID:" />
@@ -92,6 +110,53 @@
                         <TextBox Text="{Binding Path = Email}" />
                     </StackPanel>
                 </StackPanel>
+
+
+                <StackPanel>
+                    <StackPanel>
+                        <ListView Width="Auto" HorizontalContentAlignment="Stretch"
+                            IsSynchronizedWithCurrentItem="True"
+                            ItemsSource="{Binding Path = SelectedItem.Items}"
+                            >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                                    <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = Name}"/>
+                                    <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Price}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox 
+                                HorizontalAlignment="Left"
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = SelectedOrderItem, Mode=TwoWay}"
+                                ItemsSource="{Binding Path = OrderItems}" 
+                                >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel>
+                                                <Label Content="Nazev:" FontSize="10" FontWeight="Bold"/>
+                                                <Label Content="{Binding Path = Name}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <Label Content="Cena:" FontSize="10" FontWeight="Bold"/>
+                                                <Label Content="{Binding Path = Price}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddOrderItem}" />
+                        </StackPanel>
+                        <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveOrderItem}" />
+                    </DockPanel>
+                </StackPanel>
+
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
