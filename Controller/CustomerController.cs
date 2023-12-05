@@ -79,7 +79,7 @@ namespace BDAS2_Restaurace.Controller
                 {
                     comm.CommandText = "ziskat_zakaznika";
                     comm.CommandType = CommandType.StoredProcedure;
-
+    
                     comm.Parameters.Add("p_id_zakaznik", id);
 
                     OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, ParameterDirection.Output);
@@ -97,17 +97,17 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    var adresa = new AddressController().Get(addressId.Value.ToString());
+                    // var adresa = new AddressController().Get(addressId.Value.ToString());
+
 
                     result = new Customer()
                     {
                         ID = int.Parse(id),
                         FirstName = firstName.Value.ToString(),
                         LastName = lastName.Value.ToString(),
-                        BirthDate = ((OracleDate)birthDate.Value).Value,
+                        BirthDate = Convert.ToDateTime(birthDate.Value),
                         PhoneNumber = phoneNumber.Value.ToString(),
-                        Email = email.Value.ToString(),
-                        Address = adresa
+                        Email = email.Value.ToString()
                     };
                 }
             }
@@ -130,7 +130,7 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            Address address = new AddressController().Get("1");
+                            // Address address = new AddressController().Get("1");
                             result.Add(new Customer()
                             {
                                 ID = rdr.GetInt32(0),

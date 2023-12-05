@@ -55,7 +55,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "ziskat_typ_platby";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal).Value = id;
+                    comm.Parameters.Add("p_id_typ_platby", id);
 
                     OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, ParameterDirection.Output);
                     comm.Parameters.Add(name);

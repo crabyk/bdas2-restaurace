@@ -87,14 +87,13 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    var type = new PaymentTypeController().Get(typeId.Value.ToString());
+                    // var type = new PaymentTypeController().Get(typeId.Value.ToString());
 
                     result = new Payment()
                     {
                         ID = int.Parse(id),
                         Amount = double.Parse(amount.Value.ToString()),
-                        Date = ((OracleDate)date.Value).Value,
-                        Type = type
+                        Date = ((OracleDate)date.Value).Value
                     };
                 }
             }

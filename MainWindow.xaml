@@ -69,9 +69,9 @@
                 <TextBlock Text="Vytvořit objednávku" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
         </StackPanel>
-        <Grid x:Name = "MainContent" Grid.Row = "1" Grid.Column="1">
+        <ScrollViewer x:Name="MainContent" VerticalScrollBarVisibility="Auto" Grid.Row = "1" Grid.Column="1">
             <ContentControl Content = "{Binding CurrentViewModel}"/>
-        </Grid>
+        </ScrollViewer>
         <!-- Hlavni nabidka 
         <Border Grid.Row="1" Padding="1">
             <Grid>

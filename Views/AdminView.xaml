@@ -28,6 +28,9 @@
         <DataTemplate DataType = "{x:Type viewModel:CustomerViewModel}">
             <views:EditCustomerView x:Name="EditCustomerView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:OrderViewModel}">
+            <views:EditOrderView x:Name="EditOrderView" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
