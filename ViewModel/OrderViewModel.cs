@@ -98,9 +98,9 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void AddOrderItemMethod(object obj)
         {
-            new OrderItemController().Add(NewOrderItem, SelectedItem);
-            Load();
-            //SelectedItem.AddItem(NewOrderItem);
+            // new OrderItemController().Add(NewOrderItem, SelectedItem);
+            SelectedItem.AddItem(NewOrderItem);
+            // Load();
         }
 
         private bool CanRemoveOrderItemMethod(object obj)
@@ -110,9 +110,9 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void RemoveOrderItemMethod(object obj)
         {
-            new OrderItemController().Delete(SelectedOrderItem, SelectedItem);
-            Load();
-            //SelectedItem.RemoveItem(SelectedOrderItem);
+            // new OrderItemController().Delete(SelectedOrderItem, SelectedItem);
+            SelectedItem.RemoveItem(SelectedOrderItem);
+            // Load();
         }
 
     }

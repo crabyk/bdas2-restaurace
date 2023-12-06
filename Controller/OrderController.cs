@@ -190,20 +190,16 @@ namespace BDAS2_Restaurace.Controller
                     new PaymentController().Update(item.Payment);
 
                     // Pridavani funguje, ale odebirani nejak moc ne
-                    /*
+
                     List<Item> orderItems = new OrderItemController().GetAll(item.ID.ToString());
                     List<Item> newOrderItems = new List<Item>(item.Items);
 
-                    List<Item> itemsToAdd = newOrderItems.Where(i1 => !orderItems.Any(i2 => i2.ID == i1.ID)).ToList();
-                    List<Item> itemsToRemove = orderItems.Where(i1 => !newOrderItems.Any(i2 => i2.ID == i1.ID)).ToList();
-                    
-                    foreach (Item orderItem in itemsToAdd)
-                        new OrderItemController().Add(orderItem, item);
-                    
+                    List<Item> itemsAdd = newOrderItems.Where(i1 => !orderItems.Any(i2 => i2.ID == i1.ID)).ToList();
+                    List<Item> itemsRemove = orderItems.Where(i1 => !newOrderItems.Any(i2 => i2.ID == i1.ID)).ToList();
 
-                    foreach (Item orderItem in itemsToRemove)
-                        new OrderItemController().Delete(orderItem, item);
-                    */
+                    itemsAdd.ForEach(i => new OrderItemController().Add(i, item));
+                    itemsRemove.ForEach(i => new OrderItemController().Delete(i, item));
+                    
 
 
                     comm.CommandText = "upravit_objednavku";
