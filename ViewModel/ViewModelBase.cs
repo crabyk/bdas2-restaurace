@@ -98,7 +98,7 @@ namespace BDAS2_Restaurace.ViewModel
         }
 
 
-        protected async void Load()
+        protected virtual async void Load()
 		{
             /*
              * 

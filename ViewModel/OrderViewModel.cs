@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -16,7 +18,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         private ObservableCollection<Address> addresses;
 
-        private ObservableCollection<Item> orderItems;
+        private ObservableCollection<Item> orderItems = new ObservableCollection<Item>();
         private Item selectedOrderItem;
 
         public ObservableCollection<PaymentType> PaymentTypes
@@ -64,21 +66,46 @@ namespace BDAS2_Restaurace.ViewModel
 
         public OrderViewModel() : base(new OrderController())
         {
-            PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
-            Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
-
-            List<Food> foods = new FoodController().GetAll();
-            List<Drink> drinks = new DrinkController().GetAll();
-            OrderItems = new ObservableCollection<Item>();
-
-            foreach (Food food in foods)
-                OrderItems.Add(food);
-            foreach (Drink drink in drinks)
-                OrderItems.Add(drink);
+            // PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
+            // Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
 
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
         }
+
+        async void LoadAddresses()
+        {
+            List<Address> paymentTypes = await Task.Run(() => new AddressController().GetAll());
+            Addresses = new ObservableCollection<Address>(paymentTypes);
+        }
+
+        async void LoadPayments()
+        {
+            List<PaymentType> paymentTypes = await Task.Run(() => new PaymentTypeController().GetAll());   
+            PaymentTypes = new ObservableCollection<PaymentType>(paymentTypes);
+        }
+
+        async void LoadFood()
+        {
+            List<Food> foods = await Task.Run(() => new FoodController().GetAll());
+            foods.ForEach(f => OrderItems.Add(f));
+        }
+
+        async void LoadDrinks()
+        {
+            List<Drink> drinks = await Task.Run(() => new DrinkController().GetAll());
+            drinks.ForEach(d => OrderItems.Add(d));
+        }
+
+        protected override void Load()
+        {
+            // LoadAddresses();
+            LoadPayments();
+            LoadFood();
+            LoadDrinks();
+            base.Load();
+        }
+
 
         private bool CanAddOrderItemMethod(object obj)
         {

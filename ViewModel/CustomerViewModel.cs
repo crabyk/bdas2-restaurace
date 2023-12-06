@@ -1,6 +1,9 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
@@ -23,9 +26,18 @@ namespace BDAS2_Restaurace.ViewModel
 
         public CustomerViewModel() : base(new CustomerController())
         {
-            Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
         }
 
+        async void LoadAddresses()
+        {
+            List<Address> addresses = await Task.Run(() => new AddressController().GetAll());
+            Addresses = new ObservableCollection<Address>(addresses);
+        }
 
+        protected override void Load()
+        {
+            LoadAddresses();
+            base.Load();
+        }
     }
 }
