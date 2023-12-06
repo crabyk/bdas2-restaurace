@@ -129,7 +129,7 @@ namespace BDAS2_Restaurace.ViewModel
                 Address = newAddress,
                 Payment = newPayment,
                 //Table = newTable,
-                Items = items
+                Items = new ObservableCollection<Item>(items)
             };
 
             new OrderController().Add(newOrder);

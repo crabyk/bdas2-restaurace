@@ -55,7 +55,7 @@ namespace BDAS2_Restaurace.Model
         public override object Clone()
         {
             Item item = (Item)this.MemberwiseClone(); 
-            item.Image = Image?.Clone();
+            // item.Image = Image?.Clone();
 
             return item;
         }

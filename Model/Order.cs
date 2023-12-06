@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace BDAS2_Restaurace.Model
@@ -8,7 +9,7 @@ namespace BDAS2_Restaurace.Model
     {
         private DateTime orderDate;
         private Payment payment;
-        private List<Item> items = new List<Item>();
+        private ObservableCollection<Item> items = new ObservableCollection<Item>();
         private Customer customer;
         private Table? table;
         private Address? address;
@@ -31,7 +32,7 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(Payment));
             }
         }
-        public List<Item> Items
+        public ObservableCollection<Item> Items
         {
             get { return items; }
             set
@@ -77,11 +78,11 @@ namespace BDAS2_Restaurace.Model
             order.Table = (Table)Table?.Clone();
             order.Customer = (Customer)Customer?.Clone();
 
-            /*
-            order.Items = new List<Item>();
+            
+            order.Items = new ObservableCollection<Item>();
             foreach (var item in Items)
                 order.Items.Add((Item)item.Clone());
-            */
+            
             
 
             return order;
@@ -102,12 +103,13 @@ namespace BDAS2_Restaurace.Model
         public void AddItem(Item item)
         {
             Items.Add(item);
+            OnPropertyChanged(nameof(Items));
         }
 
-        public void AddItem(Item item, int amount)
+        public void RemoveItem(Item item)
         {
-            for (int i = 0; i < amount; i++)
-                AddItem(item);
+            Items.Remove(item);
+            OnPropertyChanged(nameof(Items));
         }
     }
 }
