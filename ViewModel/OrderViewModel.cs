@@ -20,6 +20,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         private ObservableCollection<Item> orderItems = new ObservableCollection<Item>();
         private Item selectedOrderItem;
+        private Item newOrderItem;
 
         public ObservableCollection<PaymentType> PaymentTypes
         {
@@ -48,6 +49,16 @@ namespace BDAS2_Restaurace.ViewModel
             {
                 selectedOrderItem = value;
                 OnPropertyChanged(nameof(SelectedOrderItem));
+            }
+        }
+
+        public Item NewOrderItem
+        {
+            get { return newOrderItem; }
+            set
+            {
+                newOrderItem = value;
+                OnPropertyChanged(nameof(NewOrderItem));
             }
         }
 
@@ -109,13 +120,14 @@ namespace BDAS2_Restaurace.ViewModel
 
         private bool CanAddOrderItemMethod(object obj)
         {
-            return true;
+            return SelectedItem.Items.Where(i => i.ID == NewOrderItem.ID).Count() == 0;
         }
 
         private void AddOrderItemMethod(object obj)
         {
-            // new OrderItemController().Add(SelectedOrderItem, SelectedItem);
-            SelectedItem.Items.Add(SelectedOrderItem);
+            // new OrderItemController().Add(NewOrderItem, SelectedItem);
+            SelectedItem.AddItem(NewOrderItem);
+            // Load();
         }
 
         private bool CanRemoveOrderItemMethod(object obj)
@@ -125,7 +137,10 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void RemoveOrderItemMethod(object obj)
         {
-            throw new NotImplementedException();
+            // new OrderItemController().Delete(SelectedOrderItem, SelectedItem);
+            SelectedItem.RemoveItem(SelectedOrderItem);
+            // Load();
         }
+
     }
 }

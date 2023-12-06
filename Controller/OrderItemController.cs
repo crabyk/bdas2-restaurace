@@ -1,5 +1,6 @@
 ﻿using BDAS2_Restaurace.DB;
 using BDAS2_Restaurace.Model;
+using Microsoft.VisualBasic;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
@@ -24,6 +25,31 @@ namespace BDAS2_Restaurace.Controller
                 using (OracleCommand comm = conn.CreateCommand())
                 {
                     comm.CommandText = "insert into polozky_objednavky (objednavka_id, polozka_id) VALUES (:objednavkaId, :polozkaId)";
+                    comm.CommandType = CommandType.Text;
+
+                    comm.Parameters.Clear();
+                    comm.Parameters.Add(":objednavkaId", OracleDbType.Int32).Value = order.ID;
+                    comm.Parameters.Add(":polozkaId", OracleDbType.Int32).Value = item.ID;
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
+            }
+
+            return result;
+        }
+
+        public Item Delete(Item item, Order order)
+        {
+            Item? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "delete from polozky_objednavky where objednavka_id = :objednavkaId and polozka_id = :polozkaId";
                     comm.CommandType = CommandType.Text;
 
                     comm.Parameters.Clear();

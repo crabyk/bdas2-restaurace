@@ -82,41 +82,15 @@
                     </StackPanel>
                 </StackPanel>
 
-                <!-- Zakaznik -->
-                <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
-                    <Label Content="Zakaznik:" FontSize="16"/>
-                    <StackPanel>
-                        <Label Content="ID:" />
-                        <Label Content="{Binding Path = ID}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Jméno:" />
-                        <TextBox Text="{Binding Path = FirstName}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Přijmení:" />
-                        <TextBox Text="{Binding Path = LastName}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Tel. číslo:" />
-                        <TextBox Text="{Binding Path = PhoneNumber}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Datum narození:" />
-                        <DatePicker SelectedDate="{Binding Path = BirthDate}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Email:" />
-                        <TextBox Text="{Binding Path = Email}" />
-                    </StackPanel>
-                </StackPanel>
 
-
+                <!-- Polozky objednavky -->
                 <StackPanel>
+                    <Label Content="Polozky objednavky:" FontSize="16"/>
                     <StackPanel>
                         <ListView Width="Auto" HorizontalContentAlignment="Stretch"
-                            IsSynchronizedWithCurrentItem="True"
-                            ItemsSource="{Binding Path = SelectedItem.Items}"
+                                  IsSynchronizedWithCurrentItem="True"
+                                  ItemsSource="{Binding Path = SelectedItem.Items, Mode=TwoWay}"
+                                  SelectedItem="{Binding Path = SelectedOrderItem}"
                             >
                             <ListView.View>
                                 <GridView>
@@ -132,7 +106,7 @@
                             <ComboBox 
                                 HorizontalAlignment="Left"
                                 IsSynchronizedWithCurrentItem="True"
-                                SelectedItem="{Binding Path = SelectedOrderItem, Mode=TwoWay}"
+                                SelectedItem="{Binding Path = NewOrderItem, Mode=TwoWay}"
                                 ItemsSource="{Binding Path = OrderItems}" 
                                 >
                                 <ComboBox.ItemTemplate>
@@ -156,6 +130,43 @@
                         <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveOrderItem}" />
                     </DockPanel>
                 </StackPanel>
+
+                <!-- Zakaznik -->
+                <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
+                    <Label Content="Zakaznik:" FontSize="16"/>
+                    <StackPanel>
+                        <Label Content="Jméno a příjmení:" />
+                        <Label Content="{Binding Path = FullName}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Datum narození:" />
+                        <Label Content="{Binding Path = BirthDate}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Kontakt:" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path = PhoneNumber}" />
+                            <Label Content="{Binding Path = Email}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Adresa -->
+                <StackPanel DataContext="{Binding Path = SelectedItem.Customer.Address}">
+                    <Label Content="Adresa:" FontSize="16"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path = StreetName}" />
+                            <Label Content="{Binding Path = UnitNumber}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path = PostalCode}" />
+                            <Label Content="{Binding Path = CityName}" />
+                            <Label Content="{Binding Path = Country}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
