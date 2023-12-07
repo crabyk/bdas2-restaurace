@@ -1,25 +1,55 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
     public class TestMenuViewModel : BindableBase
     {
-        public ObservableCollection<Food> Food { get; set; }
+        public ObservableCollection<Item> Items { get; set; }
+
+        private Item selectedMenuItem;
+
+        public Item SelectedMenuItem
+        {
+            get { return selectedMenuItem; }
+            set { SetProperty(ref selectedMenuItem, value); }
+        }
+
+        private bool CanOrderItem(object param)
+        {
+            return true;
+        }
+
+        private ICommand orderItemCommand;
+
+        public ICommand OrderItemCommand
+        {
+            get
+            {
+                if (orderItemCommand == null)
+                {
+                    orderItemCommand = new RelayCommand(param => OrderItem((Item)param), CanOrderItem);
+                }
+                return orderItemCommand;
+            }
+        }
+
+        private void OrderItem(Item item)
+        {
+            SelectedMenuItem = item;
+            // pak se nahradi za create metodu
+        }
 
         public TestMenuViewModel()
         {
-            //Food = new ObservableCollection<Food>()
-            //{
-            //    new Food { ID = 1, Name = "Gulaš se šesti", Price = 120, Weight = 150, Recipe = "Some recipe" },
-            //    new Food { ID = 2, Name = "Svičkova na smetaně", Price = 150, Weight = 160, Recipe = "Some recipe" },
-            //    new Food { ID = 3, Name = "Řízek s bramborem", Price = 130, Weight = 135, Recipe = "Some recipe" },
-            //    new Food { ID = 4, Name = "Koprovka s vejcem", Price = 100, Weight = 140, Recipe = "Some recipe" },
-            //    new Food { ID = 5, Name = "Vyborny jidlo", Price = 120, Weight = 110, Recipe = "Magic"},
-            //    new Food { ID = 6, Name = "Jeste lepsi jidlo", Price = 140, Weight = 90, Recipe = "Magic times 2"}
-            //};
-            Food = new ObservableCollection<Food>(new FoodController().GetFoodFromView());
+            // potreba to pak predelat na asynchronni verzi
+            var food = new FoodController().GetFoodFromView();
+            var drinks = new DrinkController().GetDrinksFromView();
+
+            Items = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
         }
     }
 }
