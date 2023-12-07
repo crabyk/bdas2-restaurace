@@ -6,24 +6,20 @@ namespace BDAS2_Restaurace.Model
     {
         private int number;
 
+        public Table()
+        {
+            number = 0;
+        }
+
         public int Number
         {
             get { return number; }
             set
             {
                 number = value;
-                RaisePropertyChanged(nameof(Number));
+                OnPropertyChanged(nameof(Number));
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
     }
 }

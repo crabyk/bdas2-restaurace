@@ -7,7 +7,14 @@ namespace BDAS2_Restaurace.Model
     {
         private double amount;
         private DateTime date;
-        private PaymentType type = new PaymentType();
+        private PaymentType type;
+
+        public Payment()
+        {
+            amount = 0;
+            date = DateTime.Now;
+            type = new PaymentType();
+        }
 
         public double Amount
         {

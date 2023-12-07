@@ -6,6 +6,11 @@ namespace BDAS2_Restaurace.Model
     {
         private string name;
 
+        public PaymentType()
+        {
+            name = string.Empty;
+        }
+
         public string Name
         {
             get { return name; }

@@ -9,10 +9,20 @@ namespace BDAS2_Restaurace.Model
     {
         private DateTime orderDate;
         private Payment payment;
-        private ObservableCollection<Item> items = new ObservableCollection<Item>();
+        private ObservableCollection<Item> items;
         private Customer customer;
         private Table? table;
         private Address? address;
+
+        public Order()
+        {
+            orderDate = DateTime.Now;
+            payment = new Payment();
+            customer = new Customer();
+            table = new Table();
+            address = new Address();
+            items = new ObservableCollection<Item>();
+        }
 
         public DateTime OrderDate
         {
@@ -20,7 +30,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 orderDate = value;
-                 OnPropertyChanged(nameof(OrderDate));
+                OnPropertyChanged(nameof(OrderDate));
             }
         }
         public Payment Payment

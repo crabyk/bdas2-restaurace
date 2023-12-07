@@ -31,14 +31,23 @@ namespace BDAS2_Restaurace.Controller
                     {
                         comm.Transaction = orderAddTransaction;
 
+                        Address address = new AddressController().Add(item.Customer.Address);
+                        item.Customer.Address.ID = address.ID;
+                        Customer customer = new CustomerController().Add(item.Customer);
+
+                        Payment payment = new PaymentController().Add(item.Payment);
+
+                        Table table = new Table();
+                        table.ID = 1;
+
                         comm.CommandText = "vlozit_objednavku";
                         comm.CommandType = CommandType.StoredProcedure;
 
                         comm.Parameters.Add("p_datum", OracleDbType.Date).Value = item.OrderDate;
-                        comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = item.Payment.ID;
-                        comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = item.Customer.ID;
+                        comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = payment.ID;
+                        comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = customer.ID;
                         comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
-                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address?.ID;
+                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = address.ID;
                         comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
 
                         comm.ExecuteNonQuery();

@@ -34,21 +34,22 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <ListView Grid.Column="0" Name="menuListView" Width="Auto" HorizontalContentAlignment="Stretch" 
-                          ItemsSource="{Binding Path = Food}"
-                          SelectedItem="{Binding Path = SelectedFood}"
-                          SelectionMode="Extended"
-                          >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                            <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
-                            <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
-                            <GridViewColumn Header="Gramaz" DisplayMemberBinding="{Binding Path = Weight}"/>
-                            <GridViewColumn Header="Recept" DisplayMemberBinding="{Binding Path = Recipe}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <StackPanel Grid.Column="0">
+                    <ListView Width="Auto" HorizontalContentAlignment="Stretch" 
+                              ItemsSource="{Binding Path = OrderItems}"
+                              SelectedItem="{Binding Path = NewOrderItem}"
+                              SelectionMode="Extended"
+                              >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                                <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
+                                <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="Přidat položku" Command="{Binding AddOrderItem}" />
+                </StackPanel>
 
                 <ListView Grid.Column="1" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
                           IsSynchronizedWithCurrentItem="True"
@@ -69,13 +70,17 @@
 
             <StackPanel x:Name = "SelectedItems" Grid.Row = "2">
                 <Label Content="Vybrane polozky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
-                <ListView Name="selectedListView" Width="Auto" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path = SelectedItems}">
+                <ListView Width="Auto" HorizontalContentAlignment="Stretch" 
+                          ItemsSource="{Binding Path = SelectedItem.Items}"
+                          SelectedItem="{Binding Path = SelectedOrderItem}"
+                          >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Path = Name}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Button Content="Odebrat položku" Command="{Binding Path = RemoveOrderItem}" />
             </StackPanel>
 
             <Border Grid.Row="3">
@@ -88,55 +93,55 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = Customer}">
+                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = FirstName}" />
+                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.FirstName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni" />
-                            <TextBox Height="30" Text="{Binding Path = LastName}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.LastName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum narozeni" />
-                            <DatePicker x:Name="BirthDate" Height="30" SelectedDate="{Binding Path = BirthDate}" />
+                            <DatePicker x:Name="BirthDate" Height="30" SelectedDate="{Binding Path = SelectedItem.Customer.BirthDate}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Telefon" />
-                            <TextBox Height="30" Text="{Binding Path = PhoneNumber}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.PhoneNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Email" />
-                            <TextBox Height="30" Text="{Binding Path = Email}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Email}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = Address}">
+                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = StreetName}" />
+                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.Address.StreetName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Obec" />
-                            <TextBox Height="30" Text="{Binding Path = CityName}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.CityName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Číslo popisné" />
-                            <TextBox Height="30" Text="{Binding Path = UnitNumber}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.UnitNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="PSČ" />
-                            <TextBox Height="30" Text="{Binding Path = PostalCode}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.PostalCode}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Země" />
-                            <TextBox Height="30" Text="{Binding Path = Country}" />
+                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.Country}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                         <Label HorizontalAlignment="Right" Content="Typ platby" />
                         <ComboBox HorizontalAlignment="Right" 
                                   ItemsSource="{Binding Path = PaymentTypes}" 
-                                  SelectedItem="{Binding Path = SelectedPaymentType}"
+                                  SelectedItem="{Binding Path = SelectedItem.Payment.Type}"
                                   DisplayMemberPath="Name"/>
                     </StackPanel>
                 </Grid>
@@ -147,7 +152,7 @@
                     <Button
                         Content="Potvrdit"
                         Height="40" Width="80" HorizontalAlignment="Left"
-                        Command="{Binding Path = CreateOrder}"
+                        Command="{Binding Path = Create}"
                         />
                 </DockPanel>
             </Border>

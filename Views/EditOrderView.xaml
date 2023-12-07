@@ -22,9 +22,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
-            </StackPanel>
 
             <ListView Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
@@ -73,7 +70,7 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem.Payment}">
                         <StackPanel>
                             <Label Content="Částka:" />
-                            <TextBox Text="{Binding Path = Amount}" />
+                            <Label Content="{Binding Path = Amount}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum platby:" />
@@ -170,9 +167,7 @@
 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
                 <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

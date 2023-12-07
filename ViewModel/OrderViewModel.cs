@@ -79,34 +79,39 @@ namespace BDAS2_Restaurace.ViewModel
         {
             // PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
             // Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
-
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
         }
 
-        async void LoadAddresses()
+        protected override void CreateMethod(object obj)
+        {
+            base.CreateMethod(obj);
+        }
+
+        private async void LoadAddresses()
         {
             List<Address> paymentTypes = await Task.Run(() => new AddressController().GetAll());
             Addresses = new ObservableCollection<Address>(paymentTypes);
         }
 
-        async void LoadPayments()
+        private async void LoadPayments()
         {
             List<PaymentType> paymentTypes = await Task.Run(() => new PaymentTypeController().GetAll());   
             PaymentTypes = new ObservableCollection<PaymentType>(paymentTypes);
         }
 
-        async void LoadFood()
+        private async void LoadFood()
         {
             List<Food> foods = await Task.Run(() => new FoodController().GetAll());
             foods.ForEach(f => OrderItems.Add(f));
         }
 
-        async void LoadDrinks()
+        private async void LoadDrinks()
         {
             List<Drink> drinks = await Task.Run(() => new DrinkController().GetAll());
             drinks.ForEach(d => OrderItems.Add(d));
         }
+
 
         protected override void Load()
         {
@@ -125,9 +130,8 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void AddOrderItemMethod(object obj)
         {
-            // new OrderItemController().Add(NewOrderItem, SelectedItem);
+            SelectedItem.Payment.Amount = SelectedItem.Payment.Amount + NewOrderItem.Price;
             SelectedItem.AddItem(NewOrderItem);
-            // Load();
         }
 
         private bool CanRemoveOrderItemMethod(object obj)
@@ -137,7 +141,10 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void RemoveOrderItemMethod(object obj)
         {
-            // new OrderItemController().Delete(SelectedOrderItem, SelectedItem);
+            if (SelectedOrderItem == null)
+                return;
+
+            SelectedItem.Payment.Amount = SelectedItem.Payment.Amount - SelectedOrderItem.Price;
             SelectedItem.RemoveItem(SelectedOrderItem);
             // Load();
         }

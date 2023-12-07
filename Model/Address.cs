@@ -10,13 +10,22 @@ namespace BDAS2_Restaurace.Model
         private string postalCode;
         private string country;
 
+        public Address()
+        {
+            streetName = string.Empty;
+            cityName = string.Empty;
+            unitNumber = string.Empty;
+            postalCode = string.Empty;
+            country = string.Empty;
+        }
+
         public string StreetName
         {
             get { return streetName; }
             set
             {
                 streetName = value;
-                 OnPropertyChanged(nameof(StreetName));
+                OnPropertyChanged(nameof(StreetName));
             }
         }
 
@@ -26,7 +35,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 cityName = value;
-                 OnPropertyChanged(nameof(CityName));
+                OnPropertyChanged(nameof(CityName));
             }
         }
 
@@ -36,7 +45,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 unitNumber = value;
-                 OnPropertyChanged(nameof(UnitNumber));
+                OnPropertyChanged(nameof(UnitNumber));
             }
         }
 
@@ -46,7 +55,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 postalCode = value;
-                 OnPropertyChanged(nameof(PostalCode));
+                OnPropertyChanged(nameof(PostalCode));
             }
         }
 
@@ -56,7 +65,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 country = value;
-                 OnPropertyChanged(nameof(Country));
+                OnPropertyChanged(nameof(Country));
             }
         }
 
