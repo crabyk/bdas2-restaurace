@@ -19,6 +19,9 @@
         <DataTemplate DataType = "{x:Type viewModels:OrderViewModel}">
             <views:OrderView x:Name="OrderViewModel" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:ReservationViewModel}">
+            <views:ReservationView x:Name="ReservationViewModel" />
+        </DataTemplate>
         <DataTemplate DataType = "{x:Type viewModels:AdminViewModel}">
             <views:AdminView x:Name="AdminViewModel" />
         </DataTemplate>

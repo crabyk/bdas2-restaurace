@@ -35,7 +35,15 @@
 
                     <StackPanel Grid.Column="0" Grid.Row="0" Margin="0, 0, 10, 0">
                         <Label Content="Vyber stolu" />
-                        <ComboBox Height="30" ItemsSource="{Binding Path=TableList}" SelectedItem="{Binding Path=SelectedTable}" />
+                        <ComboBox 
+                            Height="30"
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedTable, Mode=TwoWay}"
+                            SelectedValue="{Binding Path = SelectedTable.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = TableList}" 
+                            DisplayMemberPath="Number"
+                            />
                     </StackPanel>
 
                     <StackPanel Grid.Column="0" Grid.Row="1" Margin="0, 0, 10, 0">
