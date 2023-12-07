@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -11,7 +12,7 @@ namespace BDAS2_Restaurace.Model
 	{
 		private JobPosition jobPosition;
 		private ObservableCollection<WorkShift> shifts;
-		protected string employmentType;
+		private string employmentType;
 
 		protected Employee()
 		{
@@ -40,7 +41,15 @@ namespace BDAS2_Restaurace.Model
         }
 
 
-        public string EmploymentType => employmentType;
+        public string EmploymentType
+        {
+            get { return employmentType; }
+            set
+            {
+                employmentType = value;
+                OnPropertyChanged(nameof(EmploymentType));  
+            }
+        }
 
         public void AddShift(WorkShift shift)
         {
@@ -59,8 +68,14 @@ namespace BDAS2_Restaurace.Model
         {
             Employee employee = (Employee)MemberwiseClone();
 			employee.JobPosition = (JobPosition)JobPosition.Clone();
+            employee.Address = (Address)Address.Clone();
+
+            employee.Shifts = new ObservableCollection<WorkShift>();
+            foreach (var shift in Shifts)
+                employee.AddShift((WorkShift)shift.Clone());
 
             return employee;
         }
+
     }
 }

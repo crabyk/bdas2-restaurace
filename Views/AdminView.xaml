@@ -34,6 +34,18 @@
         <DataTemplate DataType = "{x:Type viewModel:AddressViewModel}">
             <views:EditAddressView x:Name="EditAddressView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:FullEmployeeViewModel}">
+            <views:EditFullEmployeeView x:Name="EditFullEmployeeView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:PartEmployeeViewModel}">
+            <views:EditPartEmployeeView x:Name="EditPartEmployeeView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:WorkShiftViewModel}">
+            <views:EditWorkShiftView x:Name="EditWorkShiftView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:JobPositionViewModel}">
+            <views:EditJobPositionView x:Name="EditJobPositionView" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -54,9 +66,10 @@
             <Button Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
             <Button Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
             <Button Content="Stoly" />
-            <Button Content="Zamestnanci" />
-            <Button Content="Pozice" />
-            <Button Content="Smeny" />
+            <Button Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
+            <Button Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
+            <Button Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
+            <Button Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0">

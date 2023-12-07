@@ -83,11 +83,6 @@ namespace BDAS2_Restaurace.ViewModel
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
         }
 
-        protected override void CreateMethod(object obj)
-        {
-            base.CreateMethod(obj);
-        }
-
         private async void LoadAddresses()
         {
             List<Address> paymentTypes = await Task.Run(() => new AddressController().GetAll());

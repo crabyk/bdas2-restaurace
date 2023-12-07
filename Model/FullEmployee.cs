@@ -12,7 +12,6 @@ namespace BDAS2_Restaurace.Model
 
         public FullEmployee() : base()
         {
-            employmentType = "Plny uvazek";
             monthRate = 0;
         }
 

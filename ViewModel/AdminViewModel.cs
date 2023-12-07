@@ -1,4 +1,5 @@
-﻿using BDAS2_Restaurace.Router;
+﻿using BDAS2_Restaurace.Model;
+using BDAS2_Restaurace.Router;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,11 @@ namespace BDAS2_Restaurace.ViewModel
             this.Routes.Add(new Route<CustomerViewModel>("customer"));
             this.Routes.Add(new Route<AddressViewModel>("address"));
 
+
+            this.Routes.Add(new Route<FullEmployeeViewModel>("fullEmployee"));
+            this.Routes.Add(new Route<PartEmployeeViewModel>("partEmployee"));
+            this.Routes.Add(new Route<WorkShiftViewModel>("shift"));
+            this.Routes.Add(new Route<JobPositionViewModel>("position"));
         }
 	}
 }
