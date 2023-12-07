@@ -12,7 +12,6 @@ namespace BDAS2_Restaurace.Model
 
         public PartEmployee() : base()
         {
-            employmentType = "Brigada";
             hourRate = 0;
         }
 
