@@ -147,26 +147,38 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select id_objednavka, datum, platba_id, zakaznik_id, adresa_id from objednavky";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_objednavky";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
                             Payment payment = new PaymentController().Get(rdr.GetInt32(2).ToString());
                             Customer customer = new CustomerController().Get(rdr.GetInt32(3).ToString());
-                            // Address address = new AddressController().Get(rdr.GetInt32(4).ToString());
+                            Table? table = null;
+                            if (!rdr.IsDBNull(4))
+                                table = new TableController().Get(rdr.GetInt32(4).ToString());
+
+                            Address? address = null;
+                            if (!rdr.IsDBNull(5))
+                                address = new AddressController().Get(rdr.GetInt32(5).ToString());
 
                             List<Item> items = new OrderItemController().GetAll(rdr.GetInt32(0).ToString());
 
                             result.Add(new Order()
                             {
                                 ID = rdr.GetInt32(0),
-                                OrderDate= rdr.GetDateTime(1),
+                                OrderDate = rdr.GetDateTime(1),
                                 Payment = payment,
                                 Customer = customer,
-                                Items = new ObservableCollection<Item>(items)
+                                Items = new ObservableCollection<Item>(items),
+                                Table = table,
+                                Address = address
                             });
                         }
                     }
@@ -199,7 +211,7 @@ namespace BDAS2_Restaurace.Controller
 
                     itemsAdd.ForEach(i => new OrderItemController().Add(i, item));
                     itemsRemove.ForEach(i => new OrderItemController().Delete(i, item));
-                    
+
 
 
                     comm.CommandText = "upravit_objednavku";

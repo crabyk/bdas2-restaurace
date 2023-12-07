@@ -80,7 +80,6 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_adresa", id);
 
-                    // u vystupnich varcharu je potreba specifikovat velikost..
                     OracleParameter streetName = new OracleParameter("p_ulice", OracleDbType.Varchar2, 32, null, ParameterDirection.Output);
                     comm.Parameters.Add(streetName);
                     OracleParameter cityName = new OracleParameter("p_mesto", OracleDbType.Varchar2, 32, null, ParameterDirection.Output);
@@ -116,9 +115,13 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select id_adresa, ulice, mesto, cislo_popisne, psc, stat from adresy";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_adresy";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
@@ -132,11 +135,9 @@ namespace BDAS2_Restaurace.Controller
                                 PostalCode = rdr.GetString(4),
                                 Country = rdr.GetString(5)
                             });
-                            //result.Add(new Address(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5)));
                         }
                     }
                 }
-
             }
 
             return result;

@@ -78,7 +78,7 @@ namespace BDAS2_Restaurace.Controller
                 {
                     comm.CommandText = "ziskat_zakaznika";
                     comm.CommandType = CommandType.StoredProcedure;
-    
+
                     comm.Parameters.Add("p_id_zakaznik", id);
 
                     OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, 20, null, ParameterDirection.Output);
@@ -122,11 +122,12 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-
-                // TODO vsechny tyhle GetAll metody by sly nejspis udelat pres explicitni kurzor, splnime si tim aspon tu podminku :D
-                string sql = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id from zakaznici";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_zakazniky";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
 
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
@@ -146,7 +147,6 @@ namespace BDAS2_Restaurace.Controller
                         }
                     }
                 }
-
             }
 
             return result;

@@ -77,9 +77,13 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select id_typ_platby, nazev from typy_plateb";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_typy_plateb";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
@@ -92,6 +96,53 @@ namespace BDAS2_Restaurace.Controller
                         }
                     }
                 }
+            }
+
+            return result;
+        }
+
+        public override int Delete(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "smazat_typ_platby";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal).Value = id;
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
+        public override PaymentType? Update(PaymentType item)
+        {
+            PaymentType? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "upravit_typ_platby";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_typ_platby", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
+
+                    comm.ExecuteNonQuery();
+                }
+
+                result = item;
             }
 
             return result;

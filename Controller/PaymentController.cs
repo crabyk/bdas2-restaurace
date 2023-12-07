@@ -109,9 +109,13 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select t.id_typ_platby, t.nazev, id_platba, suma, datum  from platby p join typy_plateb t on p.typ_platby_id = t.id_typ_platby";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_platby";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
