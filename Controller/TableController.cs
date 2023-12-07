@@ -8,12 +8,11 @@ using System.Data;
 
 namespace BDAS2_Restaurace.Controller
 {
-    public class DrinkController : Controller<Drink>
+    public class TableController : Controller<Table>
     {
-
-        public override Drink? Add(Drink item)
+        public override Table? Add(Table item)
         {
-            Drink? result = null;
+            Table? result = null;
 
             using (OracleConnection conn = Database.Connect())
             {
@@ -22,17 +21,15 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "vlozit_napoj";
+                    comm.CommandText = "vlozit_stul";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
-                    comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
-                    comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
-                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add("p_cislo_stolu", OracleDbType.Int32).Value = item.Number;
+                    comm.Parameters.Add("p_id_stul", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)comm.Parameters["p_id_polozka"].Value).Value;
+                    newId = ((OracleDecimal)comm.Parameters["p_id_stul"].Value).Value;
                 }
 
                 result = item;
@@ -52,10 +49,10 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "smazat_polozku";
+                    comm.CommandText = "smazat_stul";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add("p_id_polozka", id);
+                    comm.Parameters.Add("p_id_stul", id);
 
                     result = comm.ExecuteNonQuery();
                 }
@@ -64,37 +61,30 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-
-        public override Drink? Get(string id)
+        public override Table? Get(string id)
         {
-            Drink? result = null;
-
+            Table? result = null;
 
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
+
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "ziskat_napoj";
+                    comm.CommandText = "ziskat_stul";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add("p_id_polozka", id);
+                    comm.Parameters.Add("p_id_stul", id);
 
-                    OracleParameter name = new OracleParameter("p_nazev", OracleDbType.Varchar2, 64, null, ParameterDirection.Output);
-                    comm.Parameters.Add(name);
-                    OracleParameter price = new OracleParameter("p_cena", OracleDbType.Int32, ParameterDirection.Output);
-                    comm.Parameters.Add(price);
-                    OracleParameter volume = new OracleParameter("p_objem", OracleDbType.Int32, ParameterDirection.Output);
-                    comm.Parameters.Add(volume);
+                    OracleParameter number = new OracleParameter("p_cislo_stolu", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(number);
 
                     comm.ExecuteNonQuery();
 
-                    result = new Drink()
+                    result = new Table()
                     {
                         ID = int.Parse(id),
-                        Name = name.Value.ToString(),
-                        Price = double.Parse(price.Value.ToString()),
-                        Volume = double.Parse(volume.Value.ToString())
+                        Number = int.Parse(number.Value.ToString())
                     };
                 }
             }
@@ -102,17 +92,16 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        public override List<Drink> GetAll()
+        public override List<Table> GetAll()
         {
-            List<Drink> result = new List<Drink>();
+            List<Table> result = new List<Table>();
 
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "ziskat_napoje";
+                    comm.CommandText = "ziskat_stoly";
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
@@ -121,25 +110,22 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            result.Add(new Drink
+                            result.Add(new Table
                             {
                                 ID = rdr.GetInt32(0),
-                                Name = rdr.GetString(1),
-                                Price = rdr.GetInt32(2),
-                                Volume = rdr.GetInt32(3)
+                                Number = rdr.GetInt32(1)
                             });
                         }
                     }
-
-                    return result;
                 }
             }
+
+            return result;
         }
 
-
-        public override Drink? Update(Drink item)
+        public override Table? Update(Table item)
         {
-            Drink? result = null;
+            Table? result = null;
 
             using (OracleConnection conn = Database.Connect())
             {
@@ -147,13 +133,11 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "upravit_napoj";
+                    comm.CommandText = "upravit_stul";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal).Value = item.ID;
-                    comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
-                    comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
-                    comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
+                    comm.Parameters.Add("p_id_stul", OracleDbType.Decimal).Value = item.ID;
+                    comm.Parameters.Add("p_cislo_stolu", OracleDbType.Int32).Value = item.Number;
 
                     comm.ExecuteNonQuery();
                 }

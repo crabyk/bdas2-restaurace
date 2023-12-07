@@ -115,23 +115,25 @@ namespace BDAS2_Restaurace.Controller
             using (OracleConnection conn = Database.Connect())
             {
                 conn.Open();
-                string sql = "select j.id_polozka, nazev, cena, hmotnost, recept from polozky p join jidla j on p.id_polozka = j.id_polozka";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
+                using (OracleCommand comm = conn.CreateCommand())
                 {
+                    comm.CommandText = "ziskat_jidla";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
-                            // result.Add(new Food(rdr.GetInt32(0), rdr.GetString(1), rdr.GetInt32(2), rdr.GetInt32(3), rdr.GetString(4)));
-                            result.Add(
-                                new Food
-                                {
-                                    ID = rdr.GetInt32(0),
-                                    Name = rdr.GetString(1),
-                                    Price = rdr.GetInt32(2),
-                                    Weight = rdr.GetInt32(3),
-                                    Recipe = rdr.GetString(4),
-                                });
+                            result.Add(new Food
+                            {
+                                ID = rdr.GetInt32(0),
+                                Name = rdr.GetString(1),
+                                Price = rdr.GetInt32(2),
+                                Weight = rdr.GetInt32(3),
+                                Recipe = rdr.GetString(4),
+                            });
                         }
                     }
                 }

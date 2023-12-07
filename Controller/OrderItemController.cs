@@ -1,14 +1,8 @@
 ﻿using BDAS2_Restaurace.DB;
 using BDAS2_Restaurace.Model;
-using Microsoft.VisualBasic;
 using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Controller
 {
