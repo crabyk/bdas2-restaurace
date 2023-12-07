@@ -16,6 +16,7 @@ namespace BDAS2_Restaurace
 			this.Routes.Add(new Route<MenuViewModel>("menu"));
 			this.Routes.Add(new Route<OldOrderViewModel>("order"));
 			this.Routes.Add(new Route<AdminViewModel>("admin"));
+			this.Routes.Add(new Route<ReservationViewModel>("reservation"));
 		}
 
 		/*

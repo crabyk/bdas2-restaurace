@@ -68,6 +68,12 @@
                 >
                 <TextBlock Text="Vytvořit objednávku" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
+            <Button 
+                Height="40" Width="80" Margin="0,10,0,0"
+                Command = "{Binding NavCommand}" CommandParameter = "reservation"
+                >
+                <TextBlock Text="Vytvořit rezervaci" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
         </StackPanel>
         <ScrollViewer x:Name="MainContent" VerticalScrollBarVisibility="Auto" Grid.Row = "1" Grid.Column="1">
             <ContentControl Content = "{Binding CurrentViewModel}"/>
