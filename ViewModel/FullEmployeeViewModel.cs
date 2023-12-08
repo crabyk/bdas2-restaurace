@@ -100,19 +100,19 @@ namespace BDAS2_Restaurace.ViewModel
         }
 
 
-        async void LoadPositions()
+        private async void LoadPositions()
         {
             List<JobPosition> positions = await Task.Run(() => new JobPositionController().GetAll());
             Positions = new ObservableCollection<JobPosition>(positions);
         }
 
-        async void LoadAddresses()
+        private async void LoadAddresses()
         {
             List<Address> addresses = await Task.Run(() => new AddressController().GetAll());
             Addresses = new ObservableCollection<Address>(addresses);
         }
 
-        async void LoadShifts()
+        private async void LoadShifts()
         {
             List<WorkShift> shifts = await Task.Run(() => new WorkShiftController().GetAll());
             EmployeeShifts = new ObservableCollection<WorkShift>(shifts);

@@ -47,6 +47,12 @@
         <DataTemplate DataType = "{x:Type viewModel:JobPositionViewModel}">
             <views:EditJobPositionView x:Name="EditJobPositionView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:UserViewModel}">
+            <views:EditUserView x:Name="EditUserView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:RoleViewModel}">
+            <views:EditRoleView x:Name="EditRoleView" />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -71,6 +77,8 @@
             <Button Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
             <Button Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
             <Button Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
+            <Button Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
+            <Button Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0">

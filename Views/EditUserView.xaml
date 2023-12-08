@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="BDAS2_Restaurace.Views.EditUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
+             xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+            </StackPanel>
+
+            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+                      IsSynchronizedWithCurrentItem="True"
+                      ItemsSource="{Binding Path = Items}"
+                      SelectedItem="{Binding Path = SelectedItem}"
+                      >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                        <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
+                        <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
+                        <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Path = Login}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <StackPanel Grid.Column="1">
+            <StackPanel DataContext="{Binding Path = SelectedItem}">
+                <StackPanel>
+                    <Label Content="ID:" />
+                    <Label Content="{Binding Path = ID}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Jmeno:" />
+                    <TextBox Text="{Binding Path = FirstName}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Prijmeni:" />
+                    <TextBox Text="{Binding Path = LastName}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Login:" />
+                    <TextBox Text="{Binding Path = Login}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Nove heslo:" />
+                    <TextBox Text="{Binding Path = NewPassword}" />
+                </StackPanel>
+            </StackPanel>
+            <!-- Role -->
+            <StackPanel>
+                <Label Content="{Binding Path = Test}" />
+                <ComboBox 
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedItem.Role, Mode=TwoWay}"
+                            SelectedValue="{Binding Path = SelectedItem.Role.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = Roles}" 
+                            DisplayMemberPath="Name"
+                            />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

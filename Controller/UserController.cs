@@ -5,41 +5,28 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BDAS2_Restaurace.Controller
 {
     public class UserController : Controller<User>
     {
-        public override User? Add(User item)
+        private string HashPassword(string password)
         {
-            User? result = null;
-
-            using (OracleConnection conn = Database.Connect())
+            using (SHA256 sha256 = SHA256.Create())
             {
-                conn.Open();
-                decimal newId;
+                // Convert the plain text password to a byte array
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
 
-                using (OracleCommand comm = conn.CreateCommand())
-                {
-                    comm.CommandText = "vlozit_uzivatele";
-                    comm.CommandType = CommandType.StoredProcedure;
+                // Compute the hash value of the byte array
+                byte[] hash = sha256.ComputeHash(bytes);
 
-                    comm.Parameters.Add("p_login", OracleDbType.Varchar2).Value = item.Login;
-                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = item.Hash;
-                    comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
-                    comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
-                    comm.Parameters.Add("p_id_uzivatel", OracleDbType.Decimal, ParameterDirection.Output);
+                // Convert the hash value to a base64-encoded string
+                string hashedPassword = Convert.ToBase64String(hash);
 
-                    comm.ExecuteNonQuery();
-
-                    newId = ((OracleDecimal)comm.Parameters["p_id_uzivatel"].Value).Value;
-                }
-
-                result = item;
-                result.ID = Convert.ToInt32(newId);
+                return hashedPassword;
             }
-
-            return result;
         }
 
         public override int Delete(string id)
@@ -97,7 +84,6 @@ namespace BDAS2_Restaurace.Controller
                     {
                         ID = int.Parse(id),
                         Login = login.Value.ToString(),
-                        Hash = hash.Value.ToString(),
                         FirstName = firstName.Value.ToString(),
                         LastName = lastName.Value.ToString(),
                         Role = role
@@ -132,7 +118,6 @@ namespace BDAS2_Restaurace.Controller
                             {
                                 ID = rdr.GetInt32(0),
                                 Login = rdr.GetString(1),
-                                Hash = rdr.GetString(2),
                                 FirstName = rdr.GetString(3),
                                 LastName = rdr.GetString(4),
                                 Role = role
@@ -145,7 +130,7 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
-        public override User? Update(User item)
+        public User? Update(User item, string password)
         {
             User? result = null;
 
@@ -160,7 +145,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_uzivatel", OracleDbType.Decimal).Value = item.ID;
                     comm.Parameters.Add("p_login", OracleDbType.Varchar2).Value = item.Login;
-                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = item.Hash;
+                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = HashPassword(password);
                     comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
                     comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
                     comm.Parameters.Add("p_id_role", OracleDbType.Decimal).Value = item.Role.ID;
@@ -169,6 +154,81 @@ namespace BDAS2_Restaurace.Controller
                 }
 
                 result = item;
+            }
+
+            return result;
+        }
+
+        public User? Register(User item, string password)
+        {
+            User? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                decimal newId;
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "vlozit_uzivatele";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_login", OracleDbType.Varchar2).Value = item.Login;
+                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = HashPassword(password);
+                    comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
+                    comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add("p_id_uzivatel", OracleDbType.Decimal, ParameterDirection.Output);
+
+                    comm.ExecuteNonQuery();
+
+                    newId = ((OracleDecimal)comm.Parameters["p_id_uzivatel"].Value).Value;
+                }
+
+                result = item;
+                result.ID = Convert.ToInt32(newId);
+            }
+
+            return result;
+        }
+
+        public User? Login(string username, string password)
+        {
+            User? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "prihlasit_uzivatele";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    string hash = HashPassword(password);
+                    comm.Parameters.Add("p_login", username);
+                    comm.Parameters.Add("p_hash", hash);
+
+                    OracleParameter userId = new OracleParameter("p_id_uzivatel", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(userId);
+                    OracleParameter firstName = new OracleParameter("p_jmeno", OracleDbType.Varchar2, 20, null, ParameterDirection.Output);
+                    comm.Parameters.Add(firstName);
+                    OracleParameter lastName = new OracleParameter("p_prijmeni", OracleDbType.Varchar2, 50, null, ParameterDirection.Output);
+                    comm.Parameters.Add(lastName);
+                    OracleParameter roleId = new OracleParameter("p_id_role", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(roleId);
+
+                    comm.ExecuteNonQuery();
+
+                    var role = new RoleController().Get(roleId.Value.ToString());
+
+                    result = new User()
+                    {
+                        ID = Convert.ToInt32(userId.Value),
+                        Login = username,
+                        FirstName = firstName.Value.ToString(),
+                        LastName = lastName.Value.ToString(),
+                        Role = role
+                    };
+                }
             }
 
             return result;

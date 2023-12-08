@@ -1,9 +1,10 @@
-﻿namespace BDAS2_Restaurace.Model
+﻿using System.Collections.ObjectModel;
+
+namespace BDAS2_Restaurace.Model
 {
     public class User : ModelBase
     {
         private string login;
-        private string hash;
         private string firstName;
         private string lastName;
         private Role role;
@@ -15,16 +16,6 @@
             {
                 login = value;
                 OnPropertyChanged(nameof(Login));
-            }
-        }
-
-        public string Hash
-        {
-            get { return hash; }
-            set
-            {
-                hash = value;
-                OnPropertyChanged(nameof(Hash));
             }
         }
 
@@ -56,6 +47,14 @@
                 role = value;
                 OnPropertyChanged(nameof(Role));
             }
+        }
+
+        public override object Clone()
+        {
+            User user = (User)this.MemberwiseClone();
+            user.Role = (Role)Role?.Clone();
+
+            return user;
         }
     }
 }

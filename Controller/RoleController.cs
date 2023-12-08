@@ -21,7 +21,7 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "vlozit_uzivatele";
+                    comm.CommandText = "vlozit_roli";
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
