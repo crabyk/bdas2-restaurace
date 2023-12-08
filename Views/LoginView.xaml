@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
-             xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
+             xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel"
+             xmlns:ff="clr-namespace:BDAS2_Restaurace"
              d:DataContext="{d:DesignInstance Type=viewModels:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
@@ -22,8 +23,8 @@
             <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <TextBox Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path =Username, Mode=TwoWay}"/>
             <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <!--<PasswordBox x:Name="PasswordBox" Width="200" Height="25" Margin="0,5,0,10" Password="{Binding Password}"/>-->
-            <TextBox Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path =Password, Mode=TwoWay}"/>
+            <PasswordBox x:Name="PasswordBox" Width="200" Height="25" Margin="0,5,0,10"
+             ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <Button Grid.Row="2" Content="Přihlásit" Width="100" Height="30" HorizontalAlignment="Center" Margin="0,10,0,10" Command="{Binding LoginCommand}"/>

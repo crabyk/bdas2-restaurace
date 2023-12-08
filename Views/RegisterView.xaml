@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:ff="clr-namespace:BDAS2_Restaurace"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
     <Grid>
@@ -22,7 +23,8 @@
             <TextBox x:Name="UsernameTextBox" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Login, Mode=TwoWay}"/>
 
             <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <PasswordBox x:Name="PasswordBox" Width="200" Height="25" Margin="0,5,0,10"/>
+            <PasswordBox x:Name="PasswordBox" Width="200" Height="25" Margin="0,5,0,10"
+             ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Content="Jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <TextBox x:Name="FirstNameTextBox" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding FirstName, Mode=TwoWay}"/>
