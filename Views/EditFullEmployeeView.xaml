@@ -26,7 +26,7 @@
                 <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
 
-            <ListView Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
                         ItemsSource="{Binding Path = Items}"
                         SelectedItem="{Binding Path = SelectedItem}"
@@ -34,8 +34,8 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = FirstName}"/>
-                        <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = LastName}"/>
+                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = FullName}"/>
+                        <GridViewColumn Header="Typ uvazku" DisplayMemberBinding="{Binding Path = EmploymentType}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -48,18 +48,19 @@
                     <Label Content="{Binding Path = ID}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Nazev:" />
+                    <Label Content="Jmeno:" />
                     <TextBox Text="{Binding Path = FirstName}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Cena:" />
+                    <Label Content="Primeni:" />
                     <TextBox Text="{Binding Path = LastName}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Objem:" />
-                    <TextBox Text="{Binding Path = Email}" />
+                    <Label Content="Mesicni plat:" />
+                    <TextBox Text="{Binding Path = MonthRate}" />
                 </StackPanel>
             </StackPanel>
+
             <!-- Adresy -->
             <StackPanel>
                 <ComboBox 
@@ -94,6 +95,69 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
+
+            <!-- Pozice -->
+            <StackPanel>
+                <Label Content="{Binding Path = Test}" />
+                <ComboBox 
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedItem.JobPosition, Mode=TwoWay}"
+                            SelectedValue="{Binding Path = SelectedItem.JobPosition.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = Positions}" 
+                            DisplayMemberPath="Name"
+                            />
+            </StackPanel>
+
+            <!-- Smeny -->
+            <StackPanel>
+                <Label Content="Smeny:" FontSize="16"/>
+                <StackPanel>
+                    <ListView Width="Auto" HorizontalContentAlignment="Stretch"
+                                  IsSynchronizedWithCurrentItem="True"
+                                  ItemsSource="{Binding Path = SelectedItem.Shifts, Mode=TwoWay}"
+                                  SelectedItem="{Binding Path = SelectedShift}"
+                            >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
+                                <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = Begin}"/>
+                                <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = End}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox 
+                                HorizontalAlignment="Left"
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = NewShift, Mode=TwoWay}"
+                                ItemsSource="{Binding Path = EmployeeShifts}" 
+                                >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <Label Content="Zacatek:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = Begin}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Konec:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = End}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddShift}" />
+                    </StackPanel>
+                    <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveShift}" />
+                </DockPanel>
+            </StackPanel>
+
+
             <StackPanel Orientation="Horizontal">
                 <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
                 <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>

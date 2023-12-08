@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	public class ViewModelBase<T, U> : BindableBase 
+	public class ViewModelBase<T, U> : RouteNavigation
         where T : ModelBase, new()
         where U : Controller<T>, new()
     {

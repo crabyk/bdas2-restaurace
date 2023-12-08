@@ -67,7 +67,7 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "smazat_zamestnance";
+                    comm.CommandText = "smazat_brigadu";
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_id_zamestnanec", id);

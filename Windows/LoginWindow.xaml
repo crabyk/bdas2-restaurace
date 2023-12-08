@@ -1,0 +1,41 @@
+﻿<Window x:Class="BDAS2_Restaurace.Windows.LoginWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BDAS2_Restaurace.Windows"
+             xmlns:views = "clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel" 
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto"
+             SizeToContent="WidthAndHeight"
+             d:DesignHeight="400" d:DesignWidth="300">
+    
+    <Window.DataContext>
+        <viewModel:LoginWindowViewModel/>
+    </Window.DataContext>
+
+
+    <Window.Resources>
+        <DataTemplate DataType = "{x:Type viewModel:LoginViewModel}">
+            <views:LoginView x:Name="LoginView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:RegisterViewModel}">
+            <views:RegisterView x:Name="RegisterView" />
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <Grid x:Name = "LoginContent" Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ContentControl Name="CurrentViewModel" Content = "{Binding CurrentViewModel}"/>
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Hyperlink NavigateUri="#" Command="{Binding NavCommand}" CommandParameter = "login">Přihlásit se</Hyperlink>
+            /
+            <Hyperlink NavigateUri="#" Command="{Binding NavCommand}" CommandParameter = "register">Registrovat se</Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>

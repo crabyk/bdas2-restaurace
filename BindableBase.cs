@@ -10,7 +10,13 @@ namespace BDAS2_Restaurace
 {
 	public class BindableBase : INotifyPropertyChanged
 	{
-		protected virtual void SetProperty<T>(ref T member, T val, [CallerMemberName] string propertyName = null)
+        public event EventHandler WindowClose;
+        protected virtual void OnWindowClose()
+        {
+            WindowClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void SetProperty<T>(ref T member, T val, [CallerMemberName] string propertyName = null)
 		{
 			if (object.Equals(member, val)) return;
 

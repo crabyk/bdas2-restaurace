@@ -1,5 +1,6 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
+using BDAS2_Restaurace.Router;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -7,11 +8,13 @@ namespace BDAS2_Restaurace.ViewModel
     {
         public RegisterViewModel() : base(new UserController())
         {
+
         }
 
         protected override void CreateMethod(object obj)
         {
-            base.CreateMethod(obj);
+            OnWindowClose();
+            // base.CreateMethod(obj);
             // TODO vratit se zpet na domovskou stranku
         }
     }

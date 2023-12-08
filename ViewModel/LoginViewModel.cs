@@ -1,4 +1,9 @@
-﻿using System.Windows.Input;
+﻿using BDAS2_Restaurace.Router;
+using BDAS2_Restaurace.Windows;
+using System;
+using System.Security;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -28,32 +33,39 @@ namespace BDAS2_Restaurace.ViewModel
         }
 
         public ICommand LoginCommand { get; set; }
-        public ICommand RegisterCommand { get; set; }
 
         public LoginViewModel()
         {
-            LoginCommand = new RelayCommand(LoginExecute, CanLoginExecute);
-            RegisterCommand = new RelayCommand(RegisterExecute, CanRegisterExecute);
+            Username = string.Empty;
+            Password = string.Empty;
+            LoginCommand = new RelayCommand(LoginMethod, CanLoginMethod);
         }
 
-        private void LoginExecute(object obj)
+        private bool CanLoginMethod(object obj)
         {
-
-        }
-
-        private bool CanLoginExecute(object obj)
-        {
-            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
-        }
-
-        private void RegisterExecute(object obj)
-        {
-
-        }
-
-        private bool CanRegisterExecute(object obj)
-        {
+            // return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
             return true;
+        }
+
+        private void LoginMethod(object obj)
+        {
+            Window window;
+            if (Password == "admin" && Username == "admin")
+                window = new AdminWindow();
+            else
+                return;
+
+            window.Show();
+            // OnWindowClose();
+
+            /*
+            if (Password == "admin" && Username == "admin")
+            {
+                var win = new AdminWindow();
+                win.Show();
+                
+            }
+            */
         }
     }
 }

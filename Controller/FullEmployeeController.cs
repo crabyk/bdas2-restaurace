@@ -4,11 +4,13 @@ using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Controller
@@ -59,7 +61,7 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "smazat_zamestnance";
+                    comm.CommandText = "smazat_uvazek";
                     comm.CommandType = CommandType.StoredProcedure;
 
                     comm.Parameters.Add("p_id_zamestnanec", id);
@@ -100,7 +102,10 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
-                    var address = new AddressController().Get(addressId.Value.ToString());
+
+                    Address address = new AddressController().Get(addressId.Value.ToString());
+                    JobPosition position = new JobPositionController().Get(positionId.Value.ToString());
+                    List<WorkShift> shifts = new EmployeeShiftController().GetAll(id);
 
                     result = new FullEmployee()
                     {
@@ -109,7 +114,9 @@ namespace BDAS2_Restaurace.Controller
                         LastName = lastName.Value.ToString(),
                         EmploymentType = employmentType.Value.ToString(),
                         MonthRate = float.Parse(monthRate.Value.ToString()),
-                        Address = address
+                        Address = address,
+                        JobPosition = position,
+                        Shifts = new ObservableCollection<WorkShift>(shifts)
                     };
                 }
             }
@@ -136,6 +143,9 @@ namespace BDAS2_Restaurace.Controller
                         while (rdr.Read())
                         {
                             Address address = new AddressController().Get(rdr.GetString(5));
+                            JobPosition position = new JobPositionController().Get(rdr.GetString(6));
+                            List<WorkShift> shifts = new EmployeeShiftController().GetAll(rdr.GetInt32(0).ToString());
+
                             result.Add(new FullEmployee
                             {
                                 ID = rdr.GetInt32(0),
@@ -143,7 +153,9 @@ namespace BDAS2_Restaurace.Controller
                                 LastName = rdr.GetString(2),   
                                 EmploymentType = rdr.GetString(3),
                                 MonthRate = rdr.GetFloat(4),
-                                Address = address
+                                Address = address,
+                                JobPosition = position,
+                                Shifts = new ObservableCollection<WorkShift>(shifts)
                             });
                         }
                     }
@@ -163,6 +175,15 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
+                    List<WorkShift> shifts = new EmployeeShiftController().GetAll(item.ID.ToString());
+                    List<WorkShift> newShifts = new List<WorkShift>(item.Shifts);
+
+                    List<WorkShift> shiftsAdd = newShifts.Where(s1 => !shifts.Any(s2 => s2.ID == s1.ID)).ToList();
+                    List<WorkShift> shiftsRemove = shifts.Where(s1 => !newShifts.Any(s2 => s2.ID == s1.ID)).ToList();
+
+                    shiftsAdd.ForEach(s => new EmployeeShiftController().Add(s, item));
+                    shiftsRemove.ForEach(s => new EmployeeShiftController().Delete(s, item));
+
                     comm.CommandText = "upravit_uvazek";
                     comm.CommandType = CommandType.StoredProcedure;
 
