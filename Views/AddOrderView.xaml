@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
              xmlns:views = "clr-namespace:BDAS2_Restaurace.Views"
              xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
+             xmlns:ff="clr-namespace:BDAS2_Restaurace"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -176,8 +177,23 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
+                    <StackPanel Grid.Row="0">
+                        <StackPanel>
+                            <Label Grid.Column="0" Content="Login" />
+                            <TextBox Height="30" Grid.Column="1" Text="{Binding Username}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Heslo" />
+                            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}"
+                                    ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button Content="Přihlasit se" Command="{Binding LoadCustomer}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
                             <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.FirstName}" />
@@ -199,7 +215,7 @@
                             <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Email}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left">
+                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
                             <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.Address.StreetName}" />

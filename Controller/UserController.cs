@@ -77,7 +77,14 @@ namespace BDAS2_Restaurace.Controller
                     OracleParameter roleId = new OracleParameter("p_id_role", OracleDbType.Decimal, ParameterDirection.Output);
                     comm.Parameters.Add(roleId);
 
-                    comm.ExecuteNonQuery();
+                    try
+                    {
+                        comm.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        return null;
+                    }
 
                     var role = new RoleController().Get(roleId.Value.ToString());
 

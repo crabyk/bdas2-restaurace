@@ -1,5 +1,6 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
+using BDAS2_Restaurace.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -21,6 +23,29 @@ namespace BDAS2_Restaurace.ViewModel
         private ObservableCollection<Item> orderItems = new ObservableCollection<Item>();
         private Item selectedOrderItem;
         private Item newOrderItem;
+
+        private string username;
+        private string password;
+
+        public string Username
+        {
+            get { return username; }
+            set
+            {
+                username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
 
         public ObservableCollection<PaymentType> PaymentTypes
         {
@@ -77,6 +102,8 @@ namespace BDAS2_Restaurace.ViewModel
 
         private ICommand SelectOrderItem;
 
+        private ICommand LoadCustomer;
+
 
         public ICommand OrderItemCommand
         {
@@ -107,6 +134,7 @@ namespace BDAS2_Restaurace.ViewModel
         {
             // PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
             // Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
+            LoadCustomer = new RelayCommand(LoadCustomerMethod, CanLoadCustomerMethod);
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
             var food = new FoodController().GetAll();
@@ -115,6 +143,27 @@ namespace BDAS2_Restaurace.ViewModel
             OrderItems = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
         }
 
+        private bool CanLoadCustomerMethod(object obj)
+        {
+            return true;
+        }
+
+        private void LoadCustomerMethod(object obj)
+        {
+            try
+            {
+                User? user = new UserController().Login(Username, Password);
+                if (user == null)
+                    return;
+
+                if (user.Role.ID != 2)
+                    return;
+
+                Customer loadedCustomer = new CustomerController().GetByUser(user);
+
+            }
+            catch (Exception ex) { return; }
+        }
 
         private async void LoadAddresses()
         {

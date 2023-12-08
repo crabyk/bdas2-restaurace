@@ -12,6 +12,29 @@ namespace BDAS2_Restaurace.Controller
     public class CustomerController : Controller<Customer>
     {
 
+        public Customer? GetByUser(User user)
+        {
+            Customer? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "select jmeno, prijmeni, datum_narozeni, telefon, email FROM zakaznik WHERE id_uzivatel = :uzivatelId";
+                    comm.CommandType = CommandType.Text;
+
+                    comm.Parameters.Clear();
+                    comm.Parameters.Add(":uzivatelId", OracleDbType.Int32).Value = user.ID;
+                    comm.ExecuteNonQuery();
+                }
+
+            }
+
+            return result;
+        }
+
         public override Customer? Add(Customer item)
         {
             Customer? result = null;
@@ -103,9 +126,7 @@ namespace BDAS2_Restaurace.Controller
 
                     var adresa = new AddressController().Get(addressId.Value.ToString());
 
-                    User user = new User();
-                    if (userId.Value != null)
-                        user = new UserController().Get(userId.Value.ToString());
+                    User user = new UserController().Get(userId.Value.ToString());
 
 
                     result = new Customer()
