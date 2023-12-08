@@ -1,14 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Media.Imaging;
-
-namespace BDAS2_Restaurace.Model
+﻿namespace BDAS2_Restaurace.Model
 {
     public abstract class Item : ModelBase
     {
         private string name;
         private double price;
-        private BitmapImage? image;
+        private ItemImage? itemImage;
 
         public string Name
         {
@@ -17,12 +13,12 @@ namespace BDAS2_Restaurace.Model
                 return name;
             }
 
-			set
-			{
-				name = value;
-				 OnPropertyChanged(nameof(Name));
-			}
-		}
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         public double Price
         {
@@ -31,30 +27,30 @@ namespace BDAS2_Restaurace.Model
                 return price;
             }
 
-			set
-			{
-				price = value;
-				 OnPropertyChanged(nameof(Price));
+            set
+            {
+                price = value;
+                OnPropertyChanged(nameof(Price));
 
             }
         }
 
-        public BitmapImage? Image
+        public ItemImage? ItemImage
         {
             get
             {
-                return image;
+                return itemImage;
             }
             set
             {
-                image = value;
-                 OnPropertyChanged(nameof(Image));
+                itemImage = value;
+                OnPropertyChanged(nameof(ItemImage));
             }
         }
 
         public override object Clone()
         {
-            Item item = (Item)this.MemberwiseClone(); 
+            Item item = (Item)this.MemberwiseClone();
             // item.Image = Image?.Clone();
 
             return item;
