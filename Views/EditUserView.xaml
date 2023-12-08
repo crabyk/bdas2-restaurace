@@ -63,14 +63,14 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel>
-                <Label Content="{Binding Path = NewPassword}" />
+                <Label Content="Nove heslo:" />
                 <PasswordBox
                     ff:PasswordBoxAssistant.BindPassword="true" 
                     ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!-- Role -->
             <StackPanel>
-                <Label Content="{Binding Path = Test}" />
+                <Label Content="Role:" />
                 <ComboBox 
                             IsSynchronizedWithCurrentItem="True"
                             SelectedItem="{Binding Path = SelectedItem.Role, Mode=TwoWay}"

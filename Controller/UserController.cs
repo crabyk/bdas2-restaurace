@@ -178,6 +178,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = HashPassword(password);
                     comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
                     comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
+                    comm.Parameters.Add("p_id_role", OracleDbType.Decimal).Value = item.Role.ID;
                     comm.Parameters.Add("p_id_uzivatel", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();

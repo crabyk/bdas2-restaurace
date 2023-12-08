@@ -3,7 +3,11 @@ using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
 using BDAS2_Restaurace.Windows;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,6 +15,8 @@ namespace BDAS2_Restaurace.ViewModel
 {
     public class LoginViewModel : BindableBase
     {
+
+
         private string username;
         private string password;
 
@@ -41,6 +47,17 @@ namespace BDAS2_Restaurace.ViewModel
             Username = string.Empty;
             Password = string.Empty;
             LoginCommand = new RelayCommand(LoginMethod, CanLoginMethod);
+            Load();
+        }
+
+        private async void LoadRoles()
+        {
+            List<Role> roles = await Task.Run(() => new RoleController().GetAll());
+        }
+
+        private void Load()
+        {
+            LoadRoles();
         }
 
         private bool CanLoginMethod(object obj)
@@ -58,7 +75,23 @@ namespace BDAS2_Restaurace.ViewModel
                 User? user = new UserController().Login(Username, Password);
                 if (user == null)
                     return;
-                window = new AdminWindow();
+
+
+                switch (user.Role.ID)
+                {
+                    case 1: // Admin
+                        window = new AdminWindow();
+                        break;
+                    case 2: // Zakaznik
+                        window = new EmployeeWindow();
+                        break;
+                    case 3: // Zamestnanec
+                        window = new EmployeeWindow();
+                        break;
+                    default:
+                        return;
+                }
+
                 window.Show();
                 // window = new AdminWindow();
             }

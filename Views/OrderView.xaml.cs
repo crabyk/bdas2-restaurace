@@ -15,15 +15,14 @@ using System.Windows.Shapes;
 
 namespace BDAS2_Restaurace.Views
 {
-	/// <summary>
-	/// Interakční logika pro OrderView.xaml
-	/// </summary>
-	public partial class AddOrderView : UserControl
-	{
-
-		public AddOrderView()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interakční logika pro OrderView.xaml
+    /// </summary>
+    public partial class OrderView : UserControl
+    {
+        public OrderView()
+        {
+            InitializeComponent();
+        }
+    }
 }

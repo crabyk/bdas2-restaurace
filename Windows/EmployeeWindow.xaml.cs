@@ -10,20 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BDAS2_Restaurace.Views
+namespace BDAS2_Restaurace.Windows
 {
-	/// <summary>
-	/// Interakční logika pro OrderView.xaml
-	/// </summary>
-	public partial class AddOrderView : UserControl
-	{
-
-		public AddOrderView()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interakční logika pro EmployeeWindow.xaml
+    /// </summary>
+    public partial class EmployeeWindow : Window
+    {
+        public EmployeeWindow()
+        {
+            InitializeComponent();
+        }
+    }
 }

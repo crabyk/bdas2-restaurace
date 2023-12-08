@@ -21,7 +21,7 @@ namespace BDAS2_Restaurace.ViewModel
         public RegisterViewModel() : base(new UserController())
         {
             User newUser = new User();
-            newUser.Role = new RoleController().Get("3");
+            newUser.Role = new RoleController().Get("2");
             SelectedItem = newUser;
             NewPassword = string.Empty;
         }

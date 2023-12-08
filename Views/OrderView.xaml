@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BDAS2_Restaurace.Views.EditOrderView"
+﻿<UserControl x:Class="BDAS2_Restaurace.Views.OrderView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -49,23 +49,16 @@
                     </StackPanel>
                     <StackPanel>
                         <Label Content="Objem:" />
-                        <DatePicker SelectedDate="{Binding Path = OrderDate}" />
+                        <Label Content="{Binding Path = OrderDate}" />
                     </StackPanel>
                 </StackPanel>
-                
+
                 <!-- Platba -->
                 <StackPanel>
                     <Label Content="Platba:" FontSize="16"/>
                     <StackPanel>
                         <Label Content="Typ platby" />
-                        <ComboBox 
-                            IsSynchronizedWithCurrentItem="True"
-                            SelectedItem="{Binding Path = SelectedItem.Payment.Type, Mode=TwoWay}"
-                            SelectedValue="{Binding Path = SelectedItem.Payment.Type.ID, Mode=OneWay}"
-                            SelectedValuePath="ID"
-                            ItemsSource="{Binding Path = PaymentTypes}" 
-                            DisplayMemberPath="Name"
-                            />
+                        <Label Content="{Binding Path = SelectedItem.Payment.Type.Name}" />
                     </StackPanel>
                     <StackPanel DataContext="{Binding Path = SelectedItem.Payment}">
                         <StackPanel>
@@ -74,7 +67,7 @@
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum platby:" />
-                            <TextBox Text="{Binding Path = Date}" />
+                            <Label Content="{Binding Path = Date}" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
@@ -86,46 +79,18 @@
                     <StackPanel>
                         <ListView Width="Auto" HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="True"
-                                  ItemsSource="{Binding Path = SelectedItem.Items, Mode=TwoWay}"
-                                  SelectedItem="{Binding Path = SelectedOrderItem}"
-                            >
+                                  ItemsSource="{Binding Path = SelectedItem.Items}"
+                                  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                                    <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = Name}"/>
-                                    <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Price}"/>
+                                    <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
+                                    <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </StackPanel>
-                    <DockPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <ComboBox 
-                                HorizontalAlignment="Left"
-                                IsSynchronizedWithCurrentItem="True"
-                                SelectedItem="{Binding Path = NewOrderItem, Mode=TwoWay}"
-                                ItemsSource="{Binding Path = OrderItems}" 
-                                >
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
 
-                                        <StackPanel Orientation="Horizontal">
-                                            <StackPanel>
-                                                <Label Content="Nazev:" FontSize="10" FontWeight="Bold"/>
-                                                <Label Content="{Binding Path = Name}" />
-                                            </StackPanel>
-                                            <StackPanel>
-                                                <Label Content="Cena:" FontSize="10" FontWeight="Bold"/>
-                                                <Label Content="{Binding Path = Price}" />
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddOrderItem}" />
-                        </StackPanel>
-                        <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveOrderItem}" />
-                    </DockPanel>
                 </StackPanel>
 
                 <!-- Zakaznik -->
@@ -165,9 +130,6 @@
                 </StackPanel>
 
 
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
