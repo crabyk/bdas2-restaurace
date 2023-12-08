@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
              xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
              xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             xmlns:ff="clr-namespace:BDAS2_Restaurace"
              vml:ViewModelLocator.AutoHookedUpViewModel = "True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -60,10 +61,12 @@
                     <Label Content="Login:" />
                     <TextBox Text="{Binding Path = Login}" />
                 </StackPanel>
-                <StackPanel>
-                    <Label Content="Nove heslo:" />
-                    <TextBox Text="{Binding Path = NewPassword}" />
-                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="{Binding Path = NewPassword}" />
+                <PasswordBox
+                    ff:PasswordBoxAssistant.BindPassword="true" 
+                    ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <!-- Role -->
             <StackPanel>

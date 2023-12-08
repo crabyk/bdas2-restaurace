@@ -6,14 +6,30 @@ namespace BDAS2_Restaurace.ViewModel
 {
     public class RegisterViewModel : ViewModelBase<User, UserController>
     {
+        private string newPassword;
+
+        public string NewPassword
+        {
+            get { return newPassword; }
+            set
+            {
+                newPassword = value;
+                OnPropertyChanged(nameof(NewPassword));
+            }
+        }
+
         public RegisterViewModel() : base(new UserController())
         {
-
+            User newUser = new User();
+            newUser.Role = new RoleController().Get("3");
+            SelectedItem = newUser;
+            NewPassword = string.Empty;
         }
 
         protected override void CreateMethod(object obj)
         {
-            OnWindowClose();
+            new UserController().Register(SelectedItem, NewPassword);
+            NewPassword = string.Empty;
             // base.CreateMethod(obj);
             // TODO vratit se zpet na domovskou stranku
         }

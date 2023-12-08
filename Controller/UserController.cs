@@ -12,6 +12,7 @@ namespace BDAS2_Restaurace.Controller
 {
     public class UserController : Controller<User>
     {
+
         private string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -203,9 +204,8 @@ namespace BDAS2_Restaurace.Controller
                     comm.CommandText = "prihlasit_uzivatele";
                     comm.CommandType = CommandType.StoredProcedure;
 
-                    string hash = HashPassword(password);
                     comm.Parameters.Add("p_login", username);
-                    comm.Parameters.Add("p_hash", hash);
+                    comm.Parameters.Add("p_hash", HashPassword(password));
 
                     OracleParameter userId = new OracleParameter("p_id_uzivatel", OracleDbType.Decimal, ParameterDirection.Output);
                     comm.Parameters.Add(userId);
@@ -222,7 +222,6 @@ namespace BDAS2_Restaurace.Controller
 
                     result = new User()
                     {
-                        ID = Convert.ToInt32(userId.Value),
                         Login = username,
                         FirstName = firstName.Value.ToString(),
                         LastName = lastName.Value.ToString(),

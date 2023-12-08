@@ -1,4 +1,6 @@
-﻿using BDAS2_Restaurace.Router;
+﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Model;
+using BDAS2_Restaurace.Router;
 using BDAS2_Restaurace.Windows;
 using System;
 using System.Security;
@@ -49,13 +51,21 @@ namespace BDAS2_Restaurace.ViewModel
 
         private void LoginMethod(object obj)
         {
-            Window window;
-            if (Password == "admin" && Username == "admin")
-                window = new AdminWindow();
-            else
-                return;
 
-            window.Show();
+            try
+            {
+                Window window;
+                User? user = new UserController().Login(Username, Password);
+                if (user == null)
+                    return;
+                window = new AdminWindow();
+                window.Show();
+                // window = new AdminWindow();
+            }
+            catch (Exception ex) { return; }
+
+
+
             // OnWindowClose();
 
             /*
