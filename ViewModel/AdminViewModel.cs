@@ -29,6 +29,8 @@ namespace BDAS2_Restaurace.ViewModel
             this.Routes.Add(new Route<JobPositionViewModel>("position"));
             this.Routes.Add(new Route<UserViewModel>("user"));
             this.Routes.Add(new Route<RoleViewModel>("role"));
+            this.Routes.Add(new Route<LogViewModel>("logs"));
+            this.Routes.Add(new Route<SystemCatalogViewModel>("catalog"));
         }
 	}
 }

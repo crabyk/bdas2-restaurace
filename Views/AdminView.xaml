@@ -49,6 +49,12 @@
         <DataTemplate DataType = "{x:Type viewModel:JobPositionViewModel}">
             <views:EditJobPositionView x:Name="EditJobPositionView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:LogViewModel}">
+            <views:LogView x:Name="LogView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:SystemCatalogViewModel}">
+            <views:SystemCatalogView x:Name="SystemCatalogView" />
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>

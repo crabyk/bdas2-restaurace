@@ -56,6 +56,12 @@
         <DataTemplate DataType = "{x:Type viewModel:RoleViewModel}">
             <views:EditRoleView x:Name="EditRoleView" />
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:LogViewModel}">
+            <views:LogView x:Name="LogView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:SystemCatalogViewModel}">
+            <views:SystemCatalogView x:Name="SystemCatalogView" />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -83,6 +89,8 @@
             <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
             <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
             <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
+            <Button Style="{StaticResource Btn}" Content="Logy" Command="{Binding NavCommand}" CommandParameter = "logs" />
+            <Button Style="{StaticResource Btn}" Content="Katalog" Command="{Binding NavCommand}" CommandParameter = "catalog" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0">

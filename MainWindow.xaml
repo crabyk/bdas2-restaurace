@@ -71,6 +71,7 @@
                     Command = "{Binding NavCommand}" 
                     CommandParameter = "register"
                     />
+                <!--
                 <Button 
                     Content="Admin" 
                     HorizontalAlignment="Right" 
@@ -78,6 +79,7 @@
                     Style="{StaticResource Btn}"
                     Command = "{Binding OpenAdmin}"
                     />
+                -->
             </StackPanel>
         </Border>
 

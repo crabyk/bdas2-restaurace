@@ -29,11 +29,10 @@ namespace BDAS2_Restaurace.Controller
 
                             result.Add(new Log
                             {
-                                ID = rdr.GetInt32(0),
-                                TableName = rdr.GetString(1),
-                                AffectedId = rdr.GetInt32(2),
-                                ActionType = rdr.GetString(3),
-                                Time = rdr.GetDateTime(4)
+                                TableName = rdr.GetString(0),
+                                AffectedId = rdr.GetInt32(1),
+                                ActionType = rdr.GetString(2),
+                                Time = rdr.GetDateTime(3)
                             });
                         }
                     }
