@@ -5,6 +5,7 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.Intrinsics.Arm;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -31,9 +32,11 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
                     comm.Parameters.Add("p_email", OracleDbType.Varchar2).Value = item.Email;
                     comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
+                    comm.Parameters.Add("p_uzivatel_id", OracleDbType.Decimal).Value = item.User.ID;
                     comm.Parameters.Add("p_id_zakaznik", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
+
 
                     newId = ((OracleDecimal)comm.Parameters["p_id_zakaznik"].Value).Value;
                 }
@@ -93,10 +96,16 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add(email);
                     OracleParameter addressId = new OracleParameter("p_adresa_id", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(addressId);
+                    OracleParameter userId = new OracleParameter("p_id_uzivatel", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(userId);
 
                     comm.ExecuteNonQuery();
 
                     var adresa = new AddressController().Get(addressId.Value.ToString());
+
+                    User user = new User();
+                    if (userId.Value != null)
+                        user = new UserController().Get(userId.Value.ToString());
 
 
                     result = new Customer()
@@ -107,7 +116,8 @@ namespace BDAS2_Restaurace.Controller
                         BirthDate = ((OracleDate)birthDate.Value).Value,
                         PhoneNumber = phoneNumber.Value.ToString(),
                         Email = email.Value.ToString(),
-                        Address = adresa
+                        Address = adresa,
+                        User = user 
                     };
                 }
             }
@@ -133,16 +143,22 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            Address address = new AddressController().Get(rdr.GetString(6));
+                            var address = new AddressController().Get(rdr.GetString(6));
+
+                            User user = new User();
+                            if (!rdr.IsDBNull(7))
+                                user = new UserController().Get(rdr.GetString(7));
+
                             result.Add(new Customer()
                             {
-                                ID = rdr.GetInt32(0),
+                                ID = rdr.GetInt32(0), 
                                 FirstName = rdr.GetString(1),
                                 LastName = rdr.GetString(2),
                                 BirthDate = rdr.GetDateTime(3),
                                 PhoneNumber = rdr.GetString(4),
                                 Email = rdr.GetString(5),
-                                Address = address
+                                Address = address,
+                                User = user
                             });
                         }
                     }

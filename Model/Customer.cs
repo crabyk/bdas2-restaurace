@@ -9,6 +9,7 @@ namespace BDAS2_Restaurace.Model
         private DateTime birthDate;
         private string phoneNumber;
         private string email;
+        private User? user;
 
         public Customer() : base()
         {
@@ -16,6 +17,17 @@ namespace BDAS2_Restaurace.Model
             phoneNumber = string.Empty;
             email = string.Empty;
         }
+
+        public User? User
+        {
+            get { return user; }
+            set
+            {
+                user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
+
 
         public DateTime BirthDate
         {

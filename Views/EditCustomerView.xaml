@@ -33,6 +33,7 @@
                         >
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="User ID" DisplayMemberBinding="{Binding Path = User.ID}"/>
                         <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
                         <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
                         <GridViewColumn Header="Telefon" DisplayMemberBinding="{Binding Path = PhoneNumber}"/>
