@@ -172,20 +172,14 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
-                            var image = DbUtils.ConvertToBitmapFromBlob(rdr.GetOracleBlob(4));
+                            var itemImage = new ItemImageController().Get(rdr.GetInt32(4).ToString());
                             result.Add(new Drink
                             {
                                 ID = rdr.GetInt32(0),
                                 Name = rdr.GetString(1),
                                 Price = rdr.GetInt32(2),
                                 Volume = rdr.GetInt32(3),
-                                ItemImage = new ItemImage
-                                {
-                                    ID = rdr.GetInt32(0),
-                                    FileName = string.Empty,
-                                    ModifyDate = DateTime.Now,
-                                    Image = image
-                                }
+                                ItemImage = itemImage
                             });
                         }
                     }
