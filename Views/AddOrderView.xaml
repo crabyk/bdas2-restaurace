@@ -61,7 +61,7 @@
                             <TextBlock Text="{Binding Path=Volume, StringFormat='Objem: {0} ml'}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>
-                    <Button Grid.Row="2" Style="{StaticResource OrderBtnStyle}" Content="Objednat" HorizontalAlignment="Center"
+                    <Button Grid.Row="2" Style="{StaticResource OrderBtnStyle}" Content="Přidat" HorizontalAlignment="Center"
                     Command="{Binding DataContext.OrderItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                     CommandParameter="{Binding}" />
                 </Grid>

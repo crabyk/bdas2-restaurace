@@ -28,7 +28,7 @@ namespace BDAS2_Restaurace.ViewModel
         {
         }
 
-        async void LoadAddresses()
+        private async void LoadAddresses()
         {
             List<Address> addresses = await Task.Run(() => new AddressController().GetAll());
             Addresses = new ObservableCollection<Address>(addresses);

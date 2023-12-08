@@ -66,6 +66,35 @@
                     <TextBox Text="{Binding Path = Recipe}" />
                 </StackPanel>
             </StackPanel>
+
+            <StackPanel Margin="0, 0, 0, 10">
+                <ComboBox 
+                        IsSynchronizedWithCurrentItem="True"
+                        SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay}"
+                        SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
+                        SelectedValuePath="ID"
+                        ItemsSource="{Binding Path = Images}" 
+                        >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <Label Content="File name:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = FileName}" />
+                                </StackPanel>
+
+                                <StackPanel>
+                                    <Label Content="Obrazek:" FontSize="10" FontWeight="Bold"/>
+                                    <Image Height="50" Source="{Binding Path = Image}"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            
             <StackPanel Orientation="Horizontal">
                 <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
                 <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>

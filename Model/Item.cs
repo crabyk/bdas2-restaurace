@@ -51,7 +51,7 @@
         public override object Clone()
         {
             Item item = (Item)this.MemberwiseClone();
-            // item.Image = Image?.Clone();
+            item.ItemImage = (ItemImage)ItemImage?.Clone();
 
             return item;
         }

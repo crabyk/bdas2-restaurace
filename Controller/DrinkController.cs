@@ -28,6 +28,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
                     comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
                     comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
+                    comm.Parameters.Add("p_id_obrazek", OracleDbType.Decimal).Value = item.ItemImage.ID;
                     comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
@@ -211,6 +212,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_nazev", OracleDbType.Varchar2).Value = item.Name;
                     comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
                     comm.Parameters.Add("p_objem", OracleDbType.Int32).Value = item.Volume;
+                    comm.Parameters.Add("p_id_obrazek", OracleDbType.Decimal).Value = item.ItemImage.ID;
 
                     comm.ExecuteNonQuery();
                 }

@@ -15,7 +15,8 @@ namespace BDAS2_Restaurace.ViewModel
 
 			this.Routes.Add(new Route<DrinkViewModel>("drink"));
 			this.Routes.Add(new Route<FoodViewModel>("food"));
-			this.Routes.Add(new Route<OrderViewModel>("order"));
+            this.Routes.Add(new Route<ItemImageViewModel>("itemImage"));
+            this.Routes.Add(new Route<OrderViewModel>("order"));
             this.Routes.Add(new Route<PaymentTypeViewModel>("paymentType"));
             this.Routes.Add(new Route<CustomerViewModel>("customer"));
             this.Routes.Add(new Route<AddressViewModel>("address"));

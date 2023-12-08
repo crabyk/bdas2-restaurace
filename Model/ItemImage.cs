@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Model
@@ -37,6 +38,14 @@ namespace BDAS2_Restaurace.Model
                 image = value;
                 OnPropertyChanged(nameof(Image));
             }
+        }
+
+
+        public override object Clone()
+        {
+            ItemImage itemImage = (ItemImage)MemberwiseClone();
+
+            return base.Clone();
         }
     }
 }

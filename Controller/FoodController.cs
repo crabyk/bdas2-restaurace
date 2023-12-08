@@ -29,6 +29,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_cena", OracleDbType.Decimal).Value = item.Price;
                     comm.Parameters.Add("p_hmotnost", OracleDbType.Decimal).Value = item.Weight;
                     comm.Parameters.Add("p_recept", OracleDbType.Varchar2).Value = item.Recipe;
+                    comm.Parameters.Add("p_id_obrazek", OracleDbType.Decimal).Value = item.ItemImage.ID;
                     comm.Parameters.Add("p_id_polozka", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
@@ -213,6 +214,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_cena", OracleDbType.Int32).Value = item.Price;
                     comm.Parameters.Add("p_hmotnost", OracleDbType.Int32).Value = item.Weight;
                     comm.Parameters.Add("p_recept", OracleDbType.Varchar2).Value = item.Recipe;
+                    comm.Parameters.Add("p_id_obrazek", OracleDbType.Decimal).Value = item.ItemImage.ID;
 
                     comm.ExecuteNonQuery();
                 }
