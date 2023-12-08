@@ -64,6 +64,51 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+        // soft delete polozky
+        public int Cancel(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "zrusit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
+        // vraceni polozky z soft delete
+        public int Restore(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "obnovit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
 
         public override Drink? Get(string id)
         {

@@ -65,6 +65,50 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+        public int Cancel(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "zrusit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
+        public int Restore(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "obnovit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
         public override Food? Get(string id)
         {
             Food? result = null;
