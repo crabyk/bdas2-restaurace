@@ -79,7 +79,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Disabled" Grid.Row="1">
         <StackPanel>
             <StackPanel>
-                <ItemsControl x:Name="ListViewProducts" ItemsSource ="{Binding Path=Items}" ItemTemplate="{StaticResource itemTemplate}">
+                <ItemsControl x:Name="ListViewProducts" ItemsSource ="{Binding Path = Items}" ItemTemplate="{StaticResource itemTemplate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>

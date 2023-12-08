@@ -20,17 +20,18 @@
 
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="20">
             <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBox x:Name="UsernameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Login, Mode=TwoWay}"/>
+            <TextBox x:Name="UsernameTextBox" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.Login, Mode=TwoWay}"/>
 
             <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}" Width="200" Height="25" Margin="0,5,0,10"
-             ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         ff:PasswordBoxAssistant.BindPassword="true" 
+                         ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Content="Jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBox x:Name="FirstNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding FirstName, Mode=TwoWay}"/>
+            <TextBox x:Name="FirstNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.FirstName, Mode=TwoWay}"/>
 
             <Label Content="Příjmení:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBox x:Name="LastNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding LastName, Mode=TwoWay}"/>
+            <TextBox x:Name="LastNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.LastName, Mode=TwoWay}"/>
         </StackPanel>
 
         <Button Grid.Row="2" Content="Registrovat" Style="{StaticResource Btn}" Width="120" Height="30" HorizontalAlignment="Center" Margin="0,10,0,10" Command="{Binding Create}"/>

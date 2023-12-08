@@ -32,7 +32,7 @@ namespace BDAS2_Restaurace.ViewModel
             set
             {
                 newPassword = value;
-                OnPropertyChanged(nameof(newPassword));
+                OnPropertyChanged(nameof(NewPassword));
             }
         }
 
