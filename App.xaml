@@ -4,6 +4,261 @@
              xmlns:local="clr-namespace:BDAS2_Restaurace"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--Tlacitko-->
+        <Style x:Key="Btn" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FFA1C1FF" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" Value="#FF416698" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Animace -->
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                From="#FFA1C1FF" To="#7EA1E4" Duration="0:0:0.25"/>
+                                <ColorAnimation
+                                Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                                From="#FF416698" To="#5B84BC" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                                Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                To="#FFA1C1FF" Duration="0:0:0.25" />
+                                <ColorAnimation
+                                Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                                To="#FF416698" Duration="0:0:0.25" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="PositiveBtn" TargetType="Button" BasedOn="{StaticResource Btn}">
+            <Setter Property="Background" Value="#4CAF50" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#388E3C" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            To="#388E3C" Duration="0:0:0.25"/>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                            To="#4CAF50" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            To="#4CAF50" Duration="0:0:0.25" />
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                            To="#388E3C" Duration="0:0:0.25" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="NegativeBtn" TargetType="Button" BasedOn="{StaticResource Btn}">
+            <Setter Property="Background" Value="#E57373" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#D32F2F" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            To="#D32F2F" Duration="0:0:0.25"/>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                            To="#B71C1C" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                            To="#E57373" Duration="0:0:0.25" />
+                                <ColorAnimation
+                            Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)"
+                            To="#D32F2F" Duration="0:0:0.25" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--Konec tlacitek-->
+        
+        <!--Textboxy, passwordBoxy-->
+        <Style x:Key="TxtBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#F0F0F0" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5, 0" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#F8F8F8" />
+                    <Setter Property="BorderBrush" Value="#D9D9D9" />
+                    <Setter Property="Foreground" Value="#A5A5A5" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#707070" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#4D90FE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="PsswdBox" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#F0F0F0" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5, 0" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#F8F8F8" />
+                    <Setter Property="BorderBrush" Value="#D9D9D9" />
+                    <Setter Property="Foreground" Value="#A5A5A5" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#707070" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#4D90FE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--Konec textboxy-->
+        
+        <!--Datepicker-->
+        <Style x:Key="DatePicker" TargetType="DatePicker">
+            <Setter Property="Background" Value="#F0F0F0" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="#333333" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                            <Grid>
+                                <DatePickerTextBox x:Name="PART_TextBox" 
+                                           BorderThickness="0" 
+                                           Background="Transparent" 
+                                           HorizontalContentAlignment="Stretch"
+                                           VerticalContentAlignment="Center"/>
+                                <Button x:Name="PART_Button" 
+                                    Content="▼"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Focusable="False"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid>
+                                                <Border x:Name="Highlight" Background="Transparent">
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#F8F8F8" />
+                    <Setter Property="BorderBrush" Value="#D9D9D9" />
+                    <Setter Property="Foreground" Value="#A5A5A5" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#707070" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#4D90FE" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--Konec datepicker-->
+
     </Application.Resources>
 </Application>

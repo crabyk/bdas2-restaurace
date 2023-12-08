@@ -14,29 +14,34 @@
             <StackPanel DataContext="{Binding Path = NewCustomer}">
                 <StackPanel>
                     <Label Grid.Column="0" Content="Jmeno" />
-                    <TextBox Height="30" Grid.Column="1" Text="{Binding Path = FirstName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Grid.Column="1" Text="{Binding Path = FirstName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Prijmeni" />
-                    <TextBox Height="30" Text="{Binding Path = LastName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Datum narozeni" />
-                    <DatePicker x:Name="BirthDate" Height="30" SelectedDate="{Binding Path = BirthDate}" />
+                    <DatePicker x:Name="BirthDate" Style="{StaticResource DatePicker}" Height="30" SelectedDate="{Binding Path = BirthDate}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Telefon" />
-                    <TextBox Height="30" Text="{Binding Path = PhoneNumber}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Email" />
-                    <TextBox Height="30" Text="{Binding Path = Email}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
                 </StackPanel>
             </StackPanel>
         </Border>
-        <Border>
+        <Border Padding="10, 0">
             <StackPanel>
-                <Button Content="Pridat" Command="{Binding AddUser}" />
+                <Button 
+                    Width="150"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource PositiveBtn}"
+                    Content="Pridat" 
+                    Command="{Binding AddUser}" />
                 <ListView Name="menuListView" Width="Auto" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path = Customers}">
                     <ListView.View>
                         <GridView>

@@ -16,7 +16,7 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -33,43 +33,44 @@
                         >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = FirstName}"/>
-                        <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = LastName}"/>
+                        <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
+                        <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
+                        <GridViewColumn Header="Telefon" DisplayMemberBinding="{Binding Path = PhoneNumber}"/>
+                        <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path = Email}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1">
-            <StackPanel DataContext="{Binding Path = SelectedItem}">
+        <StackPanel Grid.Column="1" Margin="10">
+            <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">
                 <StackPanel>
                     <Label Content="ID:" />
                     <Label Content="{Binding Path = ID}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Nazev:" />
-                    <TextBox Text="{Binding Path = FirstName}" />
+                    <Label Content="Jmeno:" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Cena:" />
-                    <TextBox Text="{Binding Path = LastName}" />
+                    <Label Content="Prijmeni:" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Objem:" />
-                    <TextBox Text="{Binding Path = PhoneNumber}" />
+                    <Label Content="Telefon:" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Objem:" />
-                    <DatePicker SelectedDate="{Binding Path = BirthDate}" />
+                    <Label Content="Datum narozeni:" />
+                    <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
                 </StackPanel>
                 <StackPanel>
-                    <Label Content="Objem:" />
-                    <TextBox Text="{Binding Path = Email}" />
+                    <Label Content="Email:" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
                 </StackPanel>
             </StackPanel>
             <!-- Adresy -->
-            <StackPanel>
+            <StackPanel Margin="0, 0, 0, 10">
                 <ComboBox 
                         IsSynchronizedWithCurrentItem="True"
                         SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
@@ -103,9 +104,9 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

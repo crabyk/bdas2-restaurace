@@ -7,7 +7,7 @@
         xmlns:views = "clr-namespace:BDAS2_Restaurace.Views"
         xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
         mc:Ignorable="d"
-        Title="Hlavni menu" Height="450" Width="800">
+        Title="Restaurace" Height="450" Width="800">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -43,7 +43,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!-- Logo/Nazev -->
-        <Border BorderBrush="Black" BorderThickness="0, 0, 2, 2">
+        <Border BorderBrush="Black" BorderThickness="0, 0, 2, 2" Background="#FFA1C1FF">
             <Label 
                 Content="Restaurace"
                 HorizontalContentAlignment="Center"
@@ -58,21 +58,24 @@
                 <Button 
                     Content="Přihlásit" 
                     HorizontalAlignment="Right" 
-                    Height="24" Width="80" Margin="10,0,0,0"
+                    Width="80" Margin="10,0,0,0"
+                    Style="{StaticResource Btn}"
                     Command = "{Binding NavCommand}" 
                     CommandParameter = "login"
                     />
                 <Button 
                     Content="Registrovat" 
                     HorizontalAlignment="Right" 
-                    Height="24" Width="80" Margin="10,0,0,0"
+                    Width="80" Margin="10,0,0,0"
+                    Style="{StaticResource Btn}"
                     Command = "{Binding NavCommand}" 
                     CommandParameter = "register"
                     />
                 <Button 
                     Content="Admin" 
                     HorizontalAlignment="Right" 
-                    Height="24" Width="80" Margin="10,0,0,0"
+                    Width="80" Margin="10,0,0,0"
+                    Style="{StaticResource Btn}"
                     Command = "{Binding OpenAdmin}"
                     />
             </StackPanel>
@@ -82,26 +85,27 @@
         <Border Grid.Row="1" Grid.Column="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,2,0">
             <StackPanel>
                 <Button 
-                Height="40" Width="80" Margin="0,10,0,0"
-                Command = "{Binding NavCommand}" CommandParameter = "menu"
+                    Margin="5, 10, 5, 5"
+                    Style="{StaticResource Btn}"
+                    Command = "{Binding NavCommand}" CommandParameter = "menu"
                 >
-                    <TextBlock Text="Nabídka" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock Text="Hlavní nabídka" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
-                <Button 
-                Height="40" Width="80" Margin="0,10,0,0"
-                Command = "{Binding NavCommand}" CommandParameter = "order"
+                <Button        
+                    Style="{StaticResource Btn}"
+                    Command = "{Binding NavCommand}" CommandParameter = "order"
                 >
                     <TextBlock Text="Vytvořit objednávku" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
                 <Button 
-                Height="40" Width="80" Margin="0,10,0,0"
-                Command = "{Binding NavCommand}" CommandParameter = "reservation"
+                    Style="{StaticResource Btn}"
+                    Command = "{Binding NavCommand}" CommandParameter = "reservation"
                 >
                     <TextBlock Text="Vytvořit rezervaci" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
             </StackPanel>
         </Border>
-        <ScrollViewer x:Name="MainContent" VerticalScrollBarVisibility="Auto" Grid.Row = "1" Grid.Column="1">
+        <ScrollViewer x:Name="MainContent" VerticalScrollBarVisibility="Auto" Grid.Row = "1" Grid.Column="1" Background="#F0F0F0">
             <ContentControl Content = "{Binding CurrentViewModel}"/>
         </ScrollViewer>
     </Grid>

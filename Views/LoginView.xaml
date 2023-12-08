@@ -21,12 +21,12 @@
 
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="20">
             <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBox Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path =Username, Mode=TwoWay}"/>
+            <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path =Username, Mode=TwoWay}"/>
             <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <PasswordBox x:Name="PasswordBox" Width="200" Height="25" Margin="0,5,0,10"
+            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}" Width="200" Height="25" Margin="0,5,0,10"
              ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
-        <Button Grid.Row="2" Content="Přihlásit" Width="100" Height="30" HorizontalAlignment="Center" Margin="0,10,0,10" Command="{Binding LoginCommand}"/>
+        <Button Grid.Row="2" Content="Přihlásit" Style="{StaticResource Btn}" Width="100" Height="30" HorizontalAlignment="Center" Margin="0,10,0,10" Command="{Binding LoginCommand}"/>
     </Grid>
 </UserControl>

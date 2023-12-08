@@ -66,19 +66,19 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="2">
-            <Button Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
-            <Button Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
-            <Button Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
-            <Button Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
-            <Button Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
-            <Button Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
-            <Button Content="Stoly" Command="{Binding NavCommand}" CommandParameter = "table" />
-            <Button Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
-            <Button Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
-            <Button Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
-            <Button Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
-            <Button Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
-            <Button Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
+            <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
+            <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
+            <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+            <Button Style="{StaticResource Btn}" Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
+            <Button Style="{StaticResource Btn}" Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
+            <Button Style="{StaticResource Btn}" Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
+            <Button Style="{StaticResource Btn}" Content="Stoly" Command="{Binding NavCommand}" CommandParameter = "table" />
+            <Button Style="{StaticResource Btn}" Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
+            <Button Style="{StaticResource Btn}" Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
+            <Button Style="{StaticResource Btn}" Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
+            <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
+            <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
+            <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0">
