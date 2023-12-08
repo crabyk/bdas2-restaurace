@@ -46,8 +46,8 @@ namespace BDAS2_Restaurace.ViewModel
         public TestMenuViewModel()
         {
             // potreba to pak predelat na asynchronni verzi
-            var food = new FoodController().GetFoodFromView();
-            var drinks = new DrinkController().GetDrinksFromView();
+            var food = new FoodController().GetAll();
+            var drinks = new DrinkController().GetAll();
 
             Items = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
         }

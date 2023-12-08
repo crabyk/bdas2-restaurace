@@ -5,10 +5,6 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -69,6 +65,50 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+        public int Cancel(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "zrusit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
+        public int Restore(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "obnovit_polozku";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_polozka", id);
+
+                    result = comm.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
         public override Food? Get(string id)
         {
             Food? result = null;
@@ -91,8 +131,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add(weight);
                     OracleParameter recipe = new OracleParameter("p_recept", OracleDbType.Varchar2, 2048, null, ParameterDirection.Output);
                     comm.Parameters.Add(recipe);
+                    OracleParameter imageId = new OracleParameter("p_id_obrazek", OracleDbType.Decimal, ParameterDirection.Output);
+                    comm.Parameters.Add(imageId);
 
                     comm.ExecuteNonQuery();
+
+                    var itemImage = new ItemImageController().Get(imageId.Value.ToString());
 
                     result = new Food()
                     {
@@ -100,7 +144,8 @@ namespace BDAS2_Restaurace.Controller
                         Name = name.Value.ToString(),
                         Price = double.Parse(price.Value.ToString()),
                         Weight = double.Parse(weight.Value.ToString()),
-                        Recipe = recipe.Value.ToString()
+                        Recipe = recipe.Value.ToString(),
+                        ItemImage = itemImage
                     };
                 }
             }
@@ -126,6 +171,7 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
+                            var image = DbUtils.ConvertToBitmapFromBlob(rdr.GetOracleBlob(5));
                             result.Add(new Food
                             {
                                 ID = rdr.GetInt32(0),
@@ -133,6 +179,13 @@ namespace BDAS2_Restaurace.Controller
                                 Price = rdr.GetInt32(2),
                                 Weight = rdr.GetInt32(3),
                                 Recipe = rdr.GetString(4),
+                                ItemImage = new ItemImage
+                                {
+                                    ID = rdr.GetInt32(0),
+                                    FileName = string.Empty,
+                                    ModifyDate = DateTime.Now,
+                                    Image = image
+                                }
                             });
                         }
                     }
@@ -140,50 +193,6 @@ namespace BDAS2_Restaurace.Controller
             }
 
             return result;
-        }
-
-        public List<Food> GetFoodFromView()
-        {
-            List<Food> food = new List<Food>();
-
-            using (OracleConnection conn = Database.Connect())
-            {
-                conn.Open();
-                string sql = "select id_polozka, nazev, cena, hmotnost, obrazek from v_jidelnicek";
-                using (OracleCommand comm = new OracleCommand(sql, conn))
-                {
-                    using (OracleDataReader rdr = comm.ExecuteReader())
-                    {
-                        while (rdr.Read())
-                        {
-                            int id = rdr.GetInt32(0);
-                            string name = rdr.GetString(1);
-                            int price = rdr.GetInt32(2);
-                            int weight = rdr.GetInt32(3);
-
-                            // ziskani obrazku ze sloupce typu blob
-                            OracleBlob imgBlob = rdr.GetOracleBlob(4);
-                            Byte[] byteArr = new Byte[imgBlob.Length];
-                            int i = imgBlob.Read(byteArr, 0, Convert.ToInt32(imgBlob.Length));
-                            MemoryStream memStream = new MemoryStream(byteArr);
-                            var image = Image.FromStream(memStream);
-
-                            food.Add(
-                                new Food
-                                {
-                                    ID = id,
-                                    Name = name,
-                                    Price = price,
-                                    Weight = weight,
-                                    Recipe = string.Empty,
-                                    Image = ConvertToBitmap(image)
-                                });
-                        }
-                    }
-                }
-            }
-
-            return food;
         }
 
         public override Food? Update(Food item)
@@ -212,23 +221,6 @@ namespace BDAS2_Restaurace.Controller
             }
 
             return result;
-        }
-
-        public BitmapImage ConvertToBitmap(Image img)
-        {
-            using (var memory = new MemoryStream())
-            {
-                img.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-
-                return bitmapImage;
-            }
         }
     }
 }
