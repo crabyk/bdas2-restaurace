@@ -130,20 +130,27 @@ namespace BDAS2_Restaurace.Controller
 
                     var payment = new PaymentController().Get(paymentId.Value.ToString());
                     var customer = new CustomerController().Get(customerId.Value.ToString());
+                    List<Item> items = new OrderItemController().GetAll(id);
 
-                    // TODO dodelat vytvoreni objektu objednavky
-                    // udelat metody k zjisteni vsech polozek pro danou objednavku
-                    // dal zjistit stul nebo adresu podle objednavky
+                    Table? table = null;
+                    if (tableId.Value != null)
+                        table = new TableController().Get(tableId.Value.ToString());
+
+                    Address? address = null;
+                    if (addressId.Value != null)
+                        address = new AddressController().Get(addressId.Value.ToString());
+
                     result = new Order()
                     {
                         ID = int.Parse(id),
                         OrderDate = ((OracleDate)orderDate.Value).Value,
                         Payment = payment,
-                        Customer = customer
-                        // polozky, stul/adresa
+                        Customer = customer,
+                        Items = new ObservableCollection<Item>(items),
+                        Table = table,
+                        Address = address,
                     };
                 }
-
             }
 
             return result;
@@ -192,7 +199,6 @@ namespace BDAS2_Restaurace.Controller
                         }
                     }
                 }
-
             }
 
             return result;
@@ -221,8 +227,6 @@ namespace BDAS2_Restaurace.Controller
                     itemsAdd.ForEach(i => new OrderItemController().Add(i, item));
                     itemsRemove.ForEach(i => new OrderItemController().Delete(i, item));
 
-
-
                     comm.CommandText = "upravit_objednavku";
                     comm.CommandType = CommandType.StoredProcedure;
 
@@ -237,6 +241,31 @@ namespace BDAS2_Restaurace.Controller
                 }
 
                 result = item;
+            }
+
+            return result;
+        }
+
+        public int GetOrderItemsSum(string id)
+        {
+            int result = 0;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "spocitej_cenu_objednavky";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_id_objednavka", id);
+                    comm.Parameters.Add("v_celkova_cena", OracleDbType.Int32, ParameterDirection.ReturnValue);
+
+                    comm.ExecuteNonQuery();
+
+                    result = Convert.ToInt32(((OracleDecimal)comm.Parameters["v_celkova_cena"].Value).Value);
+                }
             }
 
             return result;

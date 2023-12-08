@@ -216,5 +216,31 @@ namespace BDAS2_Restaurace.Controller
 
             return result;
         }
+
+        public Drink? GetMostOrderedDrink()
+        {
+            Drink? result = null;
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "nejvice_objednavana_polozka";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_typ_polozky", OracleDbType.Varchar2).Value = "napoj";
+                    comm.Parameters.Add("v_id_polozky", OracleDbType.Int32, ParameterDirection.ReturnValue);
+
+                    comm.ExecuteNonQuery();
+
+                    var itemId = Convert.ToInt32(comm.Parameters["v_id_polozky"].Value);
+
+                    result = Get(itemId.ToString());
+                }
+            }
+
+            return result;
+        }
     }
 }
