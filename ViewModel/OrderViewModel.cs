@@ -75,13 +75,46 @@ namespace BDAS2_Restaurace.ViewModel
         public ICommand RemoveOrderItem { get; set; }
         public ICommand AddOrderItem { get; set; }
 
+        private ICommand SelectOrderItem;
+
+
+        public ICommand OrderItemCommand
+        {
+            get
+            {
+                if (SelectOrderItem == null)
+                {
+                    SelectOrderItem = new RelayCommand(param => OrderItem((Item)param), CanOrderItem);
+                }
+                return SelectOrderItem;
+            }
+        }
+
+        private void OrderItem(Item item)
+        {
+            // SelectedOrderItem = item;
+            SelectedItem.Payment.Amount = SelectedItem.Payment.Amount + item.Price;
+            SelectedItem.AddItem(item);
+            // pak se nahradi za create metodu
+        }
+
+        private bool CanOrderItem(object param)
+        {
+            return true;
+        }
+
         public OrderViewModel() : base(new OrderController())
         {
             // PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
             // Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
+            var food = new FoodController().GetAll();
+            var drinks = new DrinkController().GetAll();
+
+            OrderItems = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
         }
+
 
         private async void LoadAddresses()
         {
@@ -101,6 +134,14 @@ namespace BDAS2_Restaurace.ViewModel
             foods.ForEach(f => OrderItems.Add(f));
         }
 
+        private async void LoadItems()
+        {
+            var food = await Task.Run(() => new FoodController().GetAll());
+            var drinks = await Task.Run(() => new DrinkController().GetAll());
+
+            OrderItems = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
+        }
+
         private async void LoadDrinks()
         {
             List<Drink> drinks = await Task.Run(() => new DrinkController().GetAll());
@@ -112,8 +153,9 @@ namespace BDAS2_Restaurace.ViewModel
         {
             // LoadAddresses();
             LoadPayments();
-            LoadFood();
-            LoadDrinks();
+            // LoadFood();
+            // LoadDrinks();
+            // LoadItems();
             base.Load();
         }
 

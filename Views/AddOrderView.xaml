@@ -8,6 +8,67 @@
              xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Height" Value="250"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="BorderBrush" Value="Lavender"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="FloralWhite"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style x:Key="InnerGridStyle" TargetType="Grid">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="ItemImageStyle" TargetType="Image">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
+        </Style>
+        <Style x:Key="OrderBtnStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="Lavender"/>
+            <Setter Property="BorderBrush" Value="RoyalBlue"/>
+        </Style>
+
+        <DataTemplate x:Key="itemTemplate">
+            <Border Style="{StaticResource BorderStyle}">
+                <Grid Style="{StaticResource InnerGridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Style="{StaticResource ItemImageStyle}" Source="{Binding Path=ItemImage.Image}"/>
+                    <StackPanel Grid.Row="1" Margin="10, 5">
+                        <TextBlock Style="{StaticResource TitleTextStyle}" Text="{Binding Path=Name}" TextWrapping="Wrap" Margin="0, 0, 0, 5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Price, StringFormat='Cena: {0} Kč'}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Weight, StringFormat='Hmotnost: {0} g'}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Path=Volume, StringFormat='Objem: {0} ml'}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Grid.Row="2" Style="{StaticResource OrderBtnStyle}" Content="Objednat" HorizontalAlignment="Center"
+                    Command="{Binding DataContext.OrderItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                    CommandParameter="{Binding}" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
 
     <ScrollViewer>
         <Grid>
@@ -27,7 +88,29 @@
                     <Label Content="Vytvoreni objednavky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
                 </StackPanel>
             </Border>
+            
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding SelectedMenuItem.Name, UpdateSourceTrigger=PropertyChanged, StringFormat='Zvolena polozka: {0}'}" Margin="10"/>
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" Grid.Row="1">
+                    <StackPanel>
+                        <StackPanel>
+                            <ItemsControl x:Name="ListViewProducts" ItemsSource ="{Binding Path = OrderItems}" ItemTemplate="{StaticResource itemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
 
+            <!--
             <Grid x:Name = "Menu" Grid.Row = "1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
@@ -67,6 +150,7 @@
                     </ListView.View>
                 </ListView>
             </Grid>
+            -->
 
             <StackPanel x:Name = "SelectedItems" Grid.Row = "2">
                 <Label Content="Vybrane polozky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
