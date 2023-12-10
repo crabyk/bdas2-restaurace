@@ -42,68 +42,72 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1"  Margin="10, 30, 10, 0">
-            <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Label Content="Jmeno:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Prijmeni:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Telefon:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Datum narozeni:" />
-                    <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Email:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
-                </StackPanel>
-            </StackPanel>
-            <!-- Adresy -->
-            <StackPanel Margin="0, 0, 0, 10">
-                <ComboBox 
+                    <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">
+                        <StackPanel>
+                            <Label Content="Jmeno:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Prijmeni:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Telefon:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Datum narozeni:" />
+                            <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Email:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <!-- Adresy -->
+                    <StackPanel Margin="0, 0, 0, 10">
+                        <ComboBox 
                         IsSynchronizedWithCurrentItem="True"
                         SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
                         SelectedValue="{Binding Path = SelectedItem.Address.ID, Mode=OneWay}"
                         SelectedValuePath="ID"
                         ItemsSource="{Binding Path = Addresses}" 
                         >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
 
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel>
-                                    <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = PostalCode}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Mesto:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = CityName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Ulice:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = StreetName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="ČP:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = UnitNumber}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
-            </StackPanel>
-        </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = PostalCode}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Mesto:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = CityName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Ulice:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = StreetName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="ČP:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = UnitNumber}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                        <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                        <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

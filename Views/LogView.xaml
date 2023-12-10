@@ -11,27 +11,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" Name="DataListView" HorizontalContentAlignment="Stretch"
                       IsSynchronizedWithCurrentItem="True"
                       ItemsSource="{Binding Path = Items}"
                       SelectedItem="{Binding Path = SelectedItem}"
                       >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Tabulka" DisplayMemberBinding="{Binding Path = TableName}"/>
-                        <GridViewColumn Header="Ovlivnene ID" DisplayMemberBinding="{Binding Path = AffectedId}"/>
-                        <GridViewColumn Header="Typ akce" DisplayMemberBinding="{Binding Path = ActionType}"/>
-                        <GridViewColumn Header="Cas" DisplayMemberBinding="{Binding Path = Time}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Tabulka" DisplayMemberBinding="{Binding Path = TableName}"/>
+                    <GridViewColumn Header="Ovlivnene ID" DisplayMemberBinding="{Binding Path = AffectedId}"/>
+                    <GridViewColumn Header="Typ akce" DisplayMemberBinding="{Binding Path = ActionType}"/>
+                    <GridViewColumn Header="Cas" DisplayMemberBinding="{Binding Path = Time}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

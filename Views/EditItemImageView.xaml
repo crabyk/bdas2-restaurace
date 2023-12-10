@@ -40,19 +40,23 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
-            <StackPanel DataContext="{Binding Path = SelectedItem}">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Label Content="Obrazek:" />
-                    <Image Width="100" Source="{Binding Path = Image}"/>
-                </StackPanel>
+                    <StackPanel DataContext="{Binding Path = SelectedItem}">
+                        <StackPanel>
+                            <Label Content="Obrazek:" />
+                            <Image Width="100" Source="{Binding Path = Image}"/>
+                        </StackPanel>
 
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource PositiveBtn}" Content="Nahrát obrázek" Command="{Binding Path = UploadImage}"/>
-                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
-            </StackPanel>
-        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PositiveBtn}" Content="Nahrát obrázek" Command="{Binding Path = UploadImage}"/>
+                        <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                        <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

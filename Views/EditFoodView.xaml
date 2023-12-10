@@ -42,56 +42,60 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
-            <StackPanel DataContext="{Binding Path = SelectedItem}">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Label Content="Nazev:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Cena:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Vaha:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Weight}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Recept:" />
-                    <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = Recipe}" />
-                </StackPanel>
-            </StackPanel>
+                    <StackPanel DataContext="{Binding Path = SelectedItem}">
+                        <StackPanel>
+                            <Label Content="Nazev:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Cena:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Vaha:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Weight}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Recept:" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = Recipe}" />
+                        </StackPanel>
+                    </StackPanel>
 
-            <StackPanel Margin="0, 10, 0, 10">
-                <ComboBox 
+                    <StackPanel Margin="0, 10, 0, 10">
+                        <ComboBox 
                         IsSynchronizedWithCurrentItem="True"
                         SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay}"
                         SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
                         SelectedValuePath="ID"
                         ItemsSource="{Binding Path = Images}" 
                         >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel>
-                                    <Label Content="File name:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = FileName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Obrazek:" FontSize="10" FontWeight="Bold"/>
-                                    <Image Height="50" Source="{Binding Path = Image}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
-            </StackPanel>
-        </StackPanel>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <Label Content="File name:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = FileName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Obrazek:" FontSize="10" FontWeight="Bold"/>
+                                            <Image Height="50" Source="{Binding Path = Image}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                        <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                        <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

@@ -40,60 +40,62 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
-            <StackPanel DataContext="{Binding Path = SelectedItem}">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Label Content="Jmeno:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Primeni:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Mesicni plat:" />
-                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = MonthRate}" />
-                </StackPanel>
-            </StackPanel>
+                    <StackPanel DataContext="{Binding Path = SelectedItem}">
+                        <StackPanel>
+                            <Label Content="Jmeno:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Primeni:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Mesicni plat:" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = MonthRate}" />
+                        </StackPanel>
+                    </StackPanel>
 
-            <!-- Adresy -->
-            <StackPanel Margin="0, 10">
-                <ComboBox 
+                    <!-- Adresy -->
+                    <StackPanel Margin="0, 10">
+                        <ComboBox 
                         IsSynchronizedWithCurrentItem="True"
                         SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
                         SelectedValue="{Binding Path = SelectedItem.Address.ID, Mode=OneWay}"
                         SelectedValuePath="ID"
                         ItemsSource="{Binding Path = Addresses}" 
                         >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel>
-                                    <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = PostalCode}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Mesto:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = CityName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Ulice:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = StreetName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="ČP:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = UnitNumber}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = PostalCode}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Mesto:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = CityName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Ulice:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = StreetName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="ČP:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = UnitNumber}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
 
-            <!-- Pozice -->
-            <StackPanel>
-                <Label Content="{Binding Path = Test}" />
-                <ComboBox 
+                    <!-- Pozice -->
+                    <StackPanel>
+                        <Label Content="{Binding Path = Test}" />
+                        <ComboBox 
                             IsSynchronizedWithCurrentItem="True"
                             SelectedItem="{Binding Path = SelectedItem.JobPosition, Mode=TwoWay}"
                             SelectedValue="{Binding Path = SelectedItem.JobPosition.ID, Mode=OneWay}"
@@ -101,60 +103,62 @@
                             ItemsSource="{Binding Path = Positions}" 
                             DisplayMemberPath="Name"
                             />
-            </StackPanel>
+                    </StackPanel>
 
-            <!-- Smeny -->
-            <StackPanel>
-                <Label Content="Smeny:" FontSize="16" FontWeight="DemiBold"/>
-                <StackPanel>
-                    <ListView Width="Auto" HorizontalContentAlignment="Stretch"
+                    <!-- Smeny -->
+                    <StackPanel>
+                        <Label Content="Smeny:" FontSize="16" FontWeight="DemiBold"/>
+                        <StackPanel>
+                            <ListView Width="Auto" HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="True"
                                   ItemsSource="{Binding Path = SelectedItem.Shifts, Mode=TwoWay}"
                                   SelectedItem="{Binding Path = SelectedShift}"
                             >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Zacatek" DisplayMemberBinding="{Binding Path = Begin}"/>
-                                <GridViewColumn Header="Konec" DisplayMemberBinding="{Binding Path = End}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
-                <DockPanel Margin="0, 10">
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox 
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Zacatek" DisplayMemberBinding="{Binding Path = Begin}"/>
+                                        <GridViewColumn Header="Konec" DisplayMemberBinding="{Binding Path = End}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                        <DockPanel Margin="0, 10">
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox 
                                 HorizontalAlignment="Left"
                                 IsSynchronizedWithCurrentItem="True"
                                 SelectedItem="{Binding Path = NewShift, Mode=TwoWay}"
                                 ItemsSource="{Binding Path = EmployeeShifts}" 
                                 >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
 
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel>
-                                            <Label Content="Zacatek:" FontSize="10" FontWeight="Bold"/>
-                                            <Label Content="{Binding Path = Begin}" />
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <Label Content="Konec:" FontSize="10" FontWeight="Bold"/>
-                                            <Label Content="{Binding Path = End}" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button Style="{StaticResource PositiveBtn}" Width="60" Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddShift}" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel>
+                                                    <Label Content="Zacatek:" FontSize="10" FontWeight="Bold"/>
+                                                    <Label Content="{Binding Path = Begin}" />
+                                                </StackPanel>
+                                                <StackPanel>
+                                                    <Label Content="Konec:" FontSize="10" FontWeight="Bold"/>
+                                                    <Label Content="{Binding Path = End}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button Style="{StaticResource PositiveBtn}" Width="60" Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddShift}" />
+                            </StackPanel>
+                            <Button Style="{StaticResource NegativeBtn}" Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveShift}" />
+                        </DockPanel>
                     </StackPanel>
-                    <Button Style="{StaticResource NegativeBtn}" Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveShift}" />
-                </DockPanel>
-            </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
-            </StackPanel>
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                        <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                        <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

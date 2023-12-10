@@ -11,26 +11,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
-                      IsSynchronizedWithCurrentItem="True"
-                      ItemsSource="{Binding Path = Items}"
-                      SelectedItem="{Binding Path = SelectedItem}"
-                      >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path = ID}"/>
-                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = ObjectName}"/>
-                        <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Path = ObjectType}"/>
-                        <GridViewColumn Header="Cas vytvoreni" DisplayMemberBinding="{Binding Path = Created}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" Name="DataListView" HorizontalContentAlignment="Stretch"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding Path = Items}"
+                          SelectedItem="{Binding Path = SelectedItem}"
+                          >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path = ID}"/>
+                    <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = ObjectName}"/>
+                    <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Path = ObjectType}"/>
+                    <GridViewColumn Header="Cas vytvoreni" DisplayMemberBinding="{Binding Path = Created}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
