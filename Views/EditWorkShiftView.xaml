@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
 
             <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
@@ -33,7 +33,6 @@
                       >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Zacatek" DisplayMemberBinding="{Binding Path = Begin}"/>
                         <GridViewColumn Header="Konec" DisplayMemberBinding="{Binding Path = End}"/>
                     </GridView>
@@ -41,25 +40,21 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
             <StackPanel DataContext="{Binding Path = SelectedItem}">
                 <StackPanel>
-                    <Label Content="ID:" />
-                    <Label Content="{Binding Path = ID}" />
-                </StackPanel>
-                <StackPanel>
                     <Label Content="Zacatek:" />
-                    <DatePicker SelectedDate="{Binding Path = Begin}" />
+                    <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = Begin}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Konec:" />
-                    <DatePicker SelectedDate="{Binding Path = End}" />
+                    <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = End}" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

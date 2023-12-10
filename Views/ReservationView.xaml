@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="800">
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
@@ -48,12 +48,12 @@
 
                     <StackPanel Grid.Column="0" Grid.Row="1" Margin="0, 0, 10, 0">
                         <Label Content="Datum rezervace" />
-                        <DatePicker Height="30" SelectedDate="{Binding Path=ReservationDate}" />
+                        <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path=ReservationDate}" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0, 0, 0">
                         <Label Content="Pocet lidi" />
-                        <TextBox Height="30" Text="{Binding Path=NumberOfPeople}" />
+                        <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path=NumberOfPeople}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -77,45 +77,45 @@
                     <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = Customer}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = FirstName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Grid.Column="1" Text="{Binding Path = FirstName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni" />
-                            <TextBox Height="30" Text="{Binding Path = LastName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum narozeni" />
-                            <DatePicker x:Name="BirthDate" Height="30" SelectedDate="{Binding Path = BirthDate}" />
+                            <DatePicker x:Name="BirthDate" Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Telefon" />
-                            <TextBox Height="30" Text="{Binding Path = PhoneNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Email" />
-                            <TextBox Height="30" Text="{Binding Path = Email}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = Address}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = StreetName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = StreetName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Obec" />
-                            <TextBox Height="30" Text="{Binding Path = CityName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = CityName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Číslo popisné" />
-                            <TextBox Height="30" Text="{Binding Path = UnitNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = UnitNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="PSČ" />
-                            <TextBox Height="30" Text="{Binding Path = PostalCode}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PostalCode}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Země" />
-                            <TextBox Height="30" Text="{Binding Path = Country}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Country}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -124,13 +124,13 @@
             <Border Grid.Row="4" Padding="10">
                 <DockPanel>
                     <Button
+                        Style="{StaticResource PositiveBtn}"
                     Content="Potvrdit"
-                    Height="40" Width="80" HorizontalAlignment="Left"
+                    Height="40" Width="120" HorizontalAlignment="Left"
                     Command="{Binding Path = CreateReservation}"
                     />
                 </DockPanel>
             </Border>
-
         </Grid>
     </ScrollViewer>
 </UserControl>

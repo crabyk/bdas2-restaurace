@@ -228,13 +228,14 @@ namespace BDAS2_Restaurace.Controller
                 {
                     comm.CommandText = "nejvice_objednavana_polozka";
                     comm.CommandType = CommandType.StoredProcedure;
+                    comm.BindByName = true;
 
                     comm.Parameters.Add("p_typ_polozky", OracleDbType.Varchar2).Value = "napoj";
-                    comm.Parameters.Add("v_id_polozky", OracleDbType.Int32, ParameterDirection.ReturnValue);
+                    comm.Parameters.Add("v_id_polozky", OracleDbType.Decimal, ParameterDirection.ReturnValue);
 
                     comm.ExecuteNonQuery();
 
-                    var itemId = Convert.ToInt32(comm.Parameters["v_id_polozky"].Value);
+                    var itemId = Convert.ToInt32(((OracleDecimal)comm.Parameters["v_id_polozky"].Value).Value);
 
                     result = Get(itemId.ToString());
                 }

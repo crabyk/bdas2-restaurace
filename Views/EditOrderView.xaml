@@ -8,7 +8,7 @@
              xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel = "True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="800">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,7 +30,6 @@
                         >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = OrderDate}"/>
                         <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Customer.FullName}"/>
                         <GridViewColumn Header="Obec" DisplayMemberBinding="{Binding Path = Customer.Address}"/>
@@ -40,22 +39,18 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
             <StackPanel>
                 <StackPanel DataContext="{Binding Path = SelectedItem}">
                     <StackPanel>
-                        <Label Content="ID:" />
-                        <Label Content="{Binding Path = ID}" />
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Objem:" />
-                        <DatePicker SelectedDate="{Binding Path = OrderDate}" />
+                        <Label Content="Datum:" />
+                        <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = OrderDate}" />
                     </StackPanel>
                 </StackPanel>
                 
                 <!-- Platba -->
-                <StackPanel>
-                    <Label Content="Platba:" FontSize="16"/>
+                <StackPanel Margin="0, 10">
+                    <Label Content="Platba:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <Label Content="Typ platby" />
                         <ComboBox 
@@ -74,15 +69,14 @@
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum platby:" />
-                            <TextBox Text="{Binding Path = Date}" />
+                            <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = Date}" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
-
                 <!-- Polozky objednavky -->
-                <StackPanel>
-                    <Label Content="Polozky objednavky:" FontSize="16"/>
+                <StackPanel Margin="0, 10">
+                    <Label Content="Polozky objednavky:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <ListView Width="Auto" HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="True"
@@ -91,9 +85,8 @@
                             >
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                                    <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = Name}"/>
-                                    <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Price}"/>
+                                    <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
+                                    <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -108,7 +101,6 @@
                                 >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-
                                         <StackPanel Orientation="Horizontal">
                                             <StackPanel>
                                                 <Label Content="Nazev:" FontSize="10" FontWeight="Bold"/>
@@ -122,15 +114,15 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddOrderItem}" />
+                            <Button Style="{StaticResource PositiveBtn}" Width="60" Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddOrderItem}" />
                         </StackPanel>
-                        <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveOrderItem}" />
+                        <Button Style="{StaticResource NegativeBtn}" Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveOrderItem}" />
                     </DockPanel>
                 </StackPanel>
 
                 <!-- Zakaznik -->
                 <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
-                    <Label Content="Zakaznik:" FontSize="16"/>
+                    <Label Content="Zakaznik:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <Label Content="Jméno a příjmení:" />
                         <Label Content="{Binding Path = FullName}" />
@@ -150,7 +142,7 @@
 
                 <!-- Adresa -->
                 <StackPanel DataContext="{Binding Path = SelectedItem.Customer.Address}">
-                    <Label Content="Adresa:" FontSize="16"/>
+                    <Label Content="Adresa:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{Binding Path = StreetName}" />
@@ -164,10 +156,9 @@
                     </StackPanel>
                 </StackPanel>
 
-
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Style="{StaticResource PositiveBtn}" Width="120" Content="Uložit upravu" Command="{Binding Path = Update}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

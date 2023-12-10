@@ -17,17 +17,17 @@ namespace BDAS2_Restaurace.ViewModel
             var food = new FoodController().GetAll();
             var drinks = new DrinkController().GetAll();
 
-           // var topFood = new FoodController().GetMostOrderedFood();
-            //var topDrink = new DrinkController().GetMostOrderedDrink();
+            var topFood = new FoodController().GetMostOrderedFood();
+            var topDrink = new DrinkController().GetMostOrderedDrink();
 
-            //List<Item> topItems = new List<Item>
-            //{
-            //    topFood,
-            //    topDrink
-            //};
+            List<Item> topItems = new List<Item>
+            {
+                topFood,
+                topDrink
+            };
 
             Items = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
-            //TopItems = new ObservableCollection<Item>(topItems);
+            TopItems = new ObservableCollection<Item>(topItems);
         }
     }
 }

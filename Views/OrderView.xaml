@@ -22,7 +22,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-
             <ListView Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
                         ItemsSource="{Binding Path = Items}"
@@ -30,7 +29,6 @@
                         >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = OrderDate}"/>
                         <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Customer.FullName}"/>
                         <GridViewColumn Header="Obec" DisplayMemberBinding="{Binding Path = Customer.Address}"/>
@@ -44,10 +42,6 @@
             <StackPanel>
                 <StackPanel DataContext="{Binding Path = SelectedItem}">
                     <StackPanel>
-                        <Label Content="ID:" />
-                        <Label Content="{Binding Path = ID}" />
-                    </StackPanel>
-                    <StackPanel>
                         <Label Content="Objem:" />
                         <Label Content="{Binding Path = OrderDate}" />
                     </StackPanel>
@@ -55,7 +49,7 @@
 
                 <!-- Platba -->
                 <StackPanel>
-                    <Label Content="Platba:" FontSize="16"/>
+                    <Label Content="Platba:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <Label Content="Typ platby" />
                         <Label Content="{Binding Path = SelectedItem.Payment.Type.Name}" />
@@ -72,10 +66,9 @@
                     </StackPanel>
                 </StackPanel>
 
-
                 <!-- Polozky objednavky -->
                 <StackPanel>
-                    <Label Content="Polozky objednavky:" FontSize="16"/>
+                    <Label Content="Polozky objednavky:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <ListView Width="Auto" HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="True"
@@ -83,7 +76,6 @@
                                   >
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                                     <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
                                     <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
                                 </GridView>
@@ -95,7 +87,7 @@
 
                 <!-- Zakaznik -->
                 <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
-                    <Label Content="Zakaznik:" FontSize="16"/>
+                    <Label Content="Zakaznik:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <Label Content="Jméno a příjmení:" />
                         <Label Content="{Binding Path = FullName}" />
@@ -115,7 +107,7 @@
 
                 <!-- Adresa -->
                 <StackPanel DataContext="{Binding Path = SelectedItem.Customer.Address}">
-                    <Label Content="Adresa:" FontSize="16"/>
+                    <Label Content="Adresa:" FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{Binding Path = StreetName}" />
@@ -128,8 +120,6 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-
-
             </StackPanel>
         </StackPanel>
     </Grid>

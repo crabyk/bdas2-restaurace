@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
              xmlns:ff="clr-namespace:BDAS2_Restaurace"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="650" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20">
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10, 20">
                 <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                 <TextBox x:Name="UsernameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.Login, Mode=TwoWay}"/>
 
@@ -50,7 +50,7 @@
             
             </StackPanel>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1" Margin="10, 20">
                 <Label Content="Ulice:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                 <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.StreetName, Mode=TwoWay}"/>
 

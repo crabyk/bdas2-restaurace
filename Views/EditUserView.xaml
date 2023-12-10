@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
 
             <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
@@ -34,7 +34,6 @@
                       >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
                         <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
                         <GridViewColumn Header="Login" DisplayMemberBinding="{Binding Path = Login}"/>
@@ -43,28 +42,25 @@
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
             <StackPanel DataContext="{Binding Path = SelectedItem}">
                 <StackPanel>
-                    <Label Content="ID:" />
-                    <Label Content="{Binding Path = ID}" />
-                </StackPanel>
-                <StackPanel>
                     <Label Content="Jmeno:" />
-                    <TextBox Text="{Binding Path = FirstName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Prijmeni:" />
-                    <TextBox Text="{Binding Path = LastName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Login:" />
-                    <TextBox Text="{Binding Path = Login}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Login}" />
                 </StackPanel>
             </StackPanel>
             <StackPanel>
                 <Label Content="Nove heslo:" />
                 <PasswordBox
+                    Style="{StaticResource PsswdBox}"
                     ff:PasswordBoxAssistant.BindPassword="true" 
                     ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
@@ -81,9 +77,9 @@
                             />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
