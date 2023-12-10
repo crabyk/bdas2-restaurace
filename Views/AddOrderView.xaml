@@ -190,7 +190,7 @@
                                     ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel>
-                            <Button Content="Přihlasit se" Command="{Binding LoadCustomer}"/>
+                            <Button Content="Přihlasit se" Command="{Binding Path = LoadCustomer}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left">
@@ -237,7 +237,7 @@
                             <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.Country}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                         <Label HorizontalAlignment="Right" Content="Typ platby" />
                         <ComboBox HorizontalAlignment="Right" 
                                   ItemsSource="{Binding Path = PaymentTypes}" 

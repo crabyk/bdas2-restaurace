@@ -1,4 +1,5 @@
 ﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,16 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override void CreateMethod(object obj)
         {
-            new UserController().Register(SelectedItem, NewPassword);
+            ErrorHandler.OpenDialog(ErrorType.Create);
+            try
+            {
+                controller.Register(SelectedItem, NewPassword);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog(ErrorType.Create);
+            }
+
             NewPassword = string.Empty;
             Load();
         }
@@ -64,7 +74,15 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override void UpdateMethod(object obj)
         {
-            new UserController().Update(SelectedItem, NewPassword);
+
+            try
+            {
+                controller.Update(SelectedItem, NewPassword);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog(ErrorType.Update);
+            }
             NewPassword = string.Empty;
             Load();
         }

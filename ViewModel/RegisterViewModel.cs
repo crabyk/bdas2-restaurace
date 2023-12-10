@@ -1,6 +1,8 @@
 ﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
+using System;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -52,15 +54,22 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override void CreateMethod(object obj)
         {
-            User newUser = new UserController().Register(SelectedItem, NewPassword);
-            NewCustomer.User = newUser;
-            NewCustomer.FirstName = newUser.FirstName;
-            NewCustomer.LastName = newUser.LastName;
+            try
+            {
+                User newUser = new UserController().Register(SelectedItem, NewPassword);
+                NewCustomer.User = newUser;
+                NewCustomer.FirstName = newUser.FirstName;
+                NewCustomer.LastName = newUser.LastName;
 
-            Address newAddress = new AddressController().Add(NewAddress);
-            NewCustomer.Address = newAddress;
+                Address newAddress = new AddressController().Add(NewAddress);
+                NewCustomer.Address = newAddress;
 
-            new CustomerController().Add(NewCustomer);
+                new CustomerController().Add(NewCustomer);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog(ErrorType.Create);
+            }
             NewPassword = string.Empty;
             // base.CreateMethod(obj);
             // TODO vratit se zpet na domovskou stranku

@@ -1,4 +1,5 @@
 ﻿using BDAS2_Restaurace.DB;
+using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
@@ -190,6 +191,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.ExecuteNonQuery();
 
+
                     newId = ((OracleDecimal)comm.Parameters["p_id_uzivatel"].Value).Value;
                 }
 
@@ -230,6 +232,7 @@ namespace BDAS2_Restaurace.Controller
 
                     result = new User()
                     {
+                        ID = (int)((OracleDecimal)userId.Value).Value,
                         Login = username,
                         FirstName = firstName.Value.ToString(),
                         LastName = lastName.Value.ToString(),

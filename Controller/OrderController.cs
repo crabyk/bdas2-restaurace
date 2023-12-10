@@ -33,7 +33,12 @@ namespace BDAS2_Restaurace.Controller
 
                         Address address = new AddressController().Add(item.Customer.Address);
                         item.Customer.Address.ID = address.ID;
-                        Customer customer = new CustomerController().Add(item.Customer);
+
+                        Customer customer = item.Customer;
+                        if (customer.ID == null || customer.User == null)
+                        {
+                            customer = new CustomerController().Add(item.Customer);
+                        }
 
                         Payment payment = new PaymentController().Add(item.Payment);
 
@@ -170,12 +175,61 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
 
+
                     using (OracleDataReader rdr = comm.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
                             Payment payment = new PaymentController().Get(rdr.GetInt32(2).ToString());
                             Customer customer = new CustomerController().Get(rdr.GetInt32(3).ToString());
+                            Table? table = null;
+                            if (!rdr.IsDBNull(4))
+                                table = new TableController().Get(rdr.GetInt32(4).ToString());
+
+                            Address? address = null;
+                            if (!rdr.IsDBNull(5))
+                                address = new AddressController().Get(rdr.GetInt32(5).ToString());
+
+                            List<Item> items = new OrderItemController().GetAll(rdr.GetInt32(0).ToString());
+
+                            result.Add(new Order()
+                            {
+                                ID = rdr.GetInt32(0),
+                                OrderDate = rdr.GetDateTime(1),
+                                Payment = payment,
+                                Customer = customer,
+                                Items = new ObservableCollection<Item>(items),
+                                Table = table,
+                                Address = address
+                            });
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<Order> GetAll(Customer customer)
+        {
+            List<Order> result = new List<Order>();
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_objednavky_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_zakaznik_id", customer.ID);
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            Payment payment = new PaymentController().Get(rdr.GetInt32(2).ToString());
                             Table? table = null;
                             if (!rdr.IsDBNull(4))
                                 table = new TableController().Get(rdr.GetInt32(4).ToString());
