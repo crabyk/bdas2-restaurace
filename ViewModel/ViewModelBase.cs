@@ -1,4 +1,5 @@
 ﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
 using System;
@@ -61,7 +62,14 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual void UpdateMethod(object obj)
         {
-            controller.Update(SelectedItem);
+            try
+            {
+                controller.Update(SelectedItem);
+            }
+            catch
+            {
+                ErrorHandler.OpenDialog(ErrorType.Update);
+            }
             Load();
         }
 
@@ -72,7 +80,14 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual void DeleteMethod(object obj)
         {
-            controller.Delete(SelectedItem.ID.ToString());
+            try
+            {
+                controller.Delete(SelectedItem.ID.ToString());
+            }
+            catch
+            {
+                ErrorHandler.OpenDialog(ErrorType.Delete);
+            }
             Load();
         }
 
@@ -83,7 +98,14 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual void CreateMethod(object obj)
         {
-            controller.Add(SelectedItem);
+            try
+            {
+                controller.Add(SelectedItem);
+            }
+            catch
+            {
+                ErrorHandler.OpenDialog(ErrorType.Create);
+            }
             Load();
         }
 
@@ -111,9 +133,16 @@ namespace BDAS2_Restaurace.ViewModel
              * 
              */
             // await Task.Delay(2000);
-            List<T> result = await Task.Run(() => controller.GetAll());
-            ObservableCollection<T> items = new ObservableCollection<T>(result);
-            Items = items;
+            try
+            {
+                List<T> result = await Task.Run(() => controller.GetAll());
+                ObservableCollection<T> items = new ObservableCollection<T>(result);
+                Items = items;
+            }
+            catch
+            {
+                ErrorHandler.OpenDialog("Chyba při načítání dat", "Neočekávaná chyba při získávání dat z databáze");
+            }
 		}
 	}
 }

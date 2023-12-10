@@ -1,4 +1,5 @@
 ﻿using BDAS2_Restaurace.Controller;
+using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Windows;
 using System;
@@ -100,9 +101,9 @@ namespace BDAS2_Restaurace.ViewModel
         public ICommand RemoveOrderItem { get; set; }
         public ICommand AddOrderItem { get; set; }
 
-        private ICommand SelectOrderItem;
+        public ICommand SelectOrderItem;
 
-        private ICommand LoadCustomer;
+        public ICommand LoadCustomer { get; set; }
 
 
         public ICommand OrderItemCommand
@@ -161,8 +162,14 @@ namespace BDAS2_Restaurace.ViewModel
 
                 Customer loadedCustomer = new CustomerController().GetByUser(user);
 
+                SelectedItem.Customer = loadedCustomer ?? new Customer();
             }
-            catch (Exception ex) { return; }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog("Nepodařilo se načíst zákaznické údaje", "Cyhba při přihlášní");
+            }
+
+
         }
 
         private async void LoadAddresses()

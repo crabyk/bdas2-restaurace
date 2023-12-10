@@ -22,12 +22,31 @@ namespace BDAS2_Restaurace.Controller
 
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "select jmeno, prijmeni, datum_narozeni, telefon, email FROM zakaznik WHERE id_uzivatel = :uzivatelId";
+                    comm.CommandText = "select id_zakaznik, jmeno, prijmeni, datum_narozeni, telefon, email, adresa_id FROM zakaznici WHERE id_uzivatel = :uzivatelId";
                     comm.CommandType = CommandType.Text;
 
                     comm.Parameters.Clear();
                     comm.Parameters.Add(":uzivatelId", OracleDbType.Int32).Value = user.ID;
-                    comm.ExecuteNonQuery();
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            var address = new AddressController().Get(rdr.GetString(6));
+
+                            result = new Customer()
+                            {
+                                ID = rdr.GetInt32(0),
+                                FirstName = rdr.GetString(1),
+                                LastName = rdr.GetString(2),
+                                BirthDate = rdr.GetDateTime(3),
+                                PhoneNumber = rdr.GetString(4),
+                                Email = rdr.GetString(5),
+                                Address = address,
+                                User = user
+                            };
+                        }
+                    }
                 }
 
             }

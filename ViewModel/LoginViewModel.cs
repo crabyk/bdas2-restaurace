@@ -83,7 +83,8 @@ namespace BDAS2_Restaurace.ViewModel
                         window = new AdminWindow();
                         break;
                     case 2: // Zakaznik
-                        window = new EmployeeWindow();
+                        Customer customer = new CustomerController().GetByUser(user);
+                        window = new CustomerWindow(customer);
                         break;
                     case 3: // Zamestnanec
                         window = new EmployeeWindow();
