@@ -74,7 +74,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_telefon", OracleDbType.Varchar2).Value = item.PhoneNumber;
                     comm.Parameters.Add("p_email", OracleDbType.Varchar2).Value = item.Email;
                     comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
-                    comm.Parameters.Add("p_uzivatel_id", OracleDbType.Decimal).Value = item.User.ID;
+                    comm.Parameters.Add("p_uzivatel_id", OracleDbType.Decimal).Value = item.User == null ? null : item.User.ID;
                     comm.Parameters.Add("p_id_zakaznik", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
