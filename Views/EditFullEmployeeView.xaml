@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
 
             <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
@@ -33,36 +33,31 @@
                         >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                        <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = FullName}"/>
+                        <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FullName}"/>
                         <GridViewColumn Header="Typ uvazku" DisplayMemberBinding="{Binding Path = EmploymentType}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="10, 30, 10, 0">
             <StackPanel DataContext="{Binding Path = SelectedItem}">
                 <StackPanel>
-                    <Label Content="ID:" />
-                    <Label Content="{Binding Path = ID}" />
-                </StackPanel>
-                <StackPanel>
                     <Label Content="Jmeno:" />
-                    <TextBox Text="{Binding Path = FirstName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Primeni:" />
-                    <TextBox Text="{Binding Path = LastName}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Mesicni plat:" />
-                    <TextBox Text="{Binding Path = MonthRate}" />
+                    <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = MonthRate}" />
                 </StackPanel>
             </StackPanel>
 
             <!-- Adresy -->
-            <StackPanel>
+            <StackPanel Margin="0, 10">
                 <ComboBox 
                         IsSynchronizedWithCurrentItem="True"
                         SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
@@ -72,7 +67,6 @@
                         >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
                                     <Label Content="PSČ:" FontSize="10" FontWeight="Bold"/>
@@ -111,7 +105,7 @@
 
             <!-- Smeny -->
             <StackPanel>
-                <Label Content="Smeny:" FontSize="16"/>
+                <Label Content="Smeny:" FontSize="16" FontWeight="DemiBold"/>
                 <StackPanel>
                     <ListView Width="Auto" HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="True"
@@ -120,14 +114,13 @@
                             >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                                <GridViewColumn Header="Datum" DisplayMemberBinding="{Binding Path = Begin}"/>
-                                <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = End}"/>
+                                <GridViewColumn Header="Zacatek" DisplayMemberBinding="{Binding Path = Begin}"/>
+                                <GridViewColumn Header="Konec" DisplayMemberBinding="{Binding Path = End}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </StackPanel>
-                <DockPanel>
+                <DockPanel Margin="0, 10">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox 
                                 HorizontalAlignment="Left"
@@ -151,17 +144,16 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddShift}" />
+                        <Button Style="{StaticResource PositiveBtn}" Width="60" Content="Pridat" HorizontalAlignment="Left" Command="{Binding AddShift}" />
                     </StackPanel>
-                    <Button Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveShift}" />
+                    <Button Style="{StaticResource NegativeBtn}" Content="Odebrat vybrany" HorizontalAlignment="Right" Command="{Binding RemoveShift}" />
                 </DockPanel>
             </StackPanel>
 
-
             <StackPanel Orientation="Horizontal">
-                <Button Content="Přidat jako nový" Command="{Binding Path = Create}"/>
-                <Button Content="Uložit upravu" Command="{Binding Path = Update}"/>
-                <Button Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
+                <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

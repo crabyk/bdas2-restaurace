@@ -8,7 +8,7 @@
              xmlns:viewModels = "clr-namespace:BDAS2_Restaurace.ViewModel" 
              xmlns:ff="clr-namespace:BDAS2_Restaurace"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
     
     <UserControl.Resources>
         <Style x:Key="BorderStyle" TargetType="Border">
@@ -165,7 +165,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Content="Odebrat položku" Command="{Binding Path = RemoveOrderItem}" />
+                <Button Style="{StaticResource NegativeBtn}" Content="Odebrat položku" Width="230" Height="25" Command="{Binding Path = RemoveOrderItem}" />
             </StackPanel>
 
             <Border Grid.Row="3">
@@ -179,10 +179,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
+                    <StackPanel Grid.Row="0" Margin="10">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Login" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Username}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Grid.Column="1" Text="{Binding Username}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Heslo" />
@@ -190,51 +190,51 @@
                                     ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel>
-                            <Button Content="Přihlasit se" Command="{Binding Path = LoadCustomer}"/>
+                            <Button Style="{StaticResource PositiveBtn}" Width="140" Height="25" Margin="0, 10, 0, 0" Content="Přihlasit se" Command="{Binding Path = LoadCustomer}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.FirstName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.FirstName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.LastName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.LastName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum narozeni" />
-                            <DatePicker x:Name="BirthDate" Height="30" SelectedDate="{Binding Path = SelectedItem.Customer.BirthDate}" />
+                            <DatePicker x:Name="BirthDate" Style="{StaticResource DatePicker}" Height="30" SelectedDate="{Binding Path = SelectedItem.Customer.BirthDate}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Telefon" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.PhoneNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.PhoneNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Email" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Email}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.Email}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
-                            <TextBox Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.Address.StreetName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Grid.Column="1" Text="{Binding Path = SelectedItem.Customer.Address.StreetName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Obec" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.CityName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.Address.CityName}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Číslo popisné" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.UnitNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.Address.UnitNumber}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="PSČ" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.PostalCode}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.Address.PostalCode}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Země" />
-                            <TextBox Height="30" Text="{Binding Path = SelectedItem.Customer.Address.Country}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Text="{Binding Path = SelectedItem.Customer.Address.Country}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
@@ -251,7 +251,8 @@
                 <DockPanel>
                     <Button
                         Content="Potvrdit"
-                        Height="40" Width="80" HorizontalAlignment="Left"
+                        Style="{StaticResource PositiveBtn}"
+                        Height="40" Width="100" HorizontalAlignment="Left"
                         Command="{Binding Path = Create}"
                         />
                 </DockPanel>

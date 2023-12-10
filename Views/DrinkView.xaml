@@ -22,7 +22,6 @@
                   >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                     <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
                     <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
                     <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Volume}"/>
@@ -31,10 +30,6 @@
         </ListView>
 
         <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedItem}">
-            <StackPanel>
-                <Label Content="ID:" />
-                <Label Content="{Binding Path = ID}" />
-            </StackPanel>
             <StackPanel>
                 <Label Content="Nazev:" />
                 <Label Content="{Binding Path = Name}" />

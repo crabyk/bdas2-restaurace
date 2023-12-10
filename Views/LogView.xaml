@@ -11,8 +11,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -26,7 +24,6 @@
                       >
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
                         <GridViewColumn Header="Tabulka" DisplayMemberBinding="{Binding Path = TableName}"/>
                         <GridViewColumn Header="Ovlivnene ID" DisplayMemberBinding="{Binding Path = AffectedId}"/>
                         <GridViewColumn Header="Typ akce" DisplayMemberBinding="{Binding Path = ActionType}"/>
@@ -35,7 +32,6 @@
                 </ListView.View>
             </ListView>
         </Grid>
-
 
     </Grid>
 </UserControl>
