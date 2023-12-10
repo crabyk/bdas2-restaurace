@@ -21,10 +21,10 @@
                           >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path = ID}"/>
+                    <GridViewColumn Header="ID objektu" DisplayMemberBinding="{Binding Path = ID}"/>
                     <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = ObjectName}"/>
                     <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Path = ObjectType}"/>
-                    <GridViewColumn Header="Cas vytvoreni" DisplayMemberBinding="{Binding Path = Created}"/>
+                    <GridViewColumn Header="Cas vytvoreni" DisplayMemberBinding="{Binding Path = Created, StringFormat='dd.MM.yyyy HH:mm'}"/>
                 </GridView>
             </ListView.View>
         </ListView>

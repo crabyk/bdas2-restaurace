@@ -21,10 +21,10 @@
                       >
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Cas" DisplayMemberBinding="{Binding Path = Time, StringFormat='dd.MM.yyyy HH:mm:ss'}"/>
                     <GridViewColumn Header="Tabulka" DisplayMemberBinding="{Binding Path = TableName}"/>
-                    <GridViewColumn Header="Ovlivnene ID" DisplayMemberBinding="{Binding Path = AffectedId}"/>
                     <GridViewColumn Header="Typ akce" DisplayMemberBinding="{Binding Path = ActionType}"/>
-                    <GridViewColumn Header="Cas" DisplayMemberBinding="{Binding Path = Time}"/>
+                    <GridViewColumn Header="Ovlivnene ID" DisplayMemberBinding="{Binding Path = AffectedId}"/>
                 </GridView>
             </ListView.View>
         </ListView>
