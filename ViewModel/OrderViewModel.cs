@@ -242,5 +242,23 @@ namespace BDAS2_Restaurace.ViewModel
             // Load();
         }
 
+        protected override void CreateMethod(object obj)
+        {
+            try
+            {
+                base.CreateMethod(obj);
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.None;
+
+                MessageBox.Show("Objednávka úspěšně vytvořena", "Objednávka", button, icon, MessageBoxResult.Yes);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog(ErrorType.Create);
+            }
+
+
+        }
+
     }
 }

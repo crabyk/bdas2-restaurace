@@ -3,6 +3,7 @@ using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
 using System;
+using System.Windows;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -65,6 +66,12 @@ namespace BDAS2_Restaurace.ViewModel
                 NewCustomer.Address = newAddress;
 
                 new CustomerController().Add(NewCustomer);
+
+                base.CreateMethod(obj);
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.None;
+
+                MessageBox.Show("Zákazník úspěšně registrován", "Registrace", button, icon, MessageBoxResult.Yes);
             }
             catch (Exception ex)
             {
