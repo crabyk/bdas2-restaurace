@@ -5,6 +5,7 @@ using BDAS2_Restaurace.Router;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace BDAS2_Restaurace.ViewModel
 		{
             SelectedItem = new T();
             Items = new ObservableCollection<T>();
+
             this.controller = controller;
             ClearSelected = new RelayCommand(ClearMethod, CanClearMethod);
             Create = new RelayCommand(CreateMethod, CanCreateMethod);
@@ -93,7 +95,11 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual bool CanCreateMethod(object obj)
         {
-            return true;
+            /*
+            ICollection<ValidationResult> results = null;
+            return PropertyValidateModel.Validate(SelectedItem, out results);
+            */
+            return PropertyValidateModel.Validate(SelectedItem);
         }
 
         protected virtual void CreateMethod(object obj)

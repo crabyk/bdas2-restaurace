@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -27,7 +28,7 @@ namespace BDAS2_Restaurace.Model
             address = new Address();
         }
 
-
+       
         public string FirstName
         {
             get { return firstName; }
@@ -37,6 +38,8 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(FirstName));
             }
         }
+
+        
         public string LastName
         {
             get { return lastName; }

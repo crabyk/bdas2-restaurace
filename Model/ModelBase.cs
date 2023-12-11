@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.Model
 {
-    public abstract class ModelBase : ICloneable, INotifyPropertyChanged
+    public abstract class ModelBase : PropertyValidateModel, ICloneable, INotifyPropertyChanged
     {
         public int? ID { get; set; }
 

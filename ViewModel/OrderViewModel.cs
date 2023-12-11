@@ -242,6 +242,7 @@ namespace BDAS2_Restaurace.ViewModel
             // Load();
         }
 
+
         protected override void CreateMethod(object obj)
         {
             try

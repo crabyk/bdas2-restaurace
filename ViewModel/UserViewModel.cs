@@ -54,7 +54,7 @@ namespace BDAS2_Restaurace.ViewModel
             base.Load();
         }
 
-
+        /*
         protected override void CreateMethod(object obj)
         {
             ErrorHandler.OpenDialog(ErrorType.Create);
@@ -70,6 +70,7 @@ namespace BDAS2_Restaurace.ViewModel
             NewPassword = string.Empty;
             Load();
         }
+        */
 
 
         protected override void UpdateMethod(object obj)

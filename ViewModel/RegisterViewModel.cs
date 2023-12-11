@@ -53,6 +53,7 @@ namespace BDAS2_Restaurace.ViewModel
             NewPassword = string.Empty;
         }
 
+        /*
         protected override void CreateMethod(object obj)
         {
             try
@@ -75,11 +76,12 @@ namespace BDAS2_Restaurace.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorHandler.OpenDialog(ErrorType.Create);
+                // ErrorHandler.OpenDialog(ErrorType.Create);
             }
             NewPassword = string.Empty;
             // base.CreateMethod(obj);
             // TODO vratit se zpet na domovskou stranku
         }
+        */
     }
 }

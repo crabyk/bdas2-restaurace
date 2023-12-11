@@ -1,4 +1,6 @@
-﻿namespace BDAS2_Restaurace.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BDAS2_Restaurace.Model
 {
     public abstract class Item : ModelBase
     {
@@ -6,6 +8,7 @@
         private double price;
         private ItemImage? itemImage;
 
+        [Required(ErrorMessage = "Název je povinný")]
         public string Name
         {
             get
@@ -20,6 +23,7 @@
             }
         }
 
+        [Required(ErrorMessage = "Cena je povinná")]
         public double Price
         {
             get
@@ -35,6 +39,7 @@
             }
         }
 
+        [Required(ErrorMessage = "Obrázek je povinný")]
         public ItemImage? ItemImage
         {
             get

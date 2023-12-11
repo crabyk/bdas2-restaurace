@@ -1,4 +1,8 @@
-﻿namespace BDAS2_Restaurace.Model
+﻿using CommunityToolkit.Mvvm.Messaging.Messages;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
+namespace BDAS2_Restaurace.Model
 {
     public class Drink : Item
     {
@@ -6,12 +10,15 @@
 
         public double Volume
         {
-            get { return volume; }
+            get
+            {
+                return volume;
+            }
 
             set
             {
                 volume = value;
-                 OnPropertyChanged(nameof(Volume));
+                OnPropertyChanged(nameof(Volume));
             }
         }
 

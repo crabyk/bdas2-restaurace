@@ -47,20 +47,24 @@
                 <StackPanel>
                     <StackPanel DataContext="{Binding Path = SelectedItem}">
                         <StackPanel>
-                            <Label Content="Nazev:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name}" />
+                            <Label Content="Nazev" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Cena:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Vaha:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Weight}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Weight, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Recept:" />
-                            <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = Recipe}" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = Recipe, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
 
