@@ -93,6 +93,9 @@ namespace BDAS2_Restaurace.ViewModel
                         return;
                 }
 
+                Username = string.Empty;
+                Password = string.Empty;
+
                 window.Show();
                 // window = new AdminWindow();
             }

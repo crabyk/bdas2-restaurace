@@ -163,6 +163,8 @@ namespace BDAS2_Restaurace.ViewModel
                 Customer loadedCustomer = new CustomerController().GetByUser(user);
 
                 SelectedItem.Customer = loadedCustomer ?? new Customer();
+                Username = string.Empty;
+                Password = string.Empty;
             }
             catch (Exception ex)
             {
@@ -182,6 +184,7 @@ namespace BDAS2_Restaurace.ViewModel
         {
             List<PaymentType> paymentTypes = await Task.Run(() => new PaymentTypeController().GetAll());   
             PaymentTypes = new ObservableCollection<PaymentType>(paymentTypes);
+            SelectedItem.Payment.Type = PaymentTypes.First();
         }
 
         private async void LoadFood()

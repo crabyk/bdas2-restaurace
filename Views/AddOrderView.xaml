@@ -261,8 +261,9 @@
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                         <Label HorizontalAlignment="Right" Content="Typ platby" />
                         <ComboBox HorizontalAlignment="Right" 
+                                  IsSynchronizedWithCurrentItem="True"
                                   ItemsSource="{Binding Path = PaymentTypes}" 
-                                  SelectedItem="{Binding Path = SelectedItem.Payment.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                  SelectedItem="{Binding Path = SelectedItem.Payment.Type, UpdateSourceTrigger=PropertyChanged, 
                                         NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                                   DisplayMemberPath="Name"/>
                     </StackPanel>

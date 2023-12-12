@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -33,6 +34,8 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(OrderDate));
             }
         }
+
+        [Required(ErrorMessage ="Platby je povinná")]
         public Payment Payment
         {
             get { return payment; }
