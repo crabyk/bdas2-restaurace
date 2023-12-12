@@ -59,7 +59,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual bool CanUpdateMethod(object obj)
         {
-            return SelectedItem != null;
+            return PropertyValidateModel.Validate(SelectedItem) && Items.Any(i => i.ID == SelectedItem.ID);
         }
 
         protected virtual void UpdateMethod(object obj)
@@ -77,7 +77,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual bool CanDeleteMethod(object obj)
         {
-            return SelectedItem != null;
+            return PropertyValidateModel.Validate(SelectedItem) && Items.Any(i => i.ID == SelectedItem.ID);
         }
 
         protected virtual void DeleteMethod(object obj)
