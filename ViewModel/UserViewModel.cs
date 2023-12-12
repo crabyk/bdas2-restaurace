@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -52,6 +53,40 @@ namespace BDAS2_Restaurace.ViewModel
         {
             LoadRoles();
             base.Load();
+        }
+
+        protected override bool CanCreateMethod(object obj)
+        {
+            return base.CanCreateMethod(obj) && !string.IsNullOrWhiteSpace(SelectedItem.Password);
+        }
+
+        protected override void CreateMethod(object obj)
+        {
+            if (new UserController().Find(SelectedItem.Login))
+            {
+                ErrorHandler.OpenDialog($"Uživatel {SelectedItem.Login} již existuje", "Registrace");
+                return;
+            }
+
+            try
+            {
+                User newUser = new UserController().Register(SelectedItem, SelectedItem.Password);
+
+
+
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.None;
+
+                MessageBox.Show("Účet úspěšně registrován", "Registrace", button, icon, MessageBoxResult.OK);
+            }
+            catch (Exception ex)
+            {
+                // ErrorHandler.OpenDialog(ErrorType.Create);
+            }
+            SelectedItem.Password = string.Empty;
+            OnWindowChange(new LoginViewModel());
+            // base.CreateMethod(obj);
+            // TODO vratit se zpet na domovskou stranku
         }
 
         /*

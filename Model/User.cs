@@ -22,8 +22,6 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        [Required(ErrorMessage = "Heslo je povinné")]
-        [RegularExpression(@"^(?=.*).{4,}$", ErrorMessage = "Heslo musí mít alespoň 4 znaky")]
         public string Password
         {
             get { return password; }

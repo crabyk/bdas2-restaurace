@@ -10,96 +10,59 @@
              d:DesignHeight="600" d:DesignWidth="800">
 
     <Window.DataContext>
-        <viewModel:AdminViewModel />
+        <viewModel:EmulationViewModel />
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType = "{x:Type viewModel:FoodViewModel}">
-            <views:EditFoodView x:Name="EditFoodView" />
+        <DataTemplate DataType = "{x:Type viewModel:AdminViewModel}">
+            <views:AdminView x:Name="AdminView" />
         </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:DrinkViewModel}">
-            <views:EditDrinkView x:Name="EditDrinkView" />
+        <DataTemplate DataType = "{x:Type viewModel:EmployeeViewModel}">
+            <views:EmployeeView x:Name="EmplyoeeView" />
         </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:ItemImageViewModel}">
-            <views:EditItemImageView x:Name="EditItemImageView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:PaymentTypeViewModel}">
-            <views:EditPaymentTypeView x:Name="EditPaymentTypeView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:CustomerViewModel}">
-            <views:EditCustomerView x:Name="EditCustomerView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:OrderViewModel}">
-            <views:EditOrderView x:Name="EditOrderView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:AddressViewModel}">
-            <views:EditAddressView x:Name="EditAddressView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:TableViewModel}">
-            <views:EditTableView x:Name="EditTableView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:FullEmployeeViewModel}">
-            <views:EditFullEmployeeView x:Name="EditFullEmployeeView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:PartEmployeeViewModel}">
-            <views:EditPartEmployeeView x:Name="EditPartEmployeeView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:WorkShiftViewModel}">
-            <views:EditWorkShiftView x:Name="EditWorkShiftView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:JobPositionViewModel}">
-            <views:EditJobPositionView x:Name="EditJobPositionView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:UserViewModel}">
-            <views:EditUserView x:Name="EditUserView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:RoleViewModel}">
-            <views:EditRoleView x:Name="EditRoleView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:LogViewModel}">
-            <views:LogView x:Name="LogView" />
-        </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:SystemCatalogViewModel}">
-            <views:SystemCatalogView x:Name="SystemCatalogView" />
+        <DataTemplate DataType = "{x:Type viewModel:OrderCustomerViewModel}">
+            <views:OrderCustomerView x:Name="OrderCustomerView" />
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" >
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource Btn}" Content="Admin" Command="{Binding NavCommand}" CommandParameter = "admin" />
+                <Button Style="{StaticResource Btn}" Content="Emulovat Pracovníka" Command="{Binding NavCommand}" CommandParameter = "employee" />
+                <ComboBox 
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                    NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                            SelectedValue="{Binding Path = SelectedCustomer.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = Customers}" 
+                            >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="2">
-            <StackPanel>
-                <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
-                <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
-                <Button Style="{StaticResource Btn}" Content="Obrazky" Command="{Binding NavCommand}" CommandParameter = "itemImage"/>
-                <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
-                <Button Style="{StaticResource Btn}" Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
-                <Button Style="{StaticResource Btn}" Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
-                <Button Style="{StaticResource Btn}" Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
-                <Button Style="{StaticResource Btn}" Content="Stoly" Command="{Binding NavCommand}" CommandParameter = "table" />
-                <Button Style="{StaticResource Btn}" Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
-                <Button Style="{StaticResource Btn}" Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
-                <Button Style="{StaticResource Btn}" Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
-                <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
-                <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
-                <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
-                <Button Style="{StaticResource Btn}" Content="Logy" Command="{Binding NavCommand}" CommandParameter = "logs" />
-                <Button Style="{StaticResource Btn}" Content="Katalog" Command="{Binding NavCommand}" CommandParameter = "catalog" />
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <Label Content="Jméno:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = FirstName}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="Přijmení:" FontSize="10" FontWeight="Bold"/>
+                                    <Label Content="{Binding Path = LastName}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Style="{StaticResource Btn}" Content="Emulovat zákazníka" Command="{Binding EmulateCustomer}" />
+
             </StackPanel>
-        </ScrollViewer>
-
-        <StackPanel Grid.Column="1" Grid.Row="0">
-            <Label x:Name="Headline" Content="" FontSize="24" />
-        </StackPanel>
-
-        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "1">
+        </DockPanel>
+        <Grid x:Name="MainContent" Grid.Row="1">
             <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
         </Grid>
     </Grid>

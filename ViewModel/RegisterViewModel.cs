@@ -55,6 +55,11 @@ namespace BDAS2_Restaurace.ViewModel
             NewPassword = string.Empty;
         }
 
+        protected override bool CanCreateMethod(object obj)
+        {
+            return base.CanCreateMethod(obj) && !string.IsNullOrWhiteSpace(SelectedItem.Password);
+        }
+
         protected override void CreateMethod(object obj)
         {
             if (new UserController().Find(SelectedItem.Login))
