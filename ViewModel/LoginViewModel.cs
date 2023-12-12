@@ -17,8 +17,8 @@ namespace BDAS2_Restaurace.ViewModel
     {
 
 
-        private string username;
-        private string password;
+        private string username = string.Empty;
+        private string password = string.Empty;
 
         public string Username
         {

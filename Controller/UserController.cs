@@ -103,6 +103,31 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+
+        public bool Find(string login)
+        {
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "select id_uzivatel from uzivatele where login = :login";
+                    comm.CommandType = CommandType.Text;
+
+
+                    comm.Parameters.Add(":login", login);
+
+                    using (OracleDataReader reader = comm.ExecuteReader())
+                    {
+                        // Check if there are any rows
+                        return reader.HasRows;
+                    }
+                }
+            }
+
+        }
+
         public override List<User> GetAll()
         {
             List<User> result = new List<User>();

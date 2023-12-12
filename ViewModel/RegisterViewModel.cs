@@ -3,7 +3,9 @@ using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
 using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -53,12 +55,17 @@ namespace BDAS2_Restaurace.ViewModel
             NewPassword = string.Empty;
         }
 
-        /*
         protected override void CreateMethod(object obj)
         {
+            if (new UserController().Find(SelectedItem.Login))
+            {
+                ErrorHandler.OpenDialog($"Uživatel {SelectedItem.Login} již existuje", "Registrace");
+                return;
+            }
+
             try
             {
-                User newUser = new UserController().Register(SelectedItem, NewPassword);
+                User newUser = new UserController().Register(SelectedItem, SelectedItem.Password);
                 NewCustomer.User = newUser;
                 NewCustomer.FirstName = newUser.FirstName;
                 NewCustomer.LastName = newUser.LastName;
@@ -68,20 +75,19 @@ namespace BDAS2_Restaurace.ViewModel
 
                 new CustomerController().Add(NewCustomer);
 
-                base.CreateMethod(obj);
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.None;
 
-                MessageBox.Show("Zákazník úspěšně registrován", "Registrace", button, icon, MessageBoxResult.Yes);
+                MessageBox.Show("Zákazník úspěšně registrován", "Registrace", button, icon, MessageBoxResult.OK);
             }
             catch (Exception ex)
             {
                 // ErrorHandler.OpenDialog(ErrorType.Create);
             }
-            NewPassword = string.Empty;
+            SelectedItem.Password = string.Empty;
+            OnWindowChange(new LoginViewModel());
             // base.CreateMethod(obj);
             // TODO vratit se zpet na domovskou stranku
         }
-        */
     }
 }

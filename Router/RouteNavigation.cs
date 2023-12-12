@@ -40,8 +40,18 @@ namespace BDAS2_Restaurace.Router
 			BindableBase? newInstance = (BindableBase?)Activator.CreateInstance(viewModelType);
 			*/
 			BindableBase? newInstance = route.NewViewModel();
+			newInstance.WindowClose += (s, e) =>
+			{
+				CurrentViewModel = null;
+			};
 
-			CurrentViewModel = newInstance ?? route.ViewModel;
+			newInstance.WindowChange += (b) =>
+			{
+				CurrentViewModel = b;
+			};
+
+            CurrentViewModel = newInstance ?? route.ViewModel;
 		}
-	}
+
+    }
 }

@@ -24,6 +24,7 @@ namespace BDAS2_Restaurace
 			Routes.Add(new Route<AdminViewModel>("admin"));
             Routes.Add(new Route<LoginViewModel>("login"));
             Routes.Add(new Route<RegisterViewModel>("register"));
+
         }
 
         private bool CanOpenAdminMethod(object obj)

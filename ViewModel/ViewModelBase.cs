@@ -44,6 +44,8 @@ namespace BDAS2_Restaurace.ViewModel
         public ICommand Delete { get; set; }
         public ICommand Update { get; set; }
 
+
+
         public ViewModelBase(U controller)
 		{
             SelectedItem = new T();
@@ -54,6 +56,7 @@ namespace BDAS2_Restaurace.ViewModel
             Create = new RelayCommand(CreateMethod, CanCreateMethod);
             Delete = new RelayCommand(DeleteMethod, CanDeleteMethod);
             Update = new RelayCommand(UpdateMethod, CanUpdateMethod);
+            
             Load();
 		}
 

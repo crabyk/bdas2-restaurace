@@ -16,6 +16,14 @@ namespace BDAS2_Restaurace
             WindowClose?.Invoke(this, EventArgs.Empty);
         }
 
+		public delegate void WindowChangeEventHandler(BindableBase newWindow);
+
+        public event WindowChangeEventHandler WindowChange;
+        protected virtual void OnWindowChange(BindableBase newWindow)
+        {
+			WindowChange?.Invoke(newWindow);
+        }
+
         protected virtual void SetProperty<T>(ref T member, T val, [CallerMemberName] string propertyName = null)
 		{
 			if (object.Equals(member, val)) return;
