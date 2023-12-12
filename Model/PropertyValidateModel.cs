@@ -31,17 +31,21 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        public static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
+        public static bool Validate<T>(T? obj, out ICollection<ValidationResult> results)
         {
+
             results = new List<ValidationResult>();
+            if (obj == null) return false;
 
             return Validator.TryValidateObject(obj, new ValidationContext(obj), results, true);
         }
 
 
-        public static bool Validate<T>(T obj)
+        public static bool Validate<T>(T? obj)
         {
+
             List<ValidationResult> results = new List<ValidationResult>();
+            if (obj == null) return false;
 
             if (!Validator.TryValidateObject(obj, new ValidationContext(obj), results, true))
                 return false;

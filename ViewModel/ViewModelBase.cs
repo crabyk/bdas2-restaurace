@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace BDAS2_Restaurace.ViewModel
     {
         // private Controller<object> controller;
         protected U controller;
-        protected T selectedItem;
+        protected T? selectedItem;
         protected ObservableCollection<T> items;
         protected ObservableCollection<T> filteredItems;
         private string filterText;
@@ -33,12 +34,12 @@ namespace BDAS2_Restaurace.ViewModel
                 OnPropertyChanged(nameof(Items));
             }
         }
-        public T SelectedItem
+        public T? SelectedItem
         {
             get { return selectedItem; }
             set
             {
-                selectedItem = (T)value.Clone();
+                selectedItem = (T?)value?.Clone() ?? new T();
                 OnPropertyChanged(nameof(selectedItem));
             }
         }
