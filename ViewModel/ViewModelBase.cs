@@ -21,6 +21,9 @@ namespace BDAS2_Restaurace.ViewModel
         protected U controller;
         protected T selectedItem;
         protected ObservableCollection<T> items;
+        protected ObservableCollection<T> filteredItems;
+        private string filterText;
+
         public ObservableCollection<T> Items
         {
             get { return items; }
@@ -39,11 +42,33 @@ namespace BDAS2_Restaurace.ViewModel
                 OnPropertyChanged(nameof(selectedItem));
             }
         }
+
+        public ObservableCollection<T> FilteredItems
+        {
+            get { return filteredItems; }
+            set
+            {
+                filteredItems = value;
+                OnPropertyChanged(nameof(FilteredItems));
+            }
+        }
+
+        public string FilterText
+        {
+            get { return filterText; }
+            set
+            {
+                filterText = value;
+                ApplyFilter();
+                OnPropertyChanged(nameof(FilterText));
+            }
+        }
+
         public ICommand ClearSelected { get; set; }
         public ICommand Create { get; set; }
         public ICommand Delete { get; set; }
         public ICommand Update { get; set; }
-
+        public ICommand ClearFilter { get; set; }
 
 
         public ViewModelBase(U controller)
@@ -56,9 +81,10 @@ namespace BDAS2_Restaurace.ViewModel
             Create = new RelayCommand(CreateMethod, CanCreateMethod);
             Delete = new RelayCommand(DeleteMethod, CanDeleteMethod);
             Update = new RelayCommand(UpdateMethod, CanUpdateMethod);
-            
+            ClearFilter = new RelayCommand(ClearFilterMethod, CanClearFilterMethod);
+
             Load();
-		}
+		}     
 
         protected virtual bool CanUpdateMethod(object obj)
         {
@@ -128,6 +154,35 @@ namespace BDAS2_Restaurace.ViewModel
             SelectedItem = new T();
         }
 
+        protected virtual bool CanClearFilterMethod(object obj)
+        {
+            return true;
+        }
+
+        protected virtual void ClearFilterMethod(object obj)
+        {
+            FilterText = string.Empty;
+        }
+
+        protected virtual void ApplyFilter()
+        {
+            if (string.IsNullOrEmpty(FilterText))
+            {
+                FilteredItems = Items;
+            }
+            else
+            {
+                var filteredList = new ObservableCollection<T>(
+                    Items.Where(item => IsMatchingFilter(item))
+                );
+                FilteredItems = filteredList;
+            }
+        }
+
+        protected virtual bool IsMatchingFilter(T item)
+        {
+            return true;
+        }
 
         protected virtual async void Load()
 		{
@@ -147,6 +202,7 @@ namespace BDAS2_Restaurace.ViewModel
                 List<T> result = await Task.Run(() => controller.GetAll());
                 ObservableCollection<T> items = new ObservableCollection<T>(result);
                 Items = items;
+                ApplyFilter();
             }
             catch
             {

@@ -12,11 +12,19 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" Name="DataListView" HorizontalContentAlignment="Stretch"
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Filtr:" VerticalAlignment="Center"></Label>
+            <TextBox Style="{StaticResource TxtBox}" Width="180" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Style="{StaticResource NegativeBtn}" Content="Zrušit filtr" Command="{Binding Path = ClearFilter}"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" Name="DataListView" HorizontalContentAlignment="Stretch"
                           IsSynchronizedWithCurrentItem="True"
-                          ItemsSource="{Binding Path = Items}"
+                          ItemsSource="{Binding Path = FilteredItems}"
                           SelectedItem="{Binding Path = SelectedItem}"
                           >
             <ListView.View>

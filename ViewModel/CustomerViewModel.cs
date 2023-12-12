@@ -3,8 +3,6 @@ using BDAS2_Restaurace.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -38,6 +36,20 @@ namespace BDAS2_Restaurace.ViewModel
         {
             LoadAddresses();
             base.Load();
+        }
+
+        protected override bool IsMatchingFilter(Customer item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return
+                item.FirstName.ToLower().Contains(filterTextLower) ||
+                item.LastName.ToLower().Contains(filterTextLower) ||
+                item.Email.ToLower().Contains(filterTextLower) ||
+                (item.User != null && item.User.Login.ToLower().Contains(filterTextLower));
         }
     }
 }

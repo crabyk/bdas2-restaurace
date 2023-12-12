@@ -125,5 +125,19 @@ namespace BDAS2_Restaurace.ViewModel
             LoadShifts();
             base.Load();
         }
+
+        protected override bool IsMatchingFilter(PartEmployee item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return
+                item.FirstName.ToLower().Contains(filterTextLower) ||
+                item.LastName.ToLower().Contains(filterTextLower) ||
+                item.JobPosition.Name.ToLower().Contains(filterTextLower) ||
+                item.EmploymentType.ToLower().Contains(filterTextLower);
+        }
     }
 }

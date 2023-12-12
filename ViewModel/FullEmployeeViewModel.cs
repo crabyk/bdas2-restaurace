@@ -1,11 +1,7 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -124,6 +120,20 @@ namespace BDAS2_Restaurace.ViewModel
             LoadPositions();
             LoadShifts();
             base.Load();
+        }
+
+        protected override bool IsMatchingFilter(FullEmployee item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return
+                item.FirstName.ToLower().Contains(filterTextLower) ||
+                item.LastName.ToLower().Contains(filterTextLower) ||
+                item.JobPosition.Name.ToLower().Contains(filterTextLower) ||
+                item.EmploymentType.ToLower().Contains(filterTextLower);
         }
     }
 }

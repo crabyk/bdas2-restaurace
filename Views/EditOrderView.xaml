@@ -22,10 +22,16 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label Content="Filtr:" VerticalAlignment="Center"></Label>
+                <TextBox Style="{StaticResource TxtBox}" Width="180" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit filtr" Command="{Binding Path = ClearFilter}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+            </StackPanel>
 
-            <ListView Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
-                        ItemsSource="{Binding Path = Items}"
+                        ItemsSource="{Binding Path = FilteredItems}"
                         SelectedItem="{Binding Path = SelectedItem, Mode=TwoWay}"
                         >
                 <ListView.View>

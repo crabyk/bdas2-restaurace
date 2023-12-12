@@ -36,22 +36,19 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="2">
-            <Button Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
-            <Button Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
-            <Button Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+            <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
+            <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
+            <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0">
             <Label x:Name="Headline" Content="" FontSize="24" />
         </StackPanel>
 
-
         <StackPanel Grid.Column="1" Grid.Row="1">
             <Grid x:Name = "MainContent" Grid.Row = "2">
                 <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
             </Grid>
         </StackPanel>
-
-
     </Grid>
 </Window>

@@ -2,12 +2,8 @@
 using BDAS2_Restaurace.Model;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -18,7 +14,7 @@ namespace BDAS2_Restaurace.ViewModel
     {
         public ICommand UploadImage { get; set; }
 
-        public ItemImageViewModel() : base (new ItemImageController())
+        public ItemImageViewModel() : base(new ItemImageController())
         {
             UploadImage = new RelayCommand(UploadImageMethod, CanUploadImageMethod);
         }
@@ -60,6 +56,16 @@ namespace BDAS2_Restaurace.ViewModel
         {
             Items = new ObservableCollection<ItemImage>(controller.GetAll());
             // base.Load();
+        }
+
+        protected override bool IsMatchingFilter(ItemImage item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return item.FileName.ToLower().Contains(filterTextLower);
         }
     }
 }
