@@ -23,7 +23,6 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        [Required(ErrorMessage = "Cena je povinná")]
         public double Price
         {
             get

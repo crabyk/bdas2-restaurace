@@ -57,12 +57,12 @@
                         <StackPanel>
                             <Label Content="Cena:" />
                             <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price, UpdateSourceTrigger=PropertyChanged, 
-                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N1}}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Objem:" />
                             <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Volume, UpdateSourceTrigger=PropertyChanged, 
-                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N1}}" />
                         </StackPanel>
                     </StackPanel>
 

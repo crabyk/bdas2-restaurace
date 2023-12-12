@@ -43,7 +43,29 @@ namespace BDAS2_Restaurace.Model
         {
             List<ValidationResult> results = new List<ValidationResult>();
 
-            return Validator.TryValidateObject(obj, new ValidationContext(obj), results, true);
+            if (!Validator.TryValidateObject(obj, new ValidationContext(obj), results, true))
+                return false;
+
+            foreach (var prop in TypeDescriptor.GetProperties(obj).Cast<PropertyDescriptor>())
+            {
+                try
+                {
+                    // Attempt to get the property value to trigger any conversion errors
+                    var value = prop.GetValue(obj);
+                }
+                catch (FormatException ex)
+                {
+                    // If a conversion error occurs, add it to the validation results
+                    results.Add(new ValidationResult($"Conversion error: {ex.Message}", new[] { prop.Name }));
+                }
+                catch (Exception ex)
+                {
+                    // Handle other exceptions if needed
+                    results.Add(new ValidationResult($"Error: {ex.Message}", new[] { prop.Name }));
+                }
+            }
+
+            return results.Count == 0;
         }
 
     }

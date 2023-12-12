@@ -8,6 +8,7 @@ namespace BDAS2_Restaurace.Model
     {
         private double volume;
 
+        [Range(1, 1000, ErrorMessage = "Hodnota musí být od 10ml do 1000ml")]
         public double Volume
         {
             get
