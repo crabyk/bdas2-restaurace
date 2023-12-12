@@ -85,27 +85,7 @@ namespace BDAS2_Restaurace.ViewModel
             }
             SelectedItem.Password = string.Empty;
             OnWindowChange(new LoginViewModel());
-            // base.CreateMethod(obj);
-            // TODO vratit se zpet na domovskou stranku
         }
-
-        /*
-        protected override void CreateMethod(object obj)
-        {
-            ErrorHandler.OpenDialog(ErrorType.Create);
-            try
-            {
-                controller.Register(SelectedItem, NewPassword);
-            }
-            catch (Exception ex)
-            {
-                ErrorHandler.OpenDialog(ErrorType.Create);
-            }
-
-            NewPassword = string.Empty;
-            Load();
-        }
-        */
 
 
         protected override void UpdateMethod(object obj)
@@ -113,7 +93,7 @@ namespace BDAS2_Restaurace.ViewModel
 
             try
             {
-                controller.Update(SelectedItem, NewPassword);
+                controller.Update(SelectedItem, SelectedItem.Password);
             }
             catch (Exception ex)
             {

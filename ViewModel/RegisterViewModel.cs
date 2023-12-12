@@ -67,7 +67,6 @@ namespace BDAS2_Restaurace.ViewModel
                 ErrorHandler.OpenDialog($"Uživatel {SelectedItem.Login} již existuje", "Registrace");
                 return;
             }
-
             try
             {
                 User newUser = new UserController().Register(SelectedItem, SelectedItem.Password);
@@ -91,8 +90,7 @@ namespace BDAS2_Restaurace.ViewModel
             }
             SelectedItem.Password = string.Empty;
             OnWindowChange(new LoginViewModel());
-            // base.CreateMethod(obj);
-            // TODO vratit se zpet na domovskou stranku
+     
         }
     }
 }

@@ -112,17 +112,22 @@ namespace BDAS2_Restaurace.Controller
                 conn.Open();
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-                    comm.CommandText = "select id_uzivatel from uzivatele where login = :login";
-                    comm.CommandType = CommandType.Text;
+                    comm.CommandText = "existuje_login";
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.BindByName = true;
 
 
-                    comm.Parameters.Add(":login", login);
+                    comm.Parameters.Add("p_login", OracleDbType.Varchar2, 100, null, ParameterDirection.Input).Value = login;
 
-                    using (OracleDataReader reader = comm.ExecuteReader())
-                    {
-                        // Check if there are any rows
-                        return reader.HasRows;
-                    }
+                    OracleParameter res = new OracleParameter("res", OracleDbType.Decimal, ParameterDirection.ReturnValue);
+                    comm.Parameters.Add(res);
+
+                    comm.ExecuteNonQuery();
+
+                    var result = Convert.ToInt32(((OracleDecimal)res.Value).Value);
+
+                    return result == 1;
+
                 }
             }
 
@@ -179,7 +184,7 @@ namespace BDAS2_Restaurace.Controller
 
                     comm.Parameters.Add("p_id_uzivatel", OracleDbType.Decimal).Value = item.ID;
                     comm.Parameters.Add("p_login", OracleDbType.Varchar2).Value = item.Login;
-                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = HashPassword(password);
+                    comm.Parameters.Add("p_hash", OracleDbType.Varchar2).Value = string.IsNullOrEmpty(password) ? null : HashPassword(password);
                     comm.Parameters.Add("p_jmeno", OracleDbType.Varchar2).Value = item.FirstName;
                     comm.Parameters.Add("p_prijmeni", OracleDbType.Varchar2).Value = item.LastName;
                     comm.Parameters.Add("p_id_role", OracleDbType.Decimal).Value = item.Role.ID;
