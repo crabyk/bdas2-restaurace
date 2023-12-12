@@ -29,19 +29,23 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedItem}">
-            <StackPanel>
-                <Label Content="Nazev:" />
-                <Label Content="{Binding Path = Name}" />
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Cena:" />
-                <Label Content="{Binding Path = Price}" />
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Objem:" />
-                <Label Content="{Binding Path = Volume}" />
-            </StackPanel>
-        </StackPanel>
+        <Grid Grid.Column="1" Margin="10, 0">
+            <ScrollViewer>
+                <StackPanel DataContext="{Binding Path = SelectedItem}">
+                    <StackPanel>
+                        <Label Content="Nazev:" />
+                        <Label Content="{Binding Path = Name}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Cena:" />
+                        <Label Content="{Binding Path = Price}" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Objem:" />
+                        <Label Content="{Binding Path = Volume}" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

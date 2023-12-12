@@ -45,10 +45,8 @@
             <Label x:Name="Headline" Content="" FontSize="24" />
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1">
-            <Grid x:Name = "MainContent" Grid.Row = "2">
-                <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
-            </Grid>
-        </StackPanel>
+        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row="1">
+            <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
+        </Grid>
     </Grid>
 </Window>

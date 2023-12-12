@@ -100,7 +100,7 @@
             <Label x:Name="Headline" Content="" FontSize="24" />
         </StackPanel>
 
-        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "1">
+        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "1" >
             <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
         </Grid>
     </Grid>
