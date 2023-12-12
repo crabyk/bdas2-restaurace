@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace BDAS2_Restaurace.Model
@@ -29,6 +30,8 @@ namespace BDAS2_Restaurace.Model
         }
 
 
+        [Required(ErrorMessage = "Datum narození je povinné")]
+        [DataType(DataType.Date, ErrorMessage = "Špatný formát datumu")]
         public DateTime BirthDate
         {
             get { return birthDate; }
@@ -38,6 +41,8 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(BirthDate));
             }
         }
+
+        [Required(ErrorMessage = "Telefon je povinný")]
         public string PhoneNumber
         {
             get { return phoneNumber; }
@@ -48,6 +53,8 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Email je povinný")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Špatný formát emailu")]
         public string Email
         {
             get { return email; }

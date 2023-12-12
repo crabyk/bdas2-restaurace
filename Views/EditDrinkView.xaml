@@ -67,14 +67,15 @@
                     </StackPanel>
 
                     <StackPanel Margin="0, 10, 0, 10">
+                        <Label Content="Obrázek:" />
                         <ComboBox 
-                        IsSynchronizedWithCurrentItem="True"
-                        SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
-                        SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
-                        SelectedValuePath="ID"
-                        ItemsSource="{Binding Path = Images}" 
-                        >
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                                SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
+                                SelectedValuePath="ID"
+                                ItemsSource="{Binding Path = Images}" 
+                                >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

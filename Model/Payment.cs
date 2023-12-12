@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -36,6 +37,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Typ platby je povinný")]
         public PaymentType Type
         {
             get { return type; }

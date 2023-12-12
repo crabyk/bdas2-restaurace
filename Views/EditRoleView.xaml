@@ -45,7 +45,8 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem}">
                         <StackPanel>
                             <Label Content="Role:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Name, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">

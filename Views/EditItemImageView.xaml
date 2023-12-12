@@ -46,7 +46,8 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem}">
                         <StackPanel>
                             <Label Content="Obrazek:" />
-                            <Image Width="100" Source="{Binding Path = Image}"/>
+                            <Image Width="100" Source="{Binding Path = Image, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
                         </StackPanel>
 
                     </StackPanel>

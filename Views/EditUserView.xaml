@@ -48,15 +48,18 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem}">
                         <StackPanel>
                             <Label Content="Jmeno:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Login:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Login}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Login, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
@@ -71,7 +74,8 @@
                         <Label Content="Role:" />
                         <ComboBox 
                             IsSynchronizedWithCurrentItem="True"
-                            SelectedItem="{Binding Path = SelectedItem.Role, Mode=TwoWay}"
+                            SelectedItem="{Binding Path = SelectedItem.Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                             SelectedValue="{Binding Path = SelectedItem.Role.ID, Mode=OneWay}"
                             SelectedValuePath="ID"
                             ItemsSource="{Binding Path = Roles}" 

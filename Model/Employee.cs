@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace BDAS2_Restaurace.Model
 			shifts = new ObservableCollection<WorkShift>();
 		}
 
+        [Required(ErrorMessage = "Pracovní pozice je povinná")]
 		public JobPosition JobPosition
 		{
 			get { return jobPosition; }

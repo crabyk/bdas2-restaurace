@@ -12,6 +12,8 @@
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="BorderBrush" Value="#FF416698" />
             <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="MinHeight" Value="40" />
+            <Setter Property="Height" Value="Auto" />
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="10" />
             <Setter Property="FontSize" Value="13" />
@@ -133,19 +135,25 @@
         <!--Konec tlacitek-->
 
 
-        <Style TargetType="TextBox">
+        <!--Combobox-->
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="Auto"/>
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
                         <StackPanel>
-                            <Border BorderThickness="2" BorderBrush="DarkRed">
+                            <StackPanel>
+                                <Label 
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Right"
+                                    Content="{Binding AdornedElement.ToolTip, ElementName=errorControl}"
+                                    Foreground="Red" />
+                            </StackPanel>
+                            <Border BorderBrush="DarkRed">
                                 <StackPanel>
                                     <AdornedElementPlaceholder x:Name="errorControl" />
                                 </StackPanel>
                             </Border>
-                            <TextBlock 
-                                Text="{Binding AdornedElement.ToolTip, ElementName=errorControl}"
-                                Foreground="Red" />
                         </StackPanel>
                     </ControlTemplate>
                 </Setter.Value>
@@ -160,6 +168,32 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        
+        <!--Image-->
+        <Style TargetType="Image">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <StackPanel>
+                                <Label 
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Right"
+                                    Content="{Binding AdornedElement.ToolTip, ElementName=errorControl}"
+                                    Foreground="Red" />
+                            </StackPanel>
+                            <Border BorderBrush="DarkRed">
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="errorControl" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <!--Textboxy, passwordBoxy-->
         <Style x:Key="TxtBox" TargetType="TextBox">
             <Setter Property="Background" Value="#F0F0F0" />
@@ -231,6 +265,7 @@
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">

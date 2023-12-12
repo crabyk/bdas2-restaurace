@@ -166,7 +166,7 @@ namespace BDAS2_Restaurace.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorHandler.OpenDialog("Nepodařilo se načíst zákaznické údaje", "Cyhba při přihlášní");
+                ErrorHandler.OpenDialog("Nepodařilo se načíst zákaznické údaje", "Chyba při přihlášní");
             }
 
 
@@ -242,24 +242,13 @@ namespace BDAS2_Restaurace.ViewModel
             // Load();
         }
 
-
-        protected override void CreateMethod(object obj)
+        protected override bool CanCreateMethod(object obj)
         {
-            try
-            {
-                base.CreateMethod(obj);
-                MessageBoxButton button = MessageBoxButton.OK;
-                MessageBoxImage icon = MessageBoxImage.None;
-
-                MessageBox.Show("Objednávka úspěšně vytvořena", "Objednávka", button, icon, MessageBoxResult.Yes);
-            }
-            catch (Exception ex)
-            {
-                ErrorHandler.OpenDialog(ErrorType.Create);
-            }
-
-
+            return PropertyValidateModel.Validate(SelectedItem.Customer) &&
+                PropertyValidateModel.Validate(SelectedItem.Payment.Type);
         }
+
+
 
     }
 }

@@ -48,34 +48,40 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">
                         <StackPanel>
                             <Label Content="Jmeno:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = FirstName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Telefon:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum narozeni:" />
-                            <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = BirthDate, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Email:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
                     <!-- Adresy -->
                     <StackPanel Margin="0, 0, 0, 10">
                         <ComboBox 
-                        IsSynchronizedWithCurrentItem="True"
-                        SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay}"
-                        SelectedValue="{Binding Path = SelectedItem.Address.ID, Mode=OneWay}"
-                        SelectedValuePath="ID"
-                        ItemsSource="{Binding Path = Addresses}" 
-                        >
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedItem="{Binding Path = SelectedItem.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                    NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                            SelectedValue="{Binding Path = SelectedItem.Address.ID, Mode=OneWay}"
+                            SelectedValuePath="ID"
+                            ItemsSource="{Binding Path = Addresses}" 
+                            >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
 

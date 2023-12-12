@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -11,6 +12,7 @@ namespace BDAS2_Restaurace.Model
             name = string.Empty;
         }
 
+        [Required(ErrorMessage ="Nazev typu platby je povinný")]
         public string Name
         {
             get { return name; }

@@ -52,23 +52,28 @@
                     <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">
                         <StackPanel>
                             <Label Content="Obec:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = CityName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = CityName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="PSČ:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PostalCode}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PostalCode, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Ulice:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = StreetName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = StreetName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="ČP:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = UnitNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = UnitNumber, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Země:" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Country}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Country, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">

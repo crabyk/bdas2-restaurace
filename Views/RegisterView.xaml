@@ -24,47 +24,70 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10, 20">
-                <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox x:Name="UsernameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.Login, Mode=TwoWay}"/>
+                <Label Content="Uživatelské jméno:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox x:Name="UsernameTextBox" Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = SelectedItem.Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}" Width="200" Height="25" Margin="0,5,0,10"
+                <Label Content="Heslo:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}" Width="300" Height="25" Margin="0,5,0,10"
                              ff:PasswordBoxAssistant.BindPassword="true" 
-                             ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                             ff:PasswordBoxAssistant.BoundPassword="{Binding Path = SelectedItem.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Jméno:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox x:Name="FirstNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.FirstName, Mode=TwoWay}"/>
+                <Label Content="Jméno:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox x:Name="FirstNameTextBox" Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = SelectedItem.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Příjmení:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox x:Name="LastNameTextBox" Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = SelectedItem.LastName, Mode=TwoWay}"/>
+                <Label Content="Příjmení:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox x:Name="LastNameTextBox" Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = SelectedItem.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
 
-                <Label Content="Telefom:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewCustomer.PhoneNumber, Mode=TwoWay}"/>
+                <Label Content="Telefon:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewCustomer.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Email:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewCustomer.Email, Mode=TwoWay}"/>
+                <Label Content="Email:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10"
+                         Text="{Binding Path = NewCustomer.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Datum narozeni:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <DatePicker Style="{StaticResource DatePicker}" Width="200" Height="25" SelectedDate="{Binding Path = NewCustomer.BirthDate}" />
+                <Label Content="Datum narozeni:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <DatePicker Style="{StaticResource DatePicker}" Width="300" Height="25" 
+                            SelectedDate="{Binding Path = NewCustomer.BirthDate, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
             
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="10, 20">
-                <Label Content="Ulice:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.StreetName, Mode=TwoWay}"/>
+                <Label Content="Ulice:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewAddress.StreetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
                 <Label Content="Obec:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.CityName, Mode=TwoWay}"/>
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewAddress.CityName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="ČP:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.UnitNumber, Mode=TwoWay}"/>
+                <Label Content="ČP:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewAddress.UnitNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="PSČ:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.PostalCode, Mode=TwoWay}"/>
+                <Label Content="PSČ:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewAddress.PostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <Label Content="Země:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <TextBox Style="{StaticResource TxtBox}" Width="200" Height="25" Margin="0,5,0,10" Text="{Binding Path = NewAddress.Country, Mode=TwoWay}"/>
+                <Label Content="Země:" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <TextBox Style="{StaticResource TxtBox}" Width="300" Height="25" Margin="0,5,0,10" 
+                         Text="{Binding Path = NewAddress.Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
             </StackPanel>
             
             

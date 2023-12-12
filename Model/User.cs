@@ -1,14 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
     public class User : ModelBase
     {
         private string login;
+        private string password;
         private string firstName;
         private string lastName;
         private Role role;
 
+        [Required(ErrorMessage = "Login je povinný")]
         public string Login
         {
             get { return login; }
@@ -19,6 +22,19 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Heslo je povinné")]
+        [RegularExpression(@"^(?=.*).{4,}$", ErrorMessage = "Heslo musí mít alespoň 4 znaky")]
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
+
+        [Required(ErrorMessage = "Jméno je povinné")]
         public string FirstName
         {
             get { return firstName; }
@@ -29,6 +45,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Příjmení je povinné")]
         public string LastName
         {
             get { return lastName; }
@@ -39,6 +56,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Role je povinná")]
         public Role Role
         {
             get { return role; }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -19,6 +20,7 @@ namespace BDAS2_Restaurace.Model
             country = string.Empty;
         }
 
+        [Required(ErrorMessage = "Ulice je povinná")]
         public string StreetName
         {
             get { return streetName; }
@@ -29,6 +31,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Obec je povinná")]
         public string CityName
         {
             get { return cityName; }
@@ -39,6 +42,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Číslo popisné je povinné")]
         public string UnitNumber
         {
             get { return unitNumber; }
@@ -49,6 +53,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "PSČ je povinné")]
         public string PostalCode
         {
             get { return postalCode; }
@@ -59,6 +64,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Země je pivnná")]
         public string Country
         {
             get { return country; }

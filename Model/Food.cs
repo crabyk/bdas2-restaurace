@@ -7,7 +7,7 @@ namespace BDAS2_Restaurace.Model
         private double weight;
         private string recipe;
 
-        [Required(ErrorMessage = "Hmotnost je povinná")]
+        [Range(1, 1000, ErrorMessage = "Hodnota musí být od 10g do 2500g")]
         public double Weight
         {
             get { return weight; }

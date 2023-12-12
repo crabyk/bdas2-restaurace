@@ -54,12 +54,12 @@
                         <StackPanel>
                             <Label Content="Cena:" />
                             <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Price, UpdateSourceTrigger=PropertyChanged, 
-                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N1}}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Vaha:" />
                             <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Weight, UpdateSourceTrigger=PropertyChanged, 
-                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N1}}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Recept:" />
@@ -69,13 +69,15 @@
                     </StackPanel>
 
                     <StackPanel Margin="0, 10, 0, 10">
+                        <Label Content="Obrázek:" />
                         <ComboBox 
-                        IsSynchronizedWithCurrentItem="True"
-                        SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay}"
-                        SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
-                        SelectedValuePath="ID"
-                        ItemsSource="{Binding Path = Images}" 
-                        >
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = SelectedItem.ItemImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                                SelectedValue="{Binding Path = SelectedItem.ItemImage.ID, Mode=OneWay}"
+                                SelectedValuePath="ID"
+                                ItemsSource="{Binding Path = Images}" 
+                                >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

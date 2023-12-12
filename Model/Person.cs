@@ -10,7 +10,7 @@ namespace BDAS2_Restaurace.Model
         private string lastName;
         private Address address;
 
-
+        [Required(ErrorMessage = "Adresa je povinná")]
         public Address? Address
         {
             get { return address; }
@@ -28,7 +28,7 @@ namespace BDAS2_Restaurace.Model
             address = new Address();
         }
 
-       
+        [Required(ErrorMessage = "Jméno je povinné")]
         public string FirstName
         {
             get { return firstName; }
@@ -39,7 +39,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        
+        [Required(ErrorMessage = "Příjmení je povinné")]
         public string LastName
         {
             get { return lastName; }
