@@ -4,8 +4,6 @@ using BDAS2_Restaurace.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -90,7 +88,6 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override void UpdateMethod(object obj)
         {
-
             try
             {
                 controller.Update(SelectedItem, SelectedItem.Password);
@@ -101,6 +98,19 @@ namespace BDAS2_Restaurace.ViewModel
             }
             NewPassword = string.Empty;
             Load();
+        }
+
+        protected override bool IsMatchingFilter(User item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return
+                item.FirstName.ToLower().Contains(filterTextLower) ||
+                item.LastName.ToLower().Contains(filterTextLower) ||
+                item.Login.ToLower().Contains(filterTextLower);
         }
     }
 }

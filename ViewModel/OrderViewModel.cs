@@ -1,17 +1,13 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
-using BDAS2_Restaurace.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -123,7 +119,6 @@ namespace BDAS2_Restaurace.ViewModel
             // SelectedOrderItem = item;
             SelectedItem.Payment.Amount = SelectedItem.Payment.Amount + item.Price;
             SelectedItem.AddItem(item);
-            // pak se nahradi za create metodu
         }
 
         private bool CanOrderItem(object param)
@@ -182,7 +177,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         private async void LoadPayments()
         {
-            List<PaymentType> paymentTypes = await Task.Run(() => new PaymentTypeController().GetAll());   
+            List<PaymentType> paymentTypes = await Task.Run(() => new PaymentTypeController().GetAll());
             PaymentTypes = new ObservableCollection<PaymentType>(paymentTypes);
             SelectedItem.Payment.Type = PaymentTypes.First();
         }
@@ -247,10 +242,8 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override bool CanCreateMethod(object obj)
         {
-
             return PropertyValidateModel.Validate(SelectedItem.Customer) &&
                 PropertyValidateModel.Validate(SelectedItem.Payment.Type);
-            
         }
 
 
@@ -270,7 +263,18 @@ namespace BDAS2_Restaurace.ViewModel
             OnWindowClose();
         }
 
+        protected override bool IsMatchingFilter(Order item)
+        {
+            if (item == null)
+                return false;
 
+            string filterTextLower = FilterText.ToLower();
 
+            return
+                item.Customer.FirstName.ToLower().Contains(filterTextLower) ||
+                item.Customer.LastName.ToLower().Contains(filterTextLower) ||
+                item.Customer.Email.ToLower().Contains(filterTextLower) ||
+                (item.Customer.User != null && item.Customer.User.Login.ToLower().Contains(filterTextLower));
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -12,7 +7,18 @@ namespace BDAS2_Restaurace.ViewModel
     {
         public LogViewModel() : base(new LogController())
         {
+        }
 
+        protected override bool IsMatchingFilter(Log item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return
+                item.TableName.ToLower().Contains(filterTextLower) ||
+                item.ActionType.ToLower().Contains(filterTextLower);
         }
     }
 }

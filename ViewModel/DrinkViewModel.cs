@@ -1,8 +1,6 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
-using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -31,5 +29,14 @@ namespace BDAS2_Restaurace.ViewModel
             Images = new ObservableCollection<ItemImage>(new ItemImageController().GetAll());
         }
 
+        protected override bool IsMatchingFilter(Drink item)
+        {
+            if (item == null)
+                return false;
+
+            string filterTextLower = FilterText.ToLower();
+
+            return item.Name.ToLower().Contains(filterTextLower);
+        }
     }
 }

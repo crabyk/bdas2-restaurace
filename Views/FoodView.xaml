@@ -35,23 +35,27 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Grid.Column="1" DataContext="{Binding Path = SelectedItem}">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Nazev:" />
-                <Label Content="{Binding Path = Name}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Cena:" />
-                <Label Content="{Binding Path = Price}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Vaha:" />
-                <Label Content="{Binding Path = Wight}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Recept:" />
-                <Label Content="{Binding Path = Recipe}" />
-            </StackPanel>
-        </StackPanel>
+        <Grid Grid.Column="1" Margin="10, 0">
+            <ScrollViewer>
+                <StackPanel DataContext="{Binding Path = SelectedItem}">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Nazev:" />
+                        <Label Content="{Binding Path = Name}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Cena:" />
+                        <Label Content="{Binding Path = Price}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Vaha:" />
+                        <Label Content="{Binding Path = Wight}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Recept:" />
+                        <Label Content="{Binding Path = Recipe}" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>
