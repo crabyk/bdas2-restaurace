@@ -27,13 +27,14 @@ namespace BDAS2_Restaurace.ViewModel
         public OrderCustomerViewModel(Customer customer) : base(new OrderController())
         {
             SelectedCustomer = customer;
-        }
-
-        protected override async void Load()
-        {
-            List<Order> result = await Task.Run(() => controller.GetAll(SelectedCustomer));
+            List<Order> result = controller.GetAll(customer);
             ObservableCollection<Order> items = new ObservableCollection<Order>(result);
             Items = items;
         }
+
+        protected override void Load()
+        {
+        }
+
     }
 }

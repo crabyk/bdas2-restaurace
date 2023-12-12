@@ -109,6 +109,10 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <StackPanel>
+                            <Label Content="Uzivatel:" />
+                            <Label Content="{Binding Path=SelectedItem.User.Login}" />
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>

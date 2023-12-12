@@ -64,13 +64,13 @@
                             <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Login, UpdateSourceTrigger=PropertyChanged, 
                                 NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Nove heslo:" />
-                        <PasswordBox
-                    Style="{StaticResource PsswdBox}"
-                    ff:PasswordBoxAssistant.BindPassword="true" 
-                    ff:PasswordBoxAssistant.BoundPassword="{Binding Path = NewPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel>
+                            <Label Content="Nove heslo: " />
+                            <PasswordBox
+                            Style="{StaticResource PsswdBox}"
+                            ff:PasswordBoxAssistant.BindPassword="true" 
+                            ff:PasswordBoxAssistant.BoundPassword="{Binding Path = Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
                     </StackPanel>
                     <!-- Role -->
                     <StackPanel>

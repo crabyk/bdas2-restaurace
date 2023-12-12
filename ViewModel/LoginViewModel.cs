@@ -62,8 +62,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         private bool CanLoginMethod(object obj)
         {
-            // return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
-            return true;
+            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
         }
 
         private void LoginMethod(object obj)

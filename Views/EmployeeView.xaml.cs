@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BDAS2_Restaurace.Views
 {
     /// <summary>
-    /// Interakční logika pro AdminView.xaml
+    /// Interakční logika pro EmployeeView.xaml
     /// </summary>
-    public partial class AdminView : UserControl
+    public partial class EmployeeView : UserControl
     {
-        public AdminView()
+        public EmployeeView()
         {
             InitializeComponent();
         }
