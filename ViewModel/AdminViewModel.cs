@@ -19,7 +19,7 @@ namespace BDAS2_Restaurace.ViewModel
             Routes.Add(new Route<ItemImageViewModel>("itemImage"));
             Routes.Add(new Route<OrderViewModel>("order"));
             Routes.Add(new Route<PaymentTypeViewModel>("paymentType"));
-            Routes.Add(new Route<CustomerViewModel>("customer"));
+            Routes.Add(new Route<CustomerViewModel>("customer")); 
             Routes.Add(new Route<AddressViewModel>("address"));
             Routes.Add(new Route<TableViewModel>("table"));
             Routes.Add(new Route<FullEmployeeViewModel>("fullEmployee"));
