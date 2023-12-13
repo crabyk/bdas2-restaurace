@@ -15,37 +15,38 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0, 10, 0">
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Filtr:" VerticalAlignment="Center"></Label>
                 <TextBox Style="{StaticResource TxtBox}" Width="180" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <Button Style="{StaticResource NegativeBtn}" Content="Zrušit filtr" Command="{Binding Path = ClearFilter}"/>
                 <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
             </StackPanel>
+            <CheckBox Content="Respektovat anonymizaci?" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                      IsChecked="{Binding IsRespectingAnonymity}" />
+        </DockPanel>
 
-            <ListView Name="DataListView" Grid.Row="1" Width="Auto" HorizontalContentAlignment="Stretch"
+        <ListView Name="DataListView" Grid.Column="0" Grid.Row="1" Width="Auto" HorizontalContentAlignment="Stretch"
                         IsSynchronizedWithCurrentItem="True"
                         ItemsSource="{Binding Path = FilteredItems}"
                         SelectedItem="{Binding Path = SelectedItem}"
                         >
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
-                        <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
-                        <GridViewColumn Header="Telefon" DisplayMemberBinding="{Binding Path = PhoneNumber}"/>
-                        <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path = Email}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Jmeno" DisplayMemberBinding="{Binding Path = FirstName}"/>
+                    <GridViewColumn Header="Prijmeni" DisplayMemberBinding="{Binding Path = LastName}"/>
+                    <GridViewColumn Header="Telefon" DisplayMemberBinding="{Binding Path = PhoneNumber}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path = Email}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
-        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10, 0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <StackPanel DataContext="{Binding Path = SelectedItem}" Margin="0, 0, 0, 10">

@@ -5,7 +5,6 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Runtime.Intrinsics.Arm;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -157,7 +156,7 @@ namespace BDAS2_Restaurace.Controller
                         PhoneNumber = phoneNumber.Value.ToString(),
                         Email = email.Value.ToString(),
                         Address = adresa,
-                        User = user 
+                        User = user
                     };
                 }
             }
@@ -191,7 +190,7 @@ namespace BDAS2_Restaurace.Controller
 
                             result.Add(new Customer()
                             {
-                                ID = rdr.GetInt32(0), 
+                                ID = rdr.GetInt32(0),
                                 FirstName = rdr.GetString(1),
                                 LastName = rdr.GetString(2),
                                 BirthDate = rdr.GetDateTime(3),
@@ -208,6 +207,48 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+        public List<Customer> GetAllRespectAnonymity()
+        {
+            List<Customer> result = new List<Customer>();
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_zakazniky_s_anonymizaci";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            var address = new AddressController().Get(rdr.GetString(6));
+
+                            User user = new User();
+                            if (!rdr.IsDBNull(7))
+                                user = new UserController().Get(rdr.GetString(7));
+
+                            result.Add(new Customer()
+                            {
+                                ID = rdr.GetInt32(0),
+                                FirstName = rdr.GetString(1),
+                                LastName = rdr.GetString(2),
+                                BirthDate = rdr.GetDateTime(3),
+                                PhoneNumber = rdr.GetString(4),
+                                Email = rdr.GetString(5),
+                                Address = address,
+                                User = user
+                            });
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
 
         public override Customer? Update(Customer item)
         {
