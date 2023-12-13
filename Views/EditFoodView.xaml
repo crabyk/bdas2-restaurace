@@ -39,6 +39,8 @@
                         <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
                         <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
                         <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Weight}"/>
+                        <GridViewColumn Header="Dostupná" DisplayMemberBinding="{Binding Path = Available}"/>
+                        <GridViewColumn Header="Počet objednávek" DisplayMemberBinding="{Binding Path = TotalOrders}"/>
                         <GridViewColumn Header="Recept" DisplayMemberBinding="{Binding Path = Recipe}"/>
                     </GridView>
                 </ListView.View>
@@ -69,6 +71,11 @@
                             <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = Recipe, UpdateSourceTrigger=PropertyChanged, 
                                 NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
+                        <StackPanel>
+                            <Label Content="Počet objenávek:" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="auto" MinHeight="30" Text="{Binding Path = TotalOrders, UpdateSourceTrigger=PropertyChanged, 
+        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                        </StackPanel>
                     </StackPanel>
 
                     <StackPanel Margin="0, 10, 0, 10">
@@ -98,11 +105,13 @@
                         </ComboBox>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal">
+                    <WrapPanel>
                         <Button Style="{StaticResource PositiveBtn}" Content="Přidat jako nový" Command="{Binding Path = Create}"/>
                         <Button Style="{StaticResource PositiveBtn}" Content="Uložit upravu" Command="{Binding Path = Update}"/>
                         <Button Style="{StaticResource NegativeBtn}" Content="Smazat vybrany" Command="{Binding Path = Delete}"/>
-                    </StackPanel>
+                        <Button Style="{StaticResource PositiveBtn}" Content="Zpristupnit vybrany" Command="{Binding Path = Restore}"/>
+                        <Button Style="{StaticResource NegativeBtn}" Content="Znepristupnit vybrany" Command="{Binding Path = Cancel}"/>
+                    </WrapPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

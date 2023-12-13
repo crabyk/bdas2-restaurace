@@ -132,8 +132,12 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add(weight);
                     OracleParameter recipe = new OracleParameter("p_recept", OracleDbType.Varchar2, 2048, null, ParameterDirection.Output);
                     comm.Parameters.Add(recipe);
+                    OracleParameter available = new OracleParameter("p_dostupna", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(available);
                     OracleParameter imageId = new OracleParameter("p_id_obrazek", OracleDbType.Decimal, ParameterDirection.Output);
                     comm.Parameters.Add(imageId);
+                    OracleParameter totalOrders = new OracleParameter("p_pocet_objednavek", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(totalOrders);
 
                     comm.ExecuteNonQuery();
 
@@ -146,7 +150,9 @@ namespace BDAS2_Restaurace.Controller
                         Price = double.Parse(price.Value.ToString()),
                         Weight = double.Parse(weight.Value.ToString()),
                         Recipe = recipe.Value.ToString(),
-                        ItemImage = itemImage
+                        ItemImage = itemImage,
+                        Available = int.Parse(available.Value.ToString()),
+                        TotalOrders = int.Parse(totalOrders.Value.ToString())
                     };
                 }
             }
@@ -172,6 +178,44 @@ namespace BDAS2_Restaurace.Controller
                     {
                         while (rdr.Read())
                         {
+                            var itemImage = new ItemImageController().Get(rdr.GetInt32(6).ToString());
+                            result.Add(new Food
+                            {
+                                ID = rdr.GetInt32(0),
+                                Name = rdr.GetString(1),
+                                Price = rdr.GetInt32(2),
+                                Weight = rdr.GetInt32(3),
+                                Recipe = rdr.GetString(4),
+                                Available = rdr.GetInt32(5),
+                                ItemImage = itemImage,
+                                TotalOrders = rdr.GetInt32(7)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<Food> GetFoodMenu()
+        {
+            List<Food> result = new List<Food>();
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_jidelnicek";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
                             var itemImage = new ItemImageController().Get(rdr.GetInt32(5).ToString());
                             result.Add(new Food
                             {
@@ -180,7 +224,9 @@ namespace BDAS2_Restaurace.Controller
                                 Price = rdr.GetInt32(2),
                                 Weight = rdr.GetInt32(3),
                                 Recipe = rdr.GetString(4),
-                                ItemImage = itemImage
+                                ItemImage = itemImage,
+                                Available = 1,
+                                TotalOrders = rdr.GetInt32(6)
                             });
                         }
                     }
@@ -209,6 +255,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_hmotnost", OracleDbType.Int32).Value = item.Weight;
                     comm.Parameters.Add("p_recept", OracleDbType.Varchar2).Value = item.Recipe;
                     comm.Parameters.Add("p_id_obrazek", OracleDbType.Decimal).Value = item.ItemImage.ID;
+                    comm.Parameters.Add("p_pocet_objednavek", OracleDbType.Int32).Value = item.TotalOrders;
 
                     comm.ExecuteNonQuery();
                 }

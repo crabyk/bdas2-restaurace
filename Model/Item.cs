@@ -7,6 +7,8 @@ namespace BDAS2_Restaurace.Model
         private string name;
         private double price;
         private ItemImage? itemImage;
+        private int available = 1;
+        private int totalOrders;
 
         [Required(ErrorMessage = "Název je povinný")]
         public string Name
@@ -49,6 +51,26 @@ namespace BDAS2_Restaurace.Model
             {
                 itemImage = value;
                 OnPropertyChanged(nameof(ItemImage));
+            }
+        }
+
+        public int Available
+        {
+            get { return available; }
+            set
+            {
+                available = value;
+                OnPropertyChanged(nameof(Available));
+            }
+        }
+
+        public int TotalOrders
+        {
+            get { return totalOrders; }
+            set
+            {
+                totalOrders = value;
+                OnPropertyChanged(nameof(TotalOrders));
             }
         }
 

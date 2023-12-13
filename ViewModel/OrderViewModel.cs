@@ -133,8 +133,8 @@ namespace BDAS2_Restaurace.ViewModel
             LoadCustomer = new RelayCommand(LoadCustomerMethod, CanLoadCustomerMethod);
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
-            var food = new FoodController().GetAll();
-            var drinks = new DrinkController().GetAll();
+            var food = new FoodController().GetFoodMenu();
+            var drinks = new DrinkController().GetDrinkMenu();
 
             OrderItems = new ObservableCollection<Item>(drinks.Cast<Item>().Concat(food.Cast<Item>()));
         }
