@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -64,7 +63,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        [Required(ErrorMessage = "Země je pivnná")]
+        [Required(ErrorMessage = "Země je povinná")]
         public string Country
         {
             get { return country; }

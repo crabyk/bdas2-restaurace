@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
@@ -35,7 +33,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        [Required(ErrorMessage ="Platby je povinná")]
+        [Required(ErrorMessage = "Platba je povinná")]
         public Payment Payment
         {
             get { return payment; }
@@ -60,7 +58,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 customer = value;
-                 OnPropertyChanged(nameof(Customer));
+                OnPropertyChanged(nameof(Customer));
             }
         }
         public Table? Table
@@ -69,7 +67,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 table = value;
-                 OnPropertyChanged(nameof(Table));
+                OnPropertyChanged(nameof(Table));
             }
         }
         public Address? Address
@@ -78,7 +76,7 @@ namespace BDAS2_Restaurace.Model
             set
             {
                 address = value;
-                 OnPropertyChanged(nameof(Address));
+                OnPropertyChanged(nameof(Address));
             }
         }
 
@@ -91,12 +89,12 @@ namespace BDAS2_Restaurace.Model
             order.Table = (Table)Table?.Clone();
             order.Customer = (Customer)Customer?.Clone();
 
-            
+
             order.Items = new ObservableCollection<Item>();
             foreach (var item in Items)
                 order.Items.Add((Item)item.Clone());
-            
-            
+
+
 
             return order;
         }

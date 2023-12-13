@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -9,6 +10,7 @@ namespace BDAS2_Restaurace.Model
         private Customer customer;
         private Table table;
 
+        [ReservationDate(ErrorMessage = "Neplatné datum rezervace")]
         public DateTime ReservationDate
         {
             get { return reservationDate; }
@@ -19,6 +21,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage = "Počet lidí je povinný"), Range(1, int.MaxValue, ErrorMessage = "Počet lidí musí být 1 a více")]
         public int NumberOfPeople
         {
             get { return numOfPeople; }
@@ -47,6 +50,20 @@ namespace BDAS2_Restaurace.Model
                 table = value;
                 OnPropertyChanged(nameof(Table));
             }
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public sealed class ReservationDateAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value is DateTime date)
+            {
+                return date.Date >= DateTime.Today;
+            }
+
+            return false;
         }
     }
 }
