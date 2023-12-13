@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace BDAS2_Restaurace.Model
 {
@@ -21,7 +23,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
-        [Required(ErrorMessage = "Počet lidí je povinný"), Range(1, int.MaxValue, ErrorMessage = "Počet lidí musí být 1 a více")]
+        [Range(1, 16, ErrorMessage = "Počet osob musí být mezi 1 a 16")]
         public int NumberOfPeople
         {
             get { return numOfPeople; }
@@ -42,6 +44,7 @@ namespace BDAS2_Restaurace.Model
             }
         }
 
+        [Required(ErrorMessage ="Stůl je povinný")]
         public Table Table
         {
             get { return table; }
@@ -51,6 +54,15 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(Table));
             }
         }
+        public override object Clone()
+        {
+            Reservation order = (Reservation)this.MemberwiseClone();
+            order.Table = (Table)Table?.Clone();
+            order.Customer = (Customer)Customer?.Clone();
+
+            return order;
+        }
+
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
@@ -66,4 +78,6 @@ namespace BDAS2_Restaurace.Model
             return false;
         }
     }
+
+
 }

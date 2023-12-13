@@ -123,7 +123,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         private bool CanOrderItem(object param)
         {
-            return true;
+            return true;    
         }
 
         public OrderViewModel() : base(new OrderController())

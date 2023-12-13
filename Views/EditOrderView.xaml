@@ -62,13 +62,13 @@
                             <StackPanel>
                                 <Label Content="Typ platby" />
                                 <ComboBox 
-                            IsSynchronizedWithCurrentItem="True"
-                            SelectedItem="{Binding Path = SelectedItem.Payment.Type, Mode=TwoWay}"
-                            SelectedValue="{Binding Path = SelectedItem.Payment.Type.ID, Mode=OneWay}"
-                            SelectedValuePath="ID"
-                            ItemsSource="{Binding Path = PaymentTypes}" 
-                            DisplayMemberPath="Name"
-                            />
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectedItem="{Binding Path = SelectedItem.Payment.Type, Mode=TwoWay}"
+                                    SelectedValue="{Binding Path = SelectedItem.Payment.Type.ID, Mode=OneWay}"
+                                    SelectedValuePath="ID"
+                                    ItemsSource="{Binding Path = PaymentTypes}" 
+                                    DisplayMemberPath="Name"
+                                />
                             </StackPanel>
                             <StackPanel DataContext="{Binding Path = SelectedItem.Payment}">
                                 <StackPanel>

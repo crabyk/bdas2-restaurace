@@ -89,7 +89,7 @@
                     <Label Content="Vytvoreni objednavky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
                 </StackPanel>
             </Border>
-            
+
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -109,7 +109,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
-           
+
             <StackPanel x:Name = "SelectedItems" Grid.Row = "2">
                 <Label Content="Vybrane polozky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
                 <ListView Width="Auto" HorizontalContentAlignment="Stretch" 

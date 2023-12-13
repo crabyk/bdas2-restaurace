@@ -5,11 +5,14 @@ using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 
 namespace BDAS2_Restaurace.Controller
 {
     public class ReservationController : Controller<Reservation>
     {
+
+
         public override Reservation? Add(Reservation item)
         {
             Reservation? result = null;
@@ -18,25 +21,55 @@ namespace BDAS2_Restaurace.Controller
             {
                 conn.Open();
                 decimal newId;
+                // transakce k zajisteni konzistence dat
+                OracleTransaction orderAddTransaction = null;
 
-                using (OracleCommand comm = conn.CreateCommand())
+                try
                 {
-                    comm.CommandText = "vlozit_rezervaci";
-                    comm.CommandType = CommandType.StoredProcedure;
+                    orderAddTransaction = conn.BeginTransaction();
 
-                    comm.Parameters.Add("p_cas_rezervace", OracleDbType.Date).Value = item.ReservationDate;
-                    comm.Parameters.Add("p_pocet_osob", OracleDbType.Int32).Value = item.NumberOfPeople;
-                    comm.Parameters.Add("p_zakaznik_id", OracleDbType.Int32).Value = item.Customer.ID;
-                    comm.Parameters.Add("p_stul_id", OracleDbType.Int32).Value = item.Table.ID;
-                    comm.Parameters.Add("p_id_rezervace", OracleDbType.Decimal, ParameterDirection.Output);
+                    using (OracleCommand comm = conn.CreateCommand())
+                    {
+                        comm.Transaction = orderAddTransaction;
 
-                    comm.ExecuteNonQuery();
 
-                    newId = ((OracleDecimal)comm.Parameters["p_id_rezervace"].Value).Value;
+                        Customer customer = item.Customer;
+                        if (customer.ID == null || customer.User == null)
+                        {
+                            customer = new CustomerController().Add(item.Customer);
+                            Address address = new AddressController().Add(item.Customer.Address);
+                            customer.Address.ID = address.ID;
+                        }
+
+                        Table table = new Table();
+                        table.ID = item.Table.ID;
+
+                        comm.CommandText = "vlozit_rezervaci";
+                        comm.CommandType = CommandType.StoredProcedure;
+
+                        comm.Parameters.Add("p_cas_rezervace", OracleDbType.Date).Value = item.ReservationDate;
+                        comm.Parameters.Add("p_pocet_osob", OracleDbType.Int32).Value = item.NumberOfPeople;
+                        comm.Parameters.Add("p_zakaznik_id", OracleDbType.Int32).Value = item.Customer.ID;
+                        comm.Parameters.Add("p_stul_id", OracleDbType.Int32).Value = item.Table.ID;
+                        comm.Parameters.Add("p_id_rezervace", OracleDbType.Decimal, ParameterDirection.Output);
+
+                        comm.ExecuteNonQuery();
+
+                        newId = ((OracleDecimal)comm.Parameters["p_id_rezervace"].Value).Value;
+
+                        comm.ExecuteNonQuery();
+                        newId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
+                        item.ID = Convert.ToInt32(newId);
+
+                    }
+                    orderAddTransaction.Commit();
+                    result = item;
                 }
-
-                result = item;
-                result.ID = Convert.ToInt32(newId);
+                catch (Exception ex)
+                {
+                    orderAddTransaction?.Rollback();
+                    throw ex;
+                }
             }
 
             return result;
