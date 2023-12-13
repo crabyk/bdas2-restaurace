@@ -20,8 +20,8 @@
         <DataTemplate DataType = "{x:Type viewModel:EmployeeViewModel}">
             <views:EmployeeView x:Name="EmplyoeeView" />
         </DataTemplate>
-        <DataTemplate DataType = "{x:Type viewModel:OrderCustomerViewModel}">
-            <views:OrderCustomerView x:Name="OrderCustomerView" />
+        <DataTemplate DataType = "{x:Type viewModel:UserCustomerViewModel}">
+            <views:UserCustomerView x:Name="UserCustomerView" />
         </DataTemplate>
     </Window.Resources>
 

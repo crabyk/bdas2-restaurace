@@ -20,7 +20,7 @@
             <views:AddOrderView x:Name="AddOrderView" />
         </DataTemplate>
         <DataTemplate DataType = "{x:Type viewModels:ReservationViewModel}">
-            <views:ReservationView x:Name="ReservationViewModel" />
+            <views:AddReservationView x:Name="AddReservationViewModel" />
         </DataTemplate>
         <DataTemplate DataType = "{x:Type viewModels:AdminViewModel}">
             <views:AdminView x:Name="AdminViewModel" />

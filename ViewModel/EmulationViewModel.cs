@@ -92,8 +92,11 @@ namespace BDAS2_Restaurace.ViewModel
         {
             Customer? customer = new CustomerController().GetByUser(SelectedCustomer);
 
-            if (customer != null) 
-                CurrentViewModel = new OrderCustomerViewModel(customer);
+            if (customer != null)
+            {
+
+                CurrentViewModel = new UserCustomerViewModel(customer);
+            }
         }
     }
 }
