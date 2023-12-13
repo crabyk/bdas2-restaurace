@@ -14,12 +14,24 @@ namespace BDAS2_Restaurace.ViewModel
     public class PartEmployeeViewModel : ViewModelBase<PartEmployee, PartEmployeeController>
     {
         private ObservableCollection<Employee> employees;
+        private Employee selectedEmployee;
+
         private ObservableCollection<Address> addresses;
         private ObservableCollection<JobPosition> positions;
 
         private ObservableCollection<WorkShift> employeeShifts = new ObservableCollection<WorkShift>();
         private WorkShift selectedShift;
         private WorkShift newShift;
+
+        public Employee SelectedEmployee
+        {
+            get { return selectedEmployee; }
+            set
+            {
+                selectedEmployee = value;
+                OnPropertyChanged(nameof(SelectedEmployee));
+            }
+        }
 
         public ObservableCollection<Employee> Employees
         {

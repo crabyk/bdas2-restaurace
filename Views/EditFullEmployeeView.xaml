@@ -120,7 +120,7 @@
                             <Label Content="Nadřízený:" />
                             <ComboBox 
                                 IsSynchronizedWithCurrentItem="True"
-                                SelectedValue="{Binding Path = SelectedItem.ManagerId, Mode=OneWay}"
+                                SelectedValue="{Binding Path = SelectedItem.ManagerId, Mode=TwoWay}"
                                 SelectedValuePath="ID"
                                 ItemsSource="{Binding Path = Employees}" 
                                 >
