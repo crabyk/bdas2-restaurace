@@ -12,7 +12,10 @@
 
     <UserControl.Resources>
         <DataTemplate DataType = "{x:Type viewModel:UserOrderViewModel}">
-            <views:OrderView x:Name="OrderView" />
+            <views:UserOrderView x:Name="OrderView" />
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModel:UserReservationViewModel}">
+            <views:UserReservationView x:Name="UserReservationView" />
         </DataTemplate>
     </UserControl.Resources>
 
@@ -30,7 +33,7 @@
         <Border Grid.Column="0" Grid.Row="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,2,0">
             <StackPanel>
                 <Button Style="{StaticResource Btn}" Content="Objednávky" Command="{Binding LoadOrders}" />
-                <Button Style="{StaticResource Btn}" Content="Rezervace" Command="{Binding LoadReservation}" />
+                <Button Style="{StaticResource Btn}" Content="Rezervace" Command="{Binding LoadReservations}" />
             </StackPanel>
         </Border>
         <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "0" >

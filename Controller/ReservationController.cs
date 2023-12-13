@@ -4,6 +4,7 @@ using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Net;
 
@@ -164,6 +165,44 @@ namespace BDAS2_Restaurace.Controller
                                 ID = rdr.GetInt32(0),
                                 ReservationDate = rdr.GetDateTime(1),
                                 NumberOfPeople = rdr.GetInt32(2),
+                                Customer = customer,
+                                Table = table
+                            });
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<Reservation> GetAll(Customer customer)
+        {
+            List<Reservation> result = new List<Reservation>();
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+                    comm.CommandText = "ziskat_rezervace_zakaznika";
+                    comm.CommandType = CommandType.StoredProcedure;
+
+                    comm.Parameters.Add("p_zakaznik_id", customer.ID);
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            Table? table = null;
+                            if (!rdr.IsDBNull(4))
+                                table = new TableController().Get(rdr.GetInt32(4).ToString());
+
+                            result.Add(new Reservation()
+                            {
+                                ID = rdr.GetInt32(0),
+                                ReservationDate = rdr.GetDateTime(1),
                                 Customer = customer,
                                 Table = table
                             });

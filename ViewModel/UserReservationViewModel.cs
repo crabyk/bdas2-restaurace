@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-    public class UserOrderViewModel : ViewModelBase<Order, OrderController>
+    public class UserReservationViewModel : ViewModelBase<Reservation, ReservationController>
     {
         private Customer selectedCustomer;
 
@@ -23,11 +23,11 @@ namespace BDAS2_Restaurace.ViewModel
             }
         }
 
-        public UserOrderViewModel(Customer customer) : base(new OrderController())
+        public UserReservationViewModel(Customer customer) : base(new ReservationController())
         {
             SelectedCustomer = customer;
-            List<Order> result = controller.GetAll(customer);
-            ObservableCollection<Order> items = new ObservableCollection<Order>(result);
+            List<Reservation> result = controller.GetAll(customer);
+            ObservableCollection<Reservation> items = new ObservableCollection<Reservation>(result);
             Items = items;
             if (items.Count() > 0)
                 SelectedItem = items.First();

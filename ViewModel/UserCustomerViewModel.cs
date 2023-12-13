@@ -15,6 +15,19 @@ namespace BDAS2_Restaurace.ViewModel
 {
     public class UserCustomerViewModel : RouteNavigation
     {
+
+        private BindableBase customerContext;
+
+        public BindableBase CustomerContext
+        {
+            get { return customerContext; }
+            set
+            {
+                customerContext = value;
+                OnPropertyChanged(nameof(CustomerContext));
+            }
+        }
+
         private Customer customer;
 
         public Customer Customer
@@ -30,16 +43,26 @@ namespace BDAS2_Restaurace.ViewModel
 
         public ICommand LoadOrders { get; set; }
         public ICommand LoadReservations { get; set; }
-
-        public UserCustomerViewModel()
-        {
-            LoadOrders = new RelayCommand(LoadOrdersMethod, CanLoadOrdersMethod);
-        }
-
         public UserCustomerViewModel(Customer customer)
         {
             Customer = customer;
-            CurrentViewModel = new UserOrderViewModel(customer);
+            CurrentViewModel = new UserReservationViewModel(customer);
+            LoadOrders = new RelayCommand(LoadOrdersMethod, CanLoadOrdersMethod);
+            LoadReservations = new RelayCommand(LoadReservationsMethod, CanLoadReservationsMethod);
+        }
+
+
+
+        private bool CanLoadReservationsMethod(object arg)
+        {
+            return true;
+        }
+
+        private void LoadReservationsMethod(object obj)
+        {
+
+            CurrentViewModel = new UserReservationViewModel(Customer);
+
         }
 
         private bool CanLoadOrdersMethod(object arg)
