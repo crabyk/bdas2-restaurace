@@ -30,38 +30,43 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" >
+
+        <Border Grid.Row="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,0,2">
+        <DockPanel Margin="5">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource Btn}" Content="Admin" Command="{Binding NavCommand}" CommandParameter = "admin" />
                 <Button Style="{StaticResource Btn}" Content="Emulovat Pracovníka" Command="{Binding NavCommand}" CommandParameter = "employee" />
-                <ComboBox 
-                            IsSynchronizedWithCurrentItem="True"
-                            SelectedItem="{Binding Path = SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
-                                    NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
-                            SelectedValue="{Binding Path = SelectedCustomer.ID, Mode=OneWay}"
-                            SelectedValuePath="ID"
-                            ItemsSource="{Binding Path = Customers}" 
-                            >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
 
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel>
-                                    <Label Content="Jméno:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = FirstName}" />
-                                </StackPanel>
-                                <StackPanel>
-                                    <Label Content="Přijmení:" FontSize="10" FontWeight="Bold"/>
-                                    <Label Content="{Binding Path = LastName}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Style="{StaticResource Btn}" Content="Emulovat zákazníka" Command="{Binding EmulateCustomer}" />
-
+                <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 0">
+                        <ComboBox 
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                                SelectedValue="{Binding Path = SelectedCustomer.ID, Mode=OneWay}"
+                                SelectedValuePath="ID"
+                                ItemsSource="{Binding Path = Customers}" 
+                                >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <Label Content="Jméno:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = FirstName}" />
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <Label Content="Přijmení:" FontSize="10" FontWeight="Bold"/>
+                                            <Label Content="{Binding Path = LastName}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Style="{StaticResource Btn}" Content="Emulovat zákazníka" Command="{Binding EmulateCustomer}" />
+                </StackPanel>
             </StackPanel>
         </DockPanel>
+        </Border>
+        
         <Grid x:Name="MainContent" Grid.Row="1">
             <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
         </Grid>

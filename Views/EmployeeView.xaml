@@ -31,24 +31,19 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="2">
-            <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
-            <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
-            <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
-        </StackPanel>
+        <Border Grid.Column="0" Grid.Row="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,2,0">
+            <StackPanel>
+                <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
+                <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
+                <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+            </StackPanel>
+        </Border>
 
-        <StackPanel Grid.Column="1" Grid.Row="0">
-            <Label x:Name="Headline" Content="" FontSize="24" />
-        </StackPanel>
-
-        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row="2">
+        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row="0">
             <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
         </Grid>
-
-
     </Grid>
 </UserControl>

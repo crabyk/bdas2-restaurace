@@ -62,6 +62,9 @@
         <DataTemplate DataType = "{x:Type viewModel:SystemCatalogViewModel}">
             <views:SystemCatalogView x:Name="SystemCatalogView" />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+            <views:LoginView x:Name="LoginView"/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
@@ -70,37 +73,34 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="2">
-            <StackPanel>
-                <Button Style="{StaticResource Btn}" Content="Emulovat" Command="{Binding EmulateEmployee}" />
-                <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
-                <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
-                <Button Style="{StaticResource Btn}" Content="Obrazky" Command="{Binding NavCommand}" CommandParameter = "itemImage"/>
-                <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
-                <Button Style="{StaticResource Btn}" Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
-                <Button Style="{StaticResource Btn}" Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
-                <Button Style="{StaticResource Btn}" Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
-                <Button Style="{StaticResource Btn}" Content="Stoly" Command="{Binding NavCommand}" CommandParameter = "table" />
-                <Button Style="{StaticResource Btn}" Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
-                <Button Style="{StaticResource Btn}" Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
-                <Button Style="{StaticResource Btn}" Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
-                <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
-                <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
-                <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
-                <Button Style="{StaticResource Btn}" Content="Logy" Command="{Binding NavCommand}" CommandParameter = "logs" />
-                <Button Style="{StaticResource Btn}" Content="Katalog" Command="{Binding NavCommand}" CommandParameter = "catalog" />
-            </StackPanel>
-        </ScrollViewer>
+        <Border Grid.Column="0" Grid.Row="0" Background="Lavender" BorderBrush="Black" BorderThickness="0,0,2,0">
+            <ScrollViewer>
+                <StackPanel>
+                    <Button Style="{StaticResource Btn}" Content="Emulovat" Command="{Binding EmulateEmployee}" />
+                    <Button Style="{StaticResource Btn}" Content="Napoje" Command="{Binding NavCommand}" CommandParameter = "drink" />
+                    <Button Style="{StaticResource Btn}" Content="Jidlo" Command="{Binding NavCommand}" CommandParameter = "food"/>
+                    <Button Style="{StaticResource Btn}" Content="Obrazky" Command="{Binding NavCommand}" CommandParameter = "itemImage"/>
+                    <Button Style="{StaticResource Btn}" Content="Objednavky" Command="{Binding NavCommand}" CommandParameter = "order"/>
+                    <Button Style="{StaticResource Btn}" Content="Typy plateb" Command="{Binding NavCommand}" CommandParameter = "paymentType"/>
+                    <Button Style="{StaticResource Btn}" Content="Zakaznici" Command="{Binding NavCommand}" CommandParameter = "customer"/>
+                    <Button Style="{StaticResource Btn}" Content="Adresy" Command="{Binding NavCommand}" CommandParameter = "address" />
+                    <Button Style="{StaticResource Btn}" Content="Stoly" Command="{Binding NavCommand}" CommandParameter = "table" />
+                    <Button Style="{StaticResource Btn}" Content="Brigadnici" Command="{Binding NavCommand}" CommandParameter = "partEmployee" />
+                    <Button Style="{StaticResource Btn}" Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
+                    <Button Style="{StaticResource Btn}" Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
+                    <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
+                    <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
+                    <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
+                    <Button Style="{StaticResource Btn}" Content="Logy" Command="{Binding NavCommand}" CommandParameter = "logs" />
+                    <Button Style="{StaticResource Btn}" Content="Katalog" Command="{Binding NavCommand}" CommandParameter = "catalog" />
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
 
-        <StackPanel Grid.Column="1" Grid.Row="0">
-            <Label x:Name="Headline" Content="" FontSize="24" />
-        </StackPanel>
-
-        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "1" >
+        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row = "0" >
             <ContentControl x:Name="Content" Content = "{Binding CurrentViewModel}"/>
         </Grid>
     </Grid>
