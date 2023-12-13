@@ -54,6 +54,15 @@ namespace BDAS2_Restaurace.Model
                 OnPropertyChanged(nameof(Table));
             }
         }
+        public override object Clone()
+        {
+            Reservation order = (Reservation)this.MemberwiseClone();
+            order.Table = (Table)Table?.Clone();
+            order.Customer = (Customer)Customer?.Clone();
+
+            return order;
+        }
+
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
@@ -68,16 +77,7 @@ namespace BDAS2_Restaurace.Model
 
             return false;
         }
-
-
-
-        public override object Clone()
-        {
-            Reservation order = (Reservation)this.MemberwiseClone();
-            order.Table = (Table)Table?.Clone();
-            order.Customer = (Customer)Customer?.Clone();
-
-            return order;
-        }
     }
+
+
 }
