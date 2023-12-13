@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:ff="clr-namespace:BDAS2_Restaurace"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800">
     <ScrollViewer>
@@ -38,8 +39,9 @@
                         <ComboBox 
                             Height="30"
                             IsSynchronizedWithCurrentItem="True"
-                            SelectedItem="{Binding Path = SelectedTable, Mode=TwoWay}"
-                            SelectedValue="{Binding Path = SelectedTable.ID, Mode=OneWay}"
+                            SelectedItem="{Binding Path = SelectedItem.Table, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                            SelectedValue="{Binding Path = SelectedItem.Table.ID, Mode=OneWay}"
                             SelectedValuePath="ID"
                             ItemsSource="{Binding Path = TableList}" 
                             DisplayMemberPath="Number"
@@ -48,12 +50,14 @@
 
                     <StackPanel Grid.Column="0" Grid.Row="1" Margin="0, 0, 10, 0">
                         <Label Content="Datum rezervace" />
-                        <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path=ReservationDate}" />
+                        <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path= ReservationDate, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0, 0, 0">
                         <Label Content="Pocet lidi" />
-                        <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path=NumberOfPeople}" />
+                        <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path=SelectedItem.NumberOfPeople, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N1}}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -73,49 +77,76 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = Customer}">
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+                        <StackPanel>
+                            <Label Grid.Column="0" Content="Login" />
+                            <TextBox Style="{StaticResource TxtBox}" Height="30" Grid.Column="1" 
+                                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Heslo" />
+                            <PasswordBox x:Name="PasswordBox" Style="{StaticResource PsswdBox}"
+                                    ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button Style="{StaticResource PositiveBtn}" Width="140" Height="25" Margin="0, 10, 0, 0" Content="Přihlasit se" Command="{Binding Path = LoadCustomer}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel x:Name="CustomerDetails" Margin="10" Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left" DataContext="{Binding Path = SelectedItem.Customer}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Jmeno" />
-                            <TextBox Style="{StaticResource TxtBox}" Grid.Column="1" Text="{Binding Path = FirstName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Grid.Column="1" Text="{Binding Path = FirstName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Prijmeni" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = LastName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Datum narozeni" />
-                            <DatePicker x:Name="BirthDate" Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate}" />
+                            <DatePicker x:Name="BirthDate" Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = BirthDate, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Telefon" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PhoneNumber, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Email" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Email, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="0" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = Address}">
+                    <StackPanel x:Name="CustomerAddress" Margin="10" Grid.Row="1" Grid.Column="1" DockPanel.Dock="Left" DataContext="{Binding Path = SelectedItem.Customer.Address}">
                         <StackPanel>
                             <Label Grid.Column="0" Content="Ulice" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = StreetName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = StreetName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Obec" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = CityName}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = CityName, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Číslo popisné" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = UnitNumber}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = UnitNumber, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="PSČ" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PostalCode}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = PostalCode, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Země" />
-                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Country}" />
+                            <TextBox Style="{StaticResource TxtBox}" Text="{Binding Path = Country, UpdateSourceTrigger=PropertyChanged, 
+                                NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -127,7 +158,7 @@
                         Style="{StaticResource PositiveBtn}"
                     Content="Potvrdit"
                     Height="40" Width="120" HorizontalAlignment="Left"
-                    Command="{Binding Path = CreateReservation}"
+                    Command="{Binding Path = Create}"
                     />
                 </DockPanel>
             </Border>

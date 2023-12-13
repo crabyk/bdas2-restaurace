@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="BDAS2_Restaurace.Views.EditReservationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
+             xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
+             xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label Content="Filtr:" VerticalAlignment="Center"></Label>
+                <TextBox Style="{StaticResource TxtBox}" Width="180" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit filtr" Command="{Binding Path = ClearFilter}"/>
+                <Button Style="{StaticResource NegativeBtn}" Content="Zrušit výběr" Command="{Binding Path = ClearSelected}"/>
+            </StackPanel>
+
+            <ListView Grid.Row="1" Name="DataListView" Width="Auto" HorizontalContentAlignment="Stretch"
+                        IsSynchronizedWithCurrentItem="True"
+                        ItemsSource="{Binding Path = FilteredItems}"
+                        SelectedItem="{Binding Path = SelectedItem, Mode=TwoWay}"
+                        >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Datum rezervace" DisplayMemberBinding="{Binding Path = ReservationDate}"/>
+                        <GridViewColumn Header="Zakaznik" DisplayMemberBinding="{Binding Path = Customer.FullName}"/>
+                        <GridViewColumn Header="Číslo stolue" DisplayMemberBinding="{Binding Path = Table.Number}"/>
+                        <GridViewColumn Header="Počet osob" DisplayMemberBinding="{Binding Path = NumOfPeople}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10, 30, 10, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <StackPanel>
+                        <StackPanel DataContext="{Binding Path = SelectedItem}">
+                            <StackPanel>
+                                <Label Content="Datum:" />
+                                <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = ReservationDate}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Platba -->
+                        <StackPanel Margin="0, 10">
+                            <StackPanel>
+                                <Label Content="Číslo stolu:" />
+                                <ComboBox 
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectedItem="{Binding Path = SelectedItem.Table, Mode=TwoWay}"
+                                    SelectedValue="{Binding Path = SelectedItem.Table.ID, Mode=OneWay}"
+                                    SelectedValuePath="ID"
+                                    ItemsSource="{Binding Path = TableList}" 
+                                    DisplayMemberPath="Number"
+                                    />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Zakaznik -->
+                        <StackPanel DataContext="{Binding Path = SelectedItem.Customer}">
+                            <Label Content="Zakaznik:" FontSize="16" FontWeight="DemiBold"/>
+                            <StackPanel>
+                                <Label Content="Jméno a příjmení:" />
+                                <Label Content="{Binding Path = FullName}" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="Datum narození:" />
+                                <Label Content="{Binding Path = BirthDate}" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="Kontakt:" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Path = PhoneNumber}" />
+                                    <Label Content="{Binding Path = Email}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PositiveBtn}" Width="120" Content="Uložit upravu" Command="{Binding Path = Update}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

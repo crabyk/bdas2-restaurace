@@ -89,7 +89,7 @@
                     <Label Content="Vytvoreni objednavky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>
                 </StackPanel>
             </Border>
-            
+
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -110,48 +110,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
-
-            <!--
-            <Grid x:Name = "Menu" Grid.Row = "1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="0">
-                    <ListView Width="Auto" HorizontalContentAlignment="Stretch" 
-                              ItemsSource="{Binding Path = OrderItems}"
-                              SelectedItem="{Binding Path = NewOrderItem}"
-                              SelectionMode="Extended"
-                              >
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                                <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
-                                <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <Button Content="Přidat položku" Command="{Binding AddOrderItem}" />
-                </StackPanel>
-
-                <ListView Grid.Column="1" Name="DrinkListView" Width="Auto" HorizontalContentAlignment="Stretch"
-                          IsSynchronizedWithCurrentItem="True"
-                          ItemsSource="{Binding Path = Drinks}"
-                          SelectedItem="{Binding Path = SelectedDrink}"
-                          SelectionMode="Extended"
-                          >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path = ID}"/>
-                            <GridViewColumn Header="Nazev" DisplayMemberBinding="{Binding Path = Name}"/>
-                            <GridViewColumn Header="Cena" DisplayMemberBinding="{Binding Path = Price}"/>
-                            <GridViewColumn Header="Objem" DisplayMemberBinding="{Binding Path = Volume}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-            -->
 
             <StackPanel x:Name = "SelectedItems" Grid.Row = "2">
                 <Label Content="Vybrane polozky" VerticalAlignment="Center" FontSize="24" FontWeight="DemiBold"/>

@@ -134,14 +134,7 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected virtual void CreateMethod(object obj)
         {
-            try
-            {
-                controller.Add(SelectedItem);
-            }
-            catch
-            {
-                ErrorHandler.OpenDialog(ErrorType.Create);
-            }
+            controller.Add(SelectedItem);
             Load();
         }
 

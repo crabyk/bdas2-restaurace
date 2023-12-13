@@ -31,13 +31,12 @@ namespace BDAS2_Restaurace.Controller
                     {
                         comm.Transaction = orderAddTransaction;
 
-                        Address address = new AddressController().Add(item.Customer.Address);
-                        item.Customer.Address.ID = address.ID;
-
                         Customer customer = item.Customer;
                         if (customer.ID == null || customer.User == null)
                         {
                             customer = new CustomerController().Add(item.Customer);
+                            Address address = new AddressController().Add(item.Customer.Address);
+                            customer.Address.ID = address.ID;
                         }
 
                         Payment payment = new PaymentController().Add(item.Payment);
@@ -52,7 +51,7 @@ namespace BDAS2_Restaurace.Controller
                         comm.Parameters.Add("p_platba_id", OracleDbType.Decimal).Value = payment.ID;
                         comm.Parameters.Add("p_zakaznik_id", OracleDbType.Decimal).Value = customer.ID;
                         comm.Parameters.Add("p_stul_id", OracleDbType.Decimal).Value = item.Table?.ID;
-                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = address.ID;
+                        comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = customer.Address.ID;
                         comm.Parameters.Add("p_id_objednavka", OracleDbType.Decimal, ParameterDirection.Output);
 
                         comm.ExecuteNonQuery();
