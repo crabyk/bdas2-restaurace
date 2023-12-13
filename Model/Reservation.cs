@@ -12,16 +12,7 @@ namespace BDAS2_Restaurace.Model
         private Customer customer;
         private Table table;
 
-        public Reservation()
-        {
-            ReservationDate = DateTime.Now;
-            Customer = new Customer();
-            Table = new Table();
-            NumberOfPeople = 0;
-        }
-
-        [Required(ErrorMessage = "Datum rezervace je povinné")]
-        [DataType(DataType.Date, ErrorMessage = "Špatný formát datumu")]
+        [ReservationDate(ErrorMessage = "Neplatné datum rezervace")]
         public DateTime ReservationDate
         {
             get { return reservationDate; }
@@ -62,6 +53,20 @@ namespace BDAS2_Restaurace.Model
                 table = value;
                 OnPropertyChanged(nameof(Table));
             }
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public sealed class ReservationDateAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value is DateTime date)
+            {
+                return date.Date >= DateTime.Today;
+            }
+
+            return false;
         }
 
 
