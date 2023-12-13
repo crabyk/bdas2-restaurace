@@ -100,7 +100,7 @@
                     <Button Style="{StaticResource Btn}" Content="Zamestnanci" Command="{Binding NavCommand}" CommandParameter = "fullEmployee" />
                     <Button Style="{StaticResource Btn}" Content="Pozice" Command="{Binding NavCommand}" CommandParameter = "position" />
                     <Button Style="{StaticResource Btn}" Content="Smeny" Command="{Binding NavCommand}" CommandParameter = "shift" />
-                    <Button Style="{StaticResource Btn}" Content="Strom zak." Command="{Binding NavCommand}" CommandParameter = "employeeTree" />
+                    <Button Style="{StaticResource Btn}" Content="Strom zamest." Command="{Binding NavCommand}" CommandParameter = "employeeTree" />
                     <Button Style="{StaticResource Btn}" Content="Uzivatele" Command="{Binding NavCommand}" CommandParameter = "user" />
                     <Button Style="{StaticResource Btn}" Content="Role uživatelů" Command="{Binding NavCommand}" CommandParameter = "role" />
                     <Button Style="{StaticResource Btn}" Content="Logy" Command="{Binding NavCommand}" CommandParameter = "logs" />
