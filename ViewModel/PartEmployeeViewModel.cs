@@ -13,12 +13,23 @@ namespace BDAS2_Restaurace.ViewModel
 {
     public class PartEmployeeViewModel : ViewModelBase<PartEmployee, PartEmployeeController>
     {
+        private ObservableCollection<Employee> employees;
         private ObservableCollection<Address> addresses;
         private ObservableCollection<JobPosition> positions;
 
         private ObservableCollection<WorkShift> employeeShifts = new ObservableCollection<WorkShift>();
         private WorkShift selectedShift;
         private WorkShift newShift;
+
+        public ObservableCollection<Employee> Employees
+        {
+            get { return employees; }
+            set
+            {
+                employees = value;
+                OnPropertyChanged(nameof(Employees));
+            }
+        }
 
         public ObservableCollection<Address> Addresses
         {
@@ -73,10 +84,23 @@ namespace BDAS2_Restaurace.ViewModel
         public ICommand RemoveShift { get; set; }
         public ICommand AddShift { get; set; }
 
+        public ICommand NoManager { get; set; }
+
         public PartEmployeeViewModel() : base(new PartEmployeeController())
         {
             AddShift = new RelayCommand(AddShiftMethod, CanAddShiftMethod);
             RemoveShift = new RelayCommand(RemoveShiftMethod, CanRemoveShiftMethod);
+            NoManager = new RelayCommand(NoManagerMethod, CanNoManagerMethod);
+        }
+
+        private bool CanNoManagerMethod(object arg)
+        {
+            return true;
+        }
+
+        private void NoManagerMethod(object obj)
+        {
+            SelectedItem.ManagerId = null;
         }
 
         private bool CanAddShiftMethod(object obj)
@@ -97,6 +121,19 @@ namespace BDAS2_Restaurace.ViewModel
         private void RemoveShiftMethod(object obj)
         {
             SelectedItem.RemoveShift(SelectedShift);
+        }
+
+
+        private async void LoadEmployees()
+        {
+            List<FullEmployee> fullEmps = await Task.Run(() => new FullEmployeeController().GetAll());
+            List<PartEmployee> partEmps = await Task.Run(() => new PartEmployeeController().GetAll());
+            List<Employee> emps = new List<Employee>();
+
+            emps.AddRange(fullEmps);
+            emps.AddRange(partEmps);
+
+            Employees = new ObservableCollection<Employee>(emps);
         }
 
 
@@ -123,6 +160,7 @@ namespace BDAS2_Restaurace.ViewModel
             LoadAddresses();
             LoadPositions();
             LoadShifts();
+            LoadEmployees();
             base.Load();
         }
 

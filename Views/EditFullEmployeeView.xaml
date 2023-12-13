@@ -114,6 +114,39 @@
                             />
                     </StackPanel>
 
+                    <!-- Nadrizeni -->
+                    <StackPanel Margin="0, 10">
+                        <StackPanel>
+                            <Label Content="Nadřízený:" />
+                            <ComboBox 
+                                IsSynchronizedWithCurrentItem="True"
+                                SelectedItem="{Binding Path = SelectedItem.ManagerId, Mode=TwoWay}"
+                                SelectedValue="{Binding Path = SelectedItem.ManagerId, Mode=OneWay}"
+                                ItemsSource="{Binding Path = Employees}" 
+                                >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel>
+                                                <Label Content="Name:" FontSize="10" FontWeight="Bold"/>
+                                                <Label Content="{Binding Path = FullName}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <Label Content="Uvazek:" FontSize="10" FontWeight="Bold"/>
+                                                <Label Content="{Binding Path = EmploymentType}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <Label Content="Pozice:" FontSize="10" FontWeight="Bold"/>
+                                                <Label Content="{Binding Path = JobPosition.Name}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <Button Style="{StaticResource Btn}" Command="{Binding Path=NoManager}" Content="Bez nadřízeného" />
+                    </StackPanel>
+
                     <!-- Smeny -->
                     <StackPanel>
                         <Label Content="Smeny:" FontSize="16" FontWeight="DemiBold"/>
