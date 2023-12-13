@@ -6,12 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Windows.Media.Imaging;
 
 namespace BDAS2_Restaurace.Controller
 {
@@ -37,6 +32,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
                     comm.Parameters.Add("p_pozice_id", OracleDbType.Decimal).Value = item.JobPosition.ID;
                     comm.Parameters.Add("p_plat", OracleDbType.Int32).Value = item.MonthRate;
+                    comm.Parameters.Add("p_id_nadrizeny", OracleDbType.Int32).Value = item.ManagerId;
                     comm.Parameters.Add("p_id_zamestnanec", OracleDbType.Decimal, ParameterDirection.Output);
 
                     comm.ExecuteNonQuery();
@@ -99,6 +95,8 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add(employmentType);
                     OracleParameter monthRate = new OracleParameter("p_plat", OracleDbType.Int32, ParameterDirection.Output);
                     comm.Parameters.Add(monthRate);
+                    OracleParameter managerId = new OracleParameter("p_id_nadrizeny", OracleDbType.Int32, ParameterDirection.Output);
+                    comm.Parameters.Add(managerId);
 
                     comm.ExecuteNonQuery();
 
@@ -116,7 +114,8 @@ namespace BDAS2_Restaurace.Controller
                         MonthRate = float.Parse(monthRate.Value.ToString()),
                         Address = address,
                         JobPosition = position,
-                        Shifts = new ObservableCollection<WorkShift>(shifts)
+                        Shifts = new ObservableCollection<WorkShift>(shifts),
+                        ManagerId = (managerId.Value == DBNull.Value) ? null : int.Parse(managerId.Value.ToString())
                     };
                 }
             }
@@ -146,16 +145,21 @@ namespace BDAS2_Restaurace.Controller
                             JobPosition position = new JobPositionController().Get(rdr.GetString(6));
                             List<WorkShift> shifts = new EmployeeShiftController().GetAll(rdr.GetInt32(0).ToString());
 
+                            int? managerId = null;
+                            if (!rdr.IsDBNull(7))
+                                managerId = rdr.GetInt32(7);
+
                             result.Add(new FullEmployee
                             {
                                 ID = rdr.GetInt32(0),
                                 FirstName = rdr.GetString(1),
-                                LastName = rdr.GetString(2),   
+                                LastName = rdr.GetString(2),
                                 EmploymentType = rdr.GetString(3),
                                 MonthRate = rdr.GetFloat(4),
                                 Address = address,
                                 JobPosition = position,
-                                Shifts = new ObservableCollection<WorkShift>(shifts)
+                                Shifts = new ObservableCollection<WorkShift>(shifts),
+                                ManagerId = managerId
                             });
                         }
                     }
@@ -174,10 +178,10 @@ namespace BDAS2_Restaurace.Controller
                 conn.Open();
                 using (OracleCommand comm = conn.CreateCommand())
                 {
-           
+
                     comm.CommandText = "ziskat_zamestnance_hr";
                     comm.CommandType = CommandType.StoredProcedure;
-   
+
 
                     comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
 
@@ -235,6 +239,7 @@ namespace BDAS2_Restaurace.Controller
                     comm.Parameters.Add("p_adresa_id", OracleDbType.Decimal).Value = item.Address.ID;
                     comm.Parameters.Add("p_pozice_id", OracleDbType.Decimal).Value = item.JobPosition.ID;
                     comm.Parameters.Add("p_plat", OracleDbType.Int32).Value = item.MonthRate;
+                    comm.Parameters.Add("p_id_nadrizeny", OracleDbType.Int32).Value = item.ManagerId;
 
                     comm.ExecuteNonQuery();
                 }
