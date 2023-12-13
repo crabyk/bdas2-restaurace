@@ -14,7 +14,7 @@ namespace BDAS2_Restaurace.Model
 
         public Customer() : base()
         {
-            birthDate = DateTime.MinValue;
+            birthDate = DateTime.Now;
             phoneNumber = string.Empty;
             email = string.Empty;
         }

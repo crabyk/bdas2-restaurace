@@ -105,20 +105,28 @@ namespace BDAS2_Restaurace.ViewModel
 
         protected override bool CanCreateMethod(object obj)
         {
-            return true;
+            return base.CanCreateMethod(obj) &&
+                PropertyValidateModel.Validate(SelectedItem.Customer) &&
+                PropertyValidateModel.Validate(SelectedItem.Customer.Address);
         }
 
         protected override void CreateMethod(object obj)
         {
+            try
+            {
+                base.CreateMethod(obj);
 
-            base.CreateMethod(obj);
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.None;
 
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.None;
+                MessageBox.Show("Objednávka vytvořena", "Objednávka", button, icon, MessageBoxResult.OK);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.OpenDialog("Objednávka vytvořena", "Objednávka");
+            }
 
-            // MessageBox.Show("Objednávka vytvořena", "Objednávka", button, icon, MessageBoxResult.OK);
-
-            // OnWindowClose();
+            OnWindowClose();
         }
 
         protected override void Load()
