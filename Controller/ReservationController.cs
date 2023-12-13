@@ -57,8 +57,6 @@ namespace BDAS2_Restaurace.Controller
 
                         newId = ((OracleDecimal)comm.Parameters["p_id_rezervace"].Value).Value;
 
-                        comm.ExecuteNonQuery();
-                        newId = ((OracleDecimal)comm.Parameters["p_id_objednavka"].Value).Value;
                         item.ID = Convert.ToInt32(newId);
 
                     }

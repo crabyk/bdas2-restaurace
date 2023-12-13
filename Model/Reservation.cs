@@ -12,6 +12,14 @@ namespace BDAS2_Restaurace.Model
         private Customer customer;
         private Table table;
 
+        public Reservation()
+        {
+            ReservationDate = DateTime.Now;
+            NumberOfPeople = 0;
+            Customer = new Customer();
+            Table = new Table();    
+        }
+
         [ReservationDate(ErrorMessage = "Neplatné datum rezervace")]
         public DateTime ReservationDate
         {

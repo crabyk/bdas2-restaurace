@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BDAS2_Restaurace.Views"
              xmlns:viewModel = "clr-namespace:BDAS2_Restaurace.ViewModel"
              xmlns:vml = "clr-namespace:BDAS2_Restaurace.VML"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              vml:ViewModelLocator.AutoHookedUpViewModel = "True"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="800">
@@ -52,7 +53,8 @@
                         <StackPanel DataContext="{Binding Path = SelectedItem}">
                             <StackPanel>
                                 <Label Content="Datum:" />
-                                <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = OrderDate}" />
+                                <xctk:DateTimePicker Style="{StaticResource DateTimePicker}" Value="{Binding Path = OrderDate}" />
+                                <!--<DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = OrderDate}" />-->
                             </StackPanel>
                         </StackPanel>
 
@@ -77,7 +79,8 @@
                                 </StackPanel>
                                 <StackPanel>
                                     <Label Content="Datum platby:" />
-                                    <DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = Date}" />
+                                    <xctk:DateTimePicker Style="{StaticResource DateTimePicker}" Value="{Binding Path = Date}" />
+                                    <!--<DatePicker Style="{StaticResource DatePicker}" SelectedDate="{Binding Path = Date}" />-->
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
