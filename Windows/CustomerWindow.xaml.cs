@@ -23,7 +23,7 @@ namespace BDAS2_Restaurace.Windows
     {
         public CustomerWindow(Customer customer)
         {
-            DataContext = new OrderCustomerViewModel(customer);
+            DataContext = new UserCustomerViewModel(customer);
             InitializeComponent();
         }
     }

@@ -6,11 +6,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-    public class OrderCustomerViewModel : ViewModelBase<Order, OrderController>
+    public class UserOrderViewModel : ViewModelBase<Order, OrderController>
     {
         private Customer selectedCustomer;
 
@@ -24,7 +23,7 @@ namespace BDAS2_Restaurace.ViewModel
             }
         }
 
-        public OrderCustomerViewModel(Customer customer) : base(new OrderController())
+        public UserOrderViewModel(Customer customer) : base(new OrderController())
         {
             SelectedCustomer = customer;
             List<Order> result = controller.GetAll(customer);
@@ -35,6 +34,5 @@ namespace BDAS2_Restaurace.ViewModel
         protected override void Load()
         {
         }
-
     }
 }

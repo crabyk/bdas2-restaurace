@@ -18,9 +18,9 @@ namespace BDAS2_Restaurace.Views
     /// <summary>
     /// Interakční logika pro ReservationView.xaml
     /// </summary>
-    public partial class ReservationView : UserControl
+    public partial class AddReservationView : UserControl
     {
-        public ReservationView()
+        public AddReservationView()
         {
             InitializeComponent();
         }

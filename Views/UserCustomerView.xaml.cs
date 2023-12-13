@@ -18,9 +18,9 @@ namespace BDAS2_Restaurace.Views
     /// <summary>
     /// Interakční logika pro OrderCustomerView.xaml
     /// </summary>
-    public partial class OrderCustomerView : UserControl
+    public partial class UserCustomerView : UserControl
     {
-        public OrderCustomerView()
+        public UserCustomerView()
         {
             InitializeComponent();
         }
