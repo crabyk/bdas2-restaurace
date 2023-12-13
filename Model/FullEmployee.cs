@@ -9,6 +9,7 @@ namespace BDAS2_Restaurace.Model
 {
     public class FullEmployee : Employee
     {
+
         private float monthRate;
 
         public FullEmployee() : base()

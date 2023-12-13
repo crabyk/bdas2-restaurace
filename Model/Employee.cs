@@ -11,6 +11,7 @@ namespace BDAS2_Restaurace.Model
 {
 	abstract public class Employee : Person
 	{
+        private int? managerId;
 		private JobPosition jobPosition;
 		private ObservableCollection<WorkShift> shifts;
 		private string employmentType;
@@ -20,6 +21,16 @@ namespace BDAS2_Restaurace.Model
 			jobPosition = new JobPosition();
 			shifts = new ObservableCollection<WorkShift>();
 		}
+
+        public int? ManagerId
+        {
+            get { return managerId; }
+            set
+            {
+                managerId = value;
+                OnPropertyChanged(nameof(ManagerId));   
+            }
+        }
 
         [Required(ErrorMessage = "Pracovní pozice je povinná")]
 		public JobPosition JobPosition

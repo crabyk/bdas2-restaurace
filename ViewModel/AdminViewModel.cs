@@ -27,6 +27,7 @@ namespace BDAS2_Restaurace.ViewModel
             Routes.Add(new Route<PartEmployeeViewModel>("partEmployee"));
             Routes.Add(new Route<WorkShiftViewModel>("shift"));
             Routes.Add(new Route<JobPositionViewModel>("position"));
+            Routes.Add(new Route<EmployeeTreeViewModel>("employeeTree"));
             Routes.Add(new Route<UserViewModel>("user"));
             Routes.Add(new Route<RoleViewModel>("role"));
             Routes.Add(new Route<LogViewModel>("logs"));

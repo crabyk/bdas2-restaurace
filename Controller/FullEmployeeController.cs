@@ -165,6 +165,47 @@ namespace BDAS2_Restaurace.Controller
             return result;
         }
 
+        public List<Employee> GetTree()
+        {
+            List<Employee> result = new List<Employee>();
+
+            using (OracleConnection conn = Database.Connect())
+            {
+                conn.Open();
+                using (OracleCommand comm = conn.CreateCommand())
+                {
+           
+                    comm.CommandText = "ziskat_zamestnance_hr";
+                    comm.CommandType = CommandType.StoredProcedure;
+   
+
+                    comm.Parameters.Add("p_kurzor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                    using (OracleDataReader rdr = comm.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            JobPosition position = new JobPositionController().Get(rdr.GetString(4));
+                            int? managerId = null;
+                            if (!rdr.IsDBNull(1))
+                                managerId = rdr.GetInt32(1);
+
+                            result.Add(new FullEmployee
+                            {
+                                ID = rdr.GetInt32(0),
+                                ManagerId = rdr.IsDBNull(1) ? (int?)null : rdr.GetInt32(1),
+                                FirstName = rdr.GetString(2),
+                                LastName = rdr.GetString(3),
+                                JobPosition = position
+                            });
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public override FullEmployee? Update(FullEmployee item)
         {
             FullEmployee? result = null;
