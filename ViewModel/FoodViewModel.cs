@@ -1,6 +1,8 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
@@ -18,9 +20,37 @@ namespace BDAS2_Restaurace.ViewModel
                 OnPropertyChanged(nameof(Images));
             }
         }
+
+        public ICommand Restore { get; set; }
+        public ICommand Cancel { get; set; }
+
         public FoodViewModel() : base(new FoodController())
         {
+            Restore = new RelayCommand(RestoreMethod, CanRestoreMethod);
+            Cancel = new RelayCommand(CancelMethod, CanCancelMethod);
             LoadImages();
+        }
+
+        private void CancelMethod(object obj)
+        {
+            new FoodController().Cancel(SelectedItem.ID.ToString());
+            Load();
+        }
+
+        private bool CanCancelMethod(object arg)
+        {
+            return PropertyValidateModel.Validate(SelectedItem) && Items.Any(i => i.ID == SelectedItem.ID);
+        }
+
+        private void RestoreMethod(object obj)
+        {
+            new FoodController().Restore(SelectedItem.ID.ToString());
+            Load();
+        }
+
+        private bool CanRestoreMethod(object arg)
+        {
+            return PropertyValidateModel.Validate(SelectedItem) && Items.Any(i => i.ID == SelectedItem.ID);
         }
 
         private void LoadImages()

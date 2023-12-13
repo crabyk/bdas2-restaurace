@@ -14,8 +14,8 @@ namespace BDAS2_Restaurace.ViewModel
         public MenuViewModel()
         {
             // potreba to pak predelat na asynchronni verzi
-            var food = new FoodController().GetAll();
-            var drinks = new DrinkController().GetAll();
+            var food = new FoodController().GetFoodMenu();
+            var drinks = new DrinkController().GetDrinkMenu();
 
             var topFood = new FoodController().GetMostOrderedFood();
             var topDrink = new DrinkController().GetMostOrderedDrink();
