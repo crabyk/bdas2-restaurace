@@ -14,9 +14,7 @@ namespace BDAS2_Restaurace.ViewModel
     public class OrderViewModel : ViewModelBase<Order, OrderController>
     {
         private ObservableCollection<PaymentType> paymentTypes;
-
         private ObservableCollection<Address> addresses;
-
         private ObservableCollection<Item> orderItems = new ObservableCollection<Item>();
         private Item selectedOrderItem;
         private Item newOrderItem;
@@ -96,11 +94,8 @@ namespace BDAS2_Restaurace.ViewModel
 
         public ICommand RemoveOrderItem { get; set; }
         public ICommand AddOrderItem { get; set; }
-
         public ICommand SelectOrderItem;
-
         public ICommand LoadCustomer { get; set; }
-
 
         public ICommand OrderItemCommand
         {
@@ -128,8 +123,6 @@ namespace BDAS2_Restaurace.ViewModel
 
         public OrderViewModel() : base(new OrderController())
         {
-            // PaymentTypes = new ObservableCollection<PaymentType>(new PaymentTypeController().GetAll());
-            // Addresses = new ObservableCollection<Address>(new AddressController().GetAll());
             LoadCustomer = new RelayCommand(LoadCustomerMethod, CanLoadCustomerMethod);
             RemoveOrderItem = new RelayCommand(RemoveOrderItemMethod, CanRemoveOrderItemMethod);
             AddOrderItem = new RelayCommand(AddOrderItemMethod, CanAddOrderItemMethod);
@@ -165,8 +158,6 @@ namespace BDAS2_Restaurace.ViewModel
             {
                 ErrorHandler.OpenDialog("Nepodařilo se načíst zákaznické údaje", "Chyba při přihlášní");
             }
-
-
         }
 
         private async void LoadAddresses()

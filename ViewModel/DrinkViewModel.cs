@@ -1,7 +1,9 @@
 ﻿using BDAS2_Restaurace.Controller;
 using BDAS2_Restaurace.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
@@ -56,6 +58,12 @@ namespace BDAS2_Restaurace.ViewModel
         {
             Images = new ObservableCollection<ItemImage>(new ItemImageController().GetAll());
         }
+
+        //private async void LoadImages()
+        //{
+        //    List<ItemImage> result = await Task.Run(() => new ItemImageController().GetAll());
+        //    Images = new ObservableCollection<ItemImage>(result);
+        //}
 
         protected override bool IsMatchingFilter(Drink item)
         {

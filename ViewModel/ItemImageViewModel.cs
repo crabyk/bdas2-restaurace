@@ -55,7 +55,12 @@ namespace BDAS2_Restaurace.ViewModel
         protected override void Load()
         {
             Items = new ObservableCollection<ItemImage>(controller.GetAll());
-            // base.Load();
+            ApplyFilter();
+        }
+
+        protected override bool CanDeleteMethod(object obj)
+        {
+            return true;
         }
 
         protected override bool IsMatchingFilter(ItemImage item)

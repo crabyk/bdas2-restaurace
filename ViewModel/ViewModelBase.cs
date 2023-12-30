@@ -2,23 +2,19 @@
 using BDAS2_Restaurace.Errors;
 using BDAS2_Restaurace.Model;
 using BDAS2_Restaurace.Router;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BDAS2_Restaurace.ViewModel
 {
-	public class ViewModelBase<T, U> : RouteNavigation
+    public class ViewModelBase<T, U> : RouteNavigation
         where T : ModelBase, new()
         where U : Controller<T>, new()
     {
-        // private Controller<object> controller;
         protected U controller;
         protected T? selectedItem;
         protected ObservableCollection<T> items;
@@ -39,8 +35,11 @@ namespace BDAS2_Restaurace.ViewModel
             get { return selectedItem; }
             set
             {
-                selectedItem = (T?)value?.Clone() ?? new T();
-                OnPropertyChanged(nameof(selectedItem));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    selectedItem = (T?)value?.Clone() ?? new T();
+                    OnPropertyChanged(nameof(selectedItem));
+                });
             }
         }
 
@@ -60,7 +59,10 @@ namespace BDAS2_Restaurace.ViewModel
             set
             {
                 filterText = value;
-                ApplyFilter();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ApplyFilter();
+                });
                 OnPropertyChanged(nameof(FilterText));
             }
         }
@@ -73,7 +75,7 @@ namespace BDAS2_Restaurace.ViewModel
 
 
         public ViewModelBase(U controller)
-		{
+        {
             SelectedItem = new T();
             Items = new ObservableCollection<T>();
 
@@ -85,7 +87,7 @@ namespace BDAS2_Restaurace.ViewModel
             ClearFilter = new RelayCommand(ClearFilterMethod, CanClearFilterMethod);
 
             Load();
-		}     
+        }
 
         protected virtual bool CanUpdateMethod(object obj)
         {
@@ -158,7 +160,7 @@ namespace BDAS2_Restaurace.ViewModel
             FilterText = string.Empty;
         }
 
-        protected virtual void ApplyFilter()
+        protected virtual async void ApplyFilter()
         {
             if (string.IsNullOrEmpty(FilterText))
             {
@@ -166,9 +168,13 @@ namespace BDAS2_Restaurace.ViewModel
             }
             else
             {
-                var filteredList = new ObservableCollection<T>(
-                    Items.Where(item => IsMatchingFilter(item))
-                );
+                var filteredList = await Task.Run(() =>
+                {
+                    return new ObservableCollection<T>(
+                        Items.Where(item => IsMatchingFilter(item))
+                    );
+                });
+
                 FilteredItems = filteredList;
             }
         }
@@ -179,29 +185,21 @@ namespace BDAS2_Restaurace.ViewModel
         }
 
         protected virtual async void Load()
-		{
-            /*
-             * 
-             * Odkomentovat pro lepsi otestovani async chovani
-             * 
-             * Jinak GUI okna nezamrzaji coz je fajn
-             * 
-             * Zaroven se diky tomu da otestovat nove vytvareni instanci ViewModel jen kdyz jsou potreba, 
-             * protoze metoda Load() se spousti jen v konstruktoru
-             * 
-             */
-            // await Task.Delay(2000);
+        {
             try
             {
                 List<T> result = await Task.Run(() => controller.GetAll());
-                ObservableCollection<T> items = new ObservableCollection<T>(result);
-                Items = items;
-                ApplyFilter();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ObservableCollection<T> items = new ObservableCollection<T>(result);
+                    Items = items;
+                    FilteredItems = items;
+                });
             }
             catch
             {
                 ErrorHandler.OpenDialog("Chyba při načítání dat", "Neočekávaná chyba při získávání dat z databáze");
             }
-		}
-	}
+        }
+    }
 }
